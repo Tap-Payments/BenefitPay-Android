@@ -17,33 +17,27 @@ import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.*
 import cards.pay.paycardsrecognizer.sdk.Card
-import com.google.gson.Gson
 import company.tap.tapcardformkit.*
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.enums.BenefitPayStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
-import java.net.URLEncoder
 import java.util.*
 
 
 @SuppressLint("ViewConstructor")
 class TapBenefitPay : LinearLayout {
-    lateinit var constraintLayout: ConstraintLayout
     lateinit var webViewFrame: FrameLayout
     private var isBenefitPayUrlIntercepted =false
     lateinit var dialog: Dialog
     lateinit var linearLayout: LinearLayout
 
     companion object{
-         var alreadyEvaluated = false
         var NFCopened:Boolean = false
         lateinit var threeDsResponse: ThreeDsResponse
         lateinit var cardWebview: WebView
         lateinit var cardConfiguraton: CardConfiguraton
-
-        lateinit var singleWebView:WebView
 
 
         var card:Card?=null
@@ -54,11 +48,6 @@ class TapBenefitPay : LinearLayout {
         fun generateTapAuthenticate(authIdPayer: String) {
           //  cardWebview.loadUrl("javascript:window.loadAuthentication('$authIdPayer')")
         }
-
-        fun setWebView(webView: WebView){
-            singleWebView = webView
-        }
-        fun getWebView():WebView = singleWebView
 
 
 
@@ -89,16 +78,15 @@ class TapBenefitPay : LinearLayout {
 
      private fun initWebView() {
         cardWebview = findViewById(R.id.webview)
-         setWebView(cardWebview)
         webViewFrame = findViewById(R.id.webViewFrame)
-        constraintLayout = findViewById(R.id.constraint)
-         cardWebview.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
          with(cardWebview.settings){
              javaScriptEnabled=true
              domStorageEnabled=true
+             cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+
          }
          cardWebview.setBackgroundColor(Color.TRANSPARENT)
-        cardWebview.setLayerType(LAYER_TYPE_SOFTWARE, null)
+         cardWebview.setLayerType(LAYER_TYPE_SOFTWARE, null)
          cardWebview.webViewClient = MyWebViewClient()
 
 
@@ -107,7 +95,7 @@ class TapBenefitPay : LinearLayout {
 
      fun init(configuraton: CardConfiguraton) {
          cardConfiguraton = configuraton
-        applyThemeForShimmer()
+        applyTheme()
         when (configuraton) {
             CardConfiguraton.MapConfigruation -> {
                 val url  = "${urlWebStarter}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
@@ -119,7 +107,7 @@ class TapBenefitPay : LinearLayout {
         }
     }
 
-    private fun applyThemeForShimmer() {
+    private fun applyTheme() {
         /**
          * need to be refactored : mulitple copies of same code
          */
@@ -160,14 +148,6 @@ class TapBenefitPay : LinearLayout {
     }
 
 
-    private fun encodeConfigurationMapToUrl(configuraton: HashMap<String,Any>?): String? {
-        val gson = Gson()
-        val json: String = gson.toJson(configuraton)
-
-        val encodedUrl = URLEncoder.encode(json, "UTF-8")
-        return encodedUrl
-
-    }
 
 
     inner class MyWebViewClient : WebViewClient() {
@@ -203,17 +183,24 @@ class TapBenefitPay : LinearLayout {
 
                 }
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onCancel.name)) {
-                  //  Toast.makeText(context,"cancelled",Toast.LENGTH_SHORT).show()
-                    linearLayout.removeView(getWebView())
-                    dialog.dismiss()
-                    (webViewFrame as ViewGroup).addView(getWebView())
+                    Toast.makeText(context,"cancelled",Toast.LENGTH_SHORT).show()
+                    dismissDialog()
+
+
 
                 }
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onError.name)) {
                     DataConfiguration.getTapCardStatusListener()?.onError(request?.url?.getQueryParameterFromUri(keyValueName).toString())
+                    dismissDialog()
+                    init(cardConfiguraton)
+
                 }
 
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onSuccess.name)) {
+                    dismissDialog()
+                    init(cardConfiguraton)
+
+                    // init(DataConfiguration.configurations)
                     DataConfiguration.getTapCardStatusListener()?.onSuccess(request?.url?.getQueryParameterFromUri(keyValueName).toString())
                 }
 
@@ -238,7 +225,7 @@ class TapBenefitPay : LinearLayout {
                 true ->{
 
                     view?.post{
-                        (webViewFrame as ViewGroup).removeView(getWebView())
+                        (webViewFrame as ViewGroup).removeView(cardWebview)
 
 
                         dialog= Dialog(context,android.R.style.Theme_Translucent_NoTitleBar)
@@ -252,10 +239,9 @@ class TapBenefitPay : LinearLayout {
                         linearLayout.layoutParams = params
                         linearLayout.orientation = VERTICAL
 
-                        if (getWebView().parent == null){
-                            linearLayout.addView(getWebView())
+                        if (cardWebview.parent == null){
+                            linearLayout.addView(cardWebview)
                         }
-                        Log.e("parent", getWebView().parent.toString())
 
                         dialog.setContentView(linearLayout)
                         dialog.show()
@@ -293,7 +279,13 @@ class TapBenefitPay : LinearLayout {
         }
     }
 
-
+    private fun dismissDialog() {
+        if (::dialog.isInitialized and dialog.isShowing) {
+            linearLayout.removeView(cardWebview)
+            dialog.dismiss()
+            (webViewFrame as ViewGroup).addView(cardWebview)
+        }
+    }
 
 
 }

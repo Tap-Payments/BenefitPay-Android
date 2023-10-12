@@ -27,6 +27,7 @@ import company.tap.tapcardformkit.open.web_wrapper.rawFolderRefrence
 import company.tap.tapuilibrary.R
 import company.tap.tapuilibrary.themekit.ThemeManager
 import jp.wasabeef.blurry.Blurry
+import java.net.URLEncoder
 import java.util.*
 import kotlin.random.Random
 import kotlin.random.asKotlinRandom
@@ -110,6 +111,16 @@ fun Uri.getQueryParameterFromUri(keyValue: String): String {
         String(Base64.getDecoder().decode(this.getQueryParameter(keyValue).toString()))
 
     return decodedBytes
+}
+
+
+ fun encodeConfigurationMapToUrl(configuraton: HashMap<String,Any>?): String? {
+    val gson = Gson()
+    val json: String = gson.toJson(configuraton)
+
+    val encodedUrl = URLEncoder.encode(json, "UTF-8")
+    return encodedUrl
+
 }
 
 
