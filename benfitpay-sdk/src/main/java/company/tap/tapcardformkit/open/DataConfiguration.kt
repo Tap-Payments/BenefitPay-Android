@@ -136,9 +136,6 @@ object DataConfiguration {
         return tapCardStatusDelegate
     }
 
-    fun generateToken(tapBenefitPay: TapBenefitPay){
-        tapBenefitPay.generateTapToken()
-    }
     fun initializeSDK(activity: Activity, configurations: HashMap<String,Any>, tapBenefitPay: TapBenefitPay){
         BeneiftPayConfiguration.configureWithTapCardDictionaryConfiguration(activity,tapBenefitPay,configurations)
     }
@@ -154,19 +151,13 @@ interface TapCardStatusDelegate {
 
     fun onSuccess(data: String)
 
-
     fun onReady(){}
 
-    fun onFocus(){}
-
-    fun onBindIdentification(data: String){}
-
-    fun onValidInput(isValid: String)
-
+    fun onClick(){}
+    fun onOrderCreated(data: String){}
+    fun onChargeCreated(data:String){}
 
     fun onError(error: String)
-
-    fun onHeightChange(heightChange:String){}
 
 
 }

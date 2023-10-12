@@ -3,7 +3,7 @@ package company.tap.tapcardformkit.open.web_wrapper
 const val rawFolderRefrence = "raw"
 const val CardWebUrlPrefix = "tapbenefitpaywebsdk://"
 const val keyValueName = "data"
-const val parcelableThreeDsKey = "threeDsUrl"
+const val beneiftPayCheckoutUrl = "https://benefit-checkout"
 const val authDataPayerKey = "authDataPayer"
 const val waitDelaytime = 4000L
 

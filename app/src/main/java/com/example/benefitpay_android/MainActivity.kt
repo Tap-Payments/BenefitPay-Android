@@ -121,13 +121,24 @@ class MainActivity : AppCompatActivity() {
                       Toast.makeText(this@MainActivity, "onReady", Toast.LENGTH_SHORT).show()
 
                 }
-                override fun onValidInput(isValid: String) {
-                    //        Toast.makeText(this@MainActivity, "onValidInput ${isValid}", Toast.LENGTH_SHORT).show()
-                }
 
                 override fun onError(error: String) {
                     Toast.makeText(this@MainActivity, "onError ${error}", Toast.LENGTH_SHORT).show()
                     Log.e("test",error.toString())
+
+                }
+
+                override fun onChargeCreated(data: String) {
+                    Toast.makeText(this@MainActivity, "chargeCreated ${data}", Toast.LENGTH_SHORT).show()
+
+                }
+
+                override fun onOrderCreated(data: String) {
+                    Toast.makeText(this@MainActivity, "orderCreated ${data}", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onClick() {
+                    Toast.makeText(this@MainActivity, "onClick ", Toast.LENGTH_SHORT).show()
 
                 }
 

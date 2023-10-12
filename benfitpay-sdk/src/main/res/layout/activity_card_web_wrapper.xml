@@ -8,74 +8,15 @@
     android:background="@android:color/transparent"
     tools:context=".open.web_wrapper.scanner_activity.ScannerActivity">
 
-
-    <FrameLayout
-        android:id="@+id/webViewFrame"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_45sdp"
+    <include
+        layout="@layout/webviewlayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <!--        <androidx.cardview.widget.CardView-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:id="@+id/card_lottie"-->
-        <!--            app:cardUseCompatPadding="true"-->
-        <!--            app:cardPreventCornerOverlap="false"-->
-        <!--            android:layout_marginTop="@dimen/_5sdp"-->
-        <!--            android:layout_marginHorizontal="@dimen/_10sdp"-->
-        <!--            >-->
-
-        <!--        <com.airbnb.lottie.LottieAnimationView-->
-        <!--            android:id="@+id/shimmer_view"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:scaleType="centerCrop"-->
-        <!--            android:visibility="gone"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            app:lottie_loop="true"-->
-        <!--            app:lottie_autoPlay="true"-->
-        <!--            />-->
-        <!--        </androidx.cardview.widget.CardView>-->
-
-        <WebView
-            android:id="@+id/webview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
-            android:layout_gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 
-    </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/webViewFrame3ds"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <WebView
-            android:id="@+id/hideableWebView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
