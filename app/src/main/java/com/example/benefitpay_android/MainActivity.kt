@@ -3,6 +3,7 @@ package com.example.benefitpay_android
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import company.tap.tapcardformkit.open.TapCardStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.BeneiftPayConfiguration
@@ -115,6 +116,7 @@ class MainActivity : AppCompatActivity() {
             configuration,
             object : TapCardStatusDelegate {
                 override fun onSuccess(data: String) {
+                    findViewById<TextView>(R.id.data).text = data + "\n " + findViewById<TextView>(R.id.data).text
                     Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()
                 }
                 override fun onReady() {
@@ -123,17 +125,23 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onError(error: String) {
+                    findViewById<TextView>(R.id.data).text = error + "\n " + findViewById<TextView>(R.id.data).text
+
                     Toast.makeText(this@MainActivity, "onError ${error}", Toast.LENGTH_SHORT).show()
                     Log.e("test",error.toString())
 
                 }
 
                 override fun onChargeCreated(data: String) {
+                    findViewById<TextView>(R.id.data).text = data + "\n " + findViewById<TextView>(R.id.data).text
+
                     Toast.makeText(this@MainActivity, "chargeCreated ${data}", Toast.LENGTH_SHORT).show()
 
                 }
 
                 override fun onOrderCreated(data: String) {
+                    findViewById<TextView>(R.id.data).text = data + "\n " + findViewById<TextView>(R.id.data).text
+
                     Toast.makeText(this@MainActivity, "orderCreated ${data}", Toast.LENGTH_SHORT).show()
                 }
 

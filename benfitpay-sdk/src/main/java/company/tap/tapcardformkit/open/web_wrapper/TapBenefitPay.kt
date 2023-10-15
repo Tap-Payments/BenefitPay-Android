@@ -1,9 +1,14 @@
 package company.tap.tapcardformkit.open.web_wrapper
+
 import TapLocal
 import TapTheme
 import android.annotation.SuppressLint
+import android.app.ActivityManager
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.net.http.SslError
 import android.os.Build
@@ -14,24 +19,28 @@ import android.view.ViewGroup
 import android.webkit.*
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.*
 import cards.pay.paycardsrecognizer.sdk.Card
 import company.tap.tapcardformkit.*
+import company.tap.tapcardformkit.open.ApplicationLifecycle
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.enums.BenefitPayStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
+import java.net.URISyntaxException
 import java.util.*
 
 
 @SuppressLint("ViewConstructor")
-class TapBenefitPay : LinearLayout {
+class TapBenefitPay : LinearLayout,ApplicationLifecycle {
     lateinit var webViewFrame: FrameLayout
     private var isBenefitPayUrlIntercepted =false
     lateinit var dialog: Dialog
+     var pair =  Pair("",false)
     lateinit var linearLayout: LinearLayout
+     var iSAppInForeground = false
+
 
     companion object{
         var NFCopened:Boolean = false
@@ -95,6 +104,7 @@ class TapBenefitPay : LinearLayout {
 
      fun init(configuraton: CardConfiguraton) {
          cardConfiguraton = configuraton
+         DataConfiguration.addAppLifeCycle(this)
         applyTheme()
         when (configuraton) {
             CardConfiguraton.MapConfigruation -> {
@@ -157,7 +167,6 @@ class TapBenefitPay : LinearLayout {
             request: WebResourceRequest?
         ): Boolean {
 
-//            return false
             /**
              * main checker if url start with "tapCardWebSDK://"
              */
@@ -179,36 +188,66 @@ class TapBenefitPay : LinearLayout {
                 }
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onClick.name)) {
                     isBenefitPayUrlIntercepted=false
+                    pair = Pair("",false)
                     DataConfiguration.getTapCardStatusListener()?.onClick()
 
                 }
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onCancel.name)) {
                     Toast.makeText(context,"cancelled",Toast.LENGTH_SHORT).show()
-                    dismissDialog()
+                    if (!(pair.first.isNotEmpty() and pair.second)) {
+                        dismissDialog()
+                    }
 
 
 
                 }
+
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onError.name)) {
-                    DataConfiguration.getTapCardStatusListener()?.onError(request?.url?.getQueryParameterFromUri(keyValueName).toString())
-                    dismissDialog()
-                    init(cardConfiguraton)
+                    pair = Pair(request?.url?.getQueryParameterFromUri(keyValueName).toString(),true)
+                    closePayment()
 
                 }
 
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onSuccess.name)) {
-                    dismissDialog()
-                    init(cardConfiguraton)
+                    pair = Pair(request?.url?.getQueryParameterFromUri(keyValueName).toString(),true)
+                    when(iSAppInForeground) {
+                        true ->closePayment()
+                        false ->{}
+                    }
 
-                    // init(DataConfiguration.configurations)
-                    DataConfiguration.getTapCardStatusListener()?.onSuccess(request?.url?.getQueryParameterFromUri(keyValueName).toString())
+
                 }
 
                 return true
 
             }
+            if (request?.url.toString().startsWith("intent://")) {
+                try {
+                    val context: Context = context
+                    val intent: Intent = Intent.parseUri(request?.url.toString(), Intent.URI_INTENT_SCHEME)
+                    if (intent != null) {
+//                            view.stopLoading()
+                        val packageManager: PackageManager = context.packageManager
+                        val info: ResolveInfo? = packageManager.resolveActivity(
+                            intent,
+                            PackageManager.MATCH_DEFAULT_ONLY
+                        )
+                        if (info != null) {
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent)
+                        } else {
+                            return false
+                        }
+                        return true
+                    }
+                } catch (e: URISyntaxException) {
+                    Log.e("error", "Can't resolve intent://", e)
 
-                return false
+                }
+            }
+
+
+            return false
 
         }
 
@@ -217,10 +256,13 @@ class TapBenefitPay : LinearLayout {
 
         }
 
+
+
         override fun shouldInterceptRequest(
             view: WebView?,
             request: WebResourceRequest?
         ): WebResourceResponse? {
+            Log.e("intercepted",request?.url.toString())
             when(request?.url?.toString()?.contains(beneiftPayCheckoutUrl)?.and((!isBenefitPayUrlIntercepted))) {
                 true ->{
 
@@ -280,11 +322,38 @@ class TapBenefitPay : LinearLayout {
     }
 
     private fun dismissDialog() {
-        if (::dialog.isInitialized and dialog.isShowing) {
+        if (::dialog.isInitialized) {
             linearLayout.removeView(cardWebview)
             dialog.dismiss()
             (webViewFrame as ViewGroup).addView(cardWebview)
         }
+    }
+
+    override fun onEnterForeground() {
+        iSAppInForeground = true
+        Log.e("applifeCycle","onEnterForeground")
+        //check if app in background , get data from on Success ,
+        // on Enter foreground closePayment
+        closePayment()
+
+
+
+
+
+    }
+
+    private fun closePayment() {
+        if (pair.second) {
+            dismissDialog()
+            init(cardConfiguraton)
+            DataConfiguration.getTapCardStatusListener()?.onSuccess(pair.first)
+        }
+    }
+
+    override fun onEnterBackground() {
+        iSAppInForeground = false
+        Log.e("applifeCycle","onEnterBackground")
+
     }
 
 
@@ -293,7 +362,7 @@ class TapBenefitPay : LinearLayout {
 
 
 enum class CardConfiguraton() {
-    MapConfigruation, ModelConfiguration
+    MapConfigruation
 }
 
 

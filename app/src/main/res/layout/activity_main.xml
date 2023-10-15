@@ -3,16 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:gravity="center"
+    android:gravity="start|top"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click on me "/>
 
     <company.tap.tapcardformkit.open.web_wrapper.TapBenefitPay
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/benfit_pay"
         />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/data"
+        android:text="test"/>
+
+
 
 
 </LinearLayout>

@@ -26,6 +26,7 @@ All rights reserved.
 object DataConfiguration {
 
     private var tapCardStatusDelegate: TapCardStatusDelegate? = null
+    private var applicationLifecycle: ApplicationLifecycle? = null
 
     var configurations: TapCardConfigurations? = null
         get() = field
@@ -129,9 +130,14 @@ object DataConfiguration {
     fun addTapCardStatusDelegate(_tapCardStatuDelegate: TapCardStatusDelegate?) {
         this.tapCardStatusDelegate = _tapCardStatuDelegate
 
-
+    }
+    fun addAppLifeCycle(appLifeCycle: ApplicationLifecycle?) {
+        this.applicationLifecycle = appLifeCycle
     }
 
+    fun getAppLifeCycle(): ApplicationLifecycle? {
+        return this.applicationLifecycle
+    }
     fun getTapCardStatusListener(): TapCardStatusDelegate? {
         return tapCardStatusDelegate
     }
@@ -158,6 +164,21 @@ interface TapCardStatusDelegate {
     fun onChargeCreated(data:String){}
 
     fun onError(error: String)
+
+    private fun onEnterForeground(){
+
+    }
+    private fun onEnterBackground(){
+
+    }
+
+
+}
+
+interface ApplicationLifecycle {
+
+     fun onEnterForeground()
+     fun onEnterBackground()
 
 
 }

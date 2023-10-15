@@ -3,7 +3,9 @@ package company.tap.tapcardformkit.open.web_wrapper
 import Headers
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.ProcessLifecycleOwner
 import company.tap.tapcardformkit.R
+import company.tap.tapcardformkit.open.AppLifecycleObserver
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.DataConfiguration.configurationsAsHashMap
 import company.tap.tapcardformkit.open.TapCardStatusDelegate
@@ -28,6 +30,9 @@ class BeneiftPayConfiguration {
                 val operator = configurationsAsHashMap?.get(operatorKey) as HashMap<*, *>
                 val publickKey = operator.get(publicKeyToGet)
 
+                val appLifecycleObserver = AppLifecycleObserver()
+                ProcessLifecycleOwner.get().lifecycle.addObserver(appLifecycleObserver)
+
                 addOperatorHeaderField(
                     tapCardInputViewWeb,
                     context,
@@ -37,7 +42,6 @@ class BeneiftPayConfiguration {
 
                 DataConfiguration.addTapCardStatusDelegate(tapCardStatusDelegate)
                 tapCardInputViewWeb?.init(CardConfiguraton.MapConfigruation)
-
 
             }
         }
