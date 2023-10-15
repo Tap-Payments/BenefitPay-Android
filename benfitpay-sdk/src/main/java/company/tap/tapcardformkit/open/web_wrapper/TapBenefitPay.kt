@@ -328,7 +328,9 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
         if (::dialog.isInitialized) {
             linearLayout.removeView(cardWebview)
             dialog.dismiss()
-            (webViewFrame as ViewGroup).addView(cardWebview)
+            if (cardWebview.parent == null){
+                (webViewFrame as ViewGroup).addView(cardWebview)
+            }
         }
     }
 

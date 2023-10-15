@@ -1,5 +1,6 @@
 package com.example.benefitpay_android
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,12 +18,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun configureSdk(){
+
+
         /**
          * operator
          */
+        val publicKey = intent.getStringExtra("publicKey")
+        val hashStringKey = intent.getStringExtra("hashStringKey")
         val operator = HashMap<String,Any>()
         operator.put("publicKey","pk_test_HJN863LmO15EtDgo9cqK7sjS")
         operator.put("hashString","")
+        Log.e("orderData","pbulc" + publicKey.toString() + " \nhash" + hashStringKey.toString())
 
         /**
          * metadata
@@ -33,13 +39,21 @@ class MainActivity : AppCompatActivity() {
         /**
          * order
          */
+        val ordrId =  intent.getStringExtra("orderIdKey")
+        val orderDescription =  intent.getStringExtra("orderDescKey")
+        val orderAmount =  intent.getStringExtra("amountKey")
+        val orderRefrence =  intent.getStringExtra("orderTransactionRefrence")
+        val selectedCurrency: String = intent.getStringExtra("selectedCurrencyKey").toString()
+
         val order = HashMap<String,Any>()
-        order.put("id","")
-        order.put("amount",  "0.1" )
-        order.put("currency","BHD")
-        order.put("description","")
-        order.put("reference","")
+        order.put("id",ordrId ?: "")
+        order.put("amount",  if (orderAmount?.isEmpty() == true)"1" else orderAmount.toString() )
+        order.put("currency",selectedCurrency)
+        order.put("description",orderDescription ?: "")
+        order.put("reference",orderRefrence ?: "")
         order.put("metadata",metada)
+        Log.e("orderData","id" + ordrId.toString() + "  \n dest" + orderDescription.toString() +" \n orderamount " + orderAmount.toString() +"  \n orderRef" + orderRefrence.toString() + "  \n currency " + selectedCurrency.toString())
+
         /**
          * merchant
          */
@@ -87,16 +101,26 @@ class MainActivity : AppCompatActivity() {
         /**
          * interface
          */
+
+        val selectedLanguage: String? =  intent.getStringExtra("selectedlangKey")
+        val selectedTheme: String? = intent.getStringExtra("selectedthemeKey")
+        val selectedCardEdge = intent.getStringExtra("selectedcardedgeKey")
+        val selectedColorStylee = intent.getStringExtra("selectedcolorstyleKey")
+        val loader = intent.getBooleanExtra("loaderKey",false)
+
+        Log.e("interfaceData",selectedTheme.toString() + "language" + selectedLanguage.toString() + "cardedge " + selectedCardEdge.toString() +" loader" + loader.toString() + "selectedColorStylee " + selectedColorStylee.toString())
         val interfacee = HashMap<String,Any>()
-        interfacee.put("locale","en")
-        interfacee.put("theme","light")
-        interfacee.put("edges","curved")
-        interfacee.put("colorStyle","colored")
-        interfacee.put("loader",true)
+        interfacee.put("locale",selectedLanguage ?: "en")
+        interfacee.put("theme",selectedTheme ?: "light")
+        interfacee.put("edges",selectedCardEdge ?: "curved")
+        interfacee.put("colorStyle",selectedColorStylee ?:"colored")
+        interfacee.put("loader",loader)
 
         /**
          * post
          */
+        val postUrl =  intent.getStringExtra("posturlKey")
+
         val post = HashMap<String,Any>()
         post.put("url","")
         val configuration = LinkedHashMap<String,Any>()
@@ -153,6 +177,18 @@ class MainActivity : AppCompatActivity() {
 
             })
 
+
+    }
+
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        //   val intent = Intent(this, SettingsActivity::class.java)
+
+        val intent = Intent(this, SettingsActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        finish()
+        startActivity(intent)
 
     }
 }
