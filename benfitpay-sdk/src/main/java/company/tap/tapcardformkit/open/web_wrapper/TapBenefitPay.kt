@@ -211,7 +211,10 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onSuccess.name)) {
                     pair = Pair(request?.url?.getQueryParameterFromUri(keyValueName).toString(),true)
                     when(iSAppInForeground) {
-                        true ->closePayment()
+
+                        true ->{closePayment()
+                            Log.e("app","one")
+                        }
                         false ->{}
                     }
 
@@ -344,6 +347,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
 
     private fun closePayment() {
         if (pair.second) {
+            Log.e("app","one")
             dismissDialog()
             init(cardConfiguraton)
             DataConfiguration.getTapCardStatusListener()?.onSuccess(pair.first)
