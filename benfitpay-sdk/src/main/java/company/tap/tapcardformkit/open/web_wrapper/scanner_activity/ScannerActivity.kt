@@ -14,8 +14,8 @@ import company.tap.cardscanner.TapCard
 import company.tap.cardscanner.TapScannerCallback
 import company.tap.cardscanner.TapTextRecognitionCallBack
 import company.tap.cardscanner.TapTextRecognitionML
-import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.open.web_wrapper.TapBenefitPay.Companion.fillCardNumber
+import company.tap.tapcardformkit.R
 
 private const val SCAN_CARD_ID = 101
 
@@ -27,7 +27,7 @@ class ScannerActivity : AppCompatActivity(), TapTextRecognitionCallBack, TapScan
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(company.tap.tapcardformkit.R.layout.scanner_activity)
+        setContentView(R.layout.scanner_activity)
 
         textRecognitionML = TapTextRecognitionML(this)
         textRecognitionML?.addTapScannerCallback(this)
