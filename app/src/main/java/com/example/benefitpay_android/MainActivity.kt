@@ -4,13 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
-import android.widget.Toast
 import company.tap.tapcardformkit.open.TapBenefitPayStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.BeneiftPayConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapBenefitPay
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), TapBenefitPayStatusDelegate {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -138,45 +136,7 @@ class MainActivity : AppCompatActivity() {
             this,
             findViewById<TapBenefitPay>(R.id.benfit_pay),
             configuration,
-            object : TapBenefitPayStatusDelegate {
-                override fun onSuccess(data: String) {
-                    findViewById<TextView>(R.id.data).text = data + "\n " + findViewById<TextView>(R.id.data).text
-                    Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()
-                }
-                override fun onReady() {
-                      Toast.makeText(this@MainActivity, "onReady", Toast.LENGTH_SHORT).show()
-
-                }
-
-
-                override fun onError(error: String) {
-                    findViewById<TextView>(R.id.data).text = error + "\n " + findViewById<TextView>(R.id.data).text
-
-                    Toast.makeText(this@MainActivity, "onError ${error}", Toast.LENGTH_SHORT).show()
-                    Log.e("test",error.toString())
-
-                }
-
-                override fun onChargeCreated(data: String) {
-                    findViewById<TextView>(R.id.data).text = data + "\n " + findViewById<TextView>(R.id.data).text
-
-                    Toast.makeText(this@MainActivity, "chargeCreated ${data}", Toast.LENGTH_SHORT).show()
-
-                }
-
-                override fun onOrderCreated(data: String) {
-                    findViewById<TextView>(R.id.data).text = data + "\n " + findViewById<TextView>(R.id.data).text
-
-                    Toast.makeText(this@MainActivity, "orderCreated ${data}", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onClick() {
-                    Toast.makeText(this@MainActivity, "onClick ", Toast.LENGTH_SHORT).show()
-
-                }
-
-
-            })
+            this)
 
 
     }
@@ -191,5 +151,14 @@ class MainActivity : AppCompatActivity() {
         finish()
         startActivity(intent)
 
+    }
+
+    override fun onSuccess(data: String) {
+        TODO("Not yet implemented")
+    }
+
+
+    override fun onError(error: String) {
+        TODO("Not yet implemented")
     }
 }
