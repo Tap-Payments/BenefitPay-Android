@@ -135,6 +135,7 @@ class MainActivity : AppCompatActivity() {
         configuration.put("post",post)
 
 
+
         BeneiftPayConfiguration.configureWithTapBenfitPayDictionaryConfiguration(
             this,
             findViewById(R.id.benfit_pay),
