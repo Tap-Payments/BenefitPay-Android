@@ -43,23 +43,9 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
 
 
     companion object{
-        var NFCopened:Boolean = false
-        lateinit var threeDsResponse: ThreeDsResponse
         lateinit var cardWebview: WebView
         lateinit var cardConfiguraton: CardConfiguraton
-
-
         var card:Card?=null
-        fun fillCardNumber(cardNumber:String,expiryDate:String,cvv:String,cardHolderName:String){
-          //  cardWebview.loadUrl("javascript:window.fillCardInputs({cardNumber:'$cardNumber',expiryDate:'$expiryDate',cvv:'$cvv',cardHolderName:'$cardHolderName'})")
-        }
-
-        fun generateTapAuthenticate(authIdPayer: String) {
-          //  cardWebview.loadUrl("javascript:window.loadAuthentication('$authIdPayer')")
-        }
-
-
-
     }
 
     /**
@@ -339,8 +325,6 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
     override fun onEnterForeground() {
         iSAppInForeground = true
         Log.e("applifeCycle","onEnterForeground")
-        //check if app in background , get data from on Success ,
-        // on Enter foreground closePayment
         closePayment()
 
 

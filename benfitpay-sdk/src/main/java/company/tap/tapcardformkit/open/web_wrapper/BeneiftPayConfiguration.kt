@@ -61,9 +61,6 @@ class BeneiftPayConfiguration {
 
                 }
             }
-            Log.e("publick",publicKey.toString())
-
-            Log.e("encodedkey",encodedeky.toString())
             NetworkApp.initNetwork(
                 tapCardInputViewWeb?.context ,
                 publicKey ?: "",
