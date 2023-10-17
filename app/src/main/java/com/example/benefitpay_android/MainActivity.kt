@@ -4,11 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
+import android.widget.Toast
 import company.tap.tapcardformkit.open.TapBenefitPayStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.BeneiftPayConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapBenefitPay
 
-class MainActivity : AppCompatActivity(), TapBenefitPayStatusDelegate {
+class MainActivity : AppCompatActivity() {
+    lateinit var tapBenefitPay: TapBenefitPay
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -134,9 +137,47 @@ class MainActivity : AppCompatActivity(), TapBenefitPayStatusDelegate {
 
         BeneiftPayConfiguration.configureWithTapBenfitPayDictionaryConfiguration(
             this,
-            findViewById<TapBenefitPay>(R.id.benfit_pay),
+            findViewById(R.id.benfit_pay),
             configuration,
-            this)
+            object : TapBenefitPayStatusDelegate {
+                override fun onSuccess(data: String) {
+                    findViewById<TextView>(R.id.data).text = data + "\n " + findViewById<TextView>(R.id.data).text
+                    Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()
+                }
+                override fun onReady() {
+                      Toast.makeText(this@MainActivity, "onReady", Toast.LENGTH_SHORT).show()
+
+                }
+
+
+                override fun onError(error: String) {
+                    findViewById<TextView>(R.id.data).text = error + "\n " + findViewById<TextView>(R.id.data).text
+
+                    Toast.makeText(this@MainActivity, "onError ${error}", Toast.LENGTH_SHORT).show()
+                    Log.e("test",error.toString())
+
+                }
+
+                override fun onChargeCreated(data: String) {
+                    findViewById<TextView>(R.id.data).text = data + "\n " + findViewById<TextView>(R.id.data).text
+
+                    Toast.makeText(this@MainActivity, "chargeCreated ${data}", Toast.LENGTH_SHORT).show()
+
+                }
+
+                override fun onOrderCreated(data: String) {
+                    findViewById<TextView>(R.id.data).text = data + "\n " + findViewById<TextView>(R.id.data).text
+
+                    Toast.makeText(this@MainActivity, "orderCreated ${data}", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onClick() {
+                    Toast.makeText(this@MainActivity, "onClick ", Toast.LENGTH_SHORT).show()
+
+                }
+
+
+            })
 
 
     }
@@ -144,8 +185,6 @@ class MainActivity : AppCompatActivity(), TapBenefitPayStatusDelegate {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        //   val intent = Intent(this, SettingsActivity::class.java)
-
         val intent = Intent(this, SettingsActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         finish()
@@ -153,12 +192,4 @@ class MainActivity : AppCompatActivity(), TapBenefitPayStatusDelegate {
 
     }
 
-    override fun onSuccess(data: String) {
-        TODO("Not yet implemented")
-    }
-
-
-    override fun onError(error: String) {
-        TODO("Not yet implemented")
-    }
 }

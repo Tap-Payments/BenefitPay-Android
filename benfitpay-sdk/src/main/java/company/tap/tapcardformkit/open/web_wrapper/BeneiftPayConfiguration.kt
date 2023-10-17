@@ -40,7 +40,7 @@ class BeneiftPayConfiguration {
                     publickKey.toString()
                 )
 
-                DataConfiguration.addTapCardStatusDelegate(tapBenefitPayStatusDelegate)
+                DataConfiguration.addTapBenefitPayStatusDelegate(tapBenefitPayStatusDelegate)
                 tapCardInputViewWeb?.init(CardConfiguraton.MapConfigruation)
 
             }

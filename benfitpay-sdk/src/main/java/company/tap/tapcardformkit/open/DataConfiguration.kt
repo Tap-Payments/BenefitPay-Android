@@ -127,7 +127,7 @@ object DataConfiguration {
         authenticationExample = tapAuthentication
     }
 
-    fun addTapCardStatusDelegate(_tapCardStatuDelegate: TapBenefitPayStatusDelegate?) {
+    fun addTapBenefitPayStatusDelegate(_tapCardStatuDelegate: TapBenefitPayStatusDelegate?) {
         this.tapBenefitPayStatusDelegate = _tapCardStatuDelegate
 
     }
@@ -154,28 +154,13 @@ object DataConfiguration {
 }
 
 interface TapBenefitPayStatusDelegate {
-
     fun onSuccess(data: String)
-
     fun onReady(){}
-
     fun onClick(){}
     fun onOrderCreated(data: String){}
     fun onChargeCreated(data:String){}
-
     fun onError(error: String)
-
     fun onCancel(){}
-
-
-    private fun onEnterForeground(){
-
-    }
-    private fun onEnterBackground(){
-
-    }
-
-
 }
 
 interface ApplicationLifecycle {
