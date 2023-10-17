@@ -39,7 +39,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
     lateinit var dialog: Dialog
      var pair =  Pair("",false)
     lateinit var linearLayout: LinearLayout
-     var iSAppInForeground = false
+     var iSAppInForeground = true
 
 
     companion object{
