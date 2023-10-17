@@ -25,7 +25,7 @@ All rights reserved.
 @SuppressLint("StaticFieldLeak")
 object DataConfiguration {
 
-    private var tapCardStatusDelegate: TapCardStatusDelegate? = null
+    private var tapBenefitPayStatusDelegate: TapBenefitPayStatusDelegate? = null
     private var applicationLifecycle: ApplicationLifecycle? = null
 
     var configurations: TapCardConfigurations? = null
@@ -127,8 +127,8 @@ object DataConfiguration {
         authenticationExample = tapAuthentication
     }
 
-    fun addTapCardStatusDelegate(_tapCardStatuDelegate: TapCardStatusDelegate?) {
-        this.tapCardStatusDelegate = _tapCardStatuDelegate
+    fun addTapCardStatusDelegate(_tapCardStatuDelegate: TapBenefitPayStatusDelegate?) {
+        this.tapBenefitPayStatusDelegate = _tapCardStatuDelegate
 
     }
     fun addAppLifeCycle(appLifeCycle: ApplicationLifecycle?) {
@@ -138,12 +138,12 @@ object DataConfiguration {
     fun getAppLifeCycle(): ApplicationLifecycle? {
         return this.applicationLifecycle
     }
-    fun getTapCardStatusListener(): TapCardStatusDelegate? {
-        return tapCardStatusDelegate
+    fun getTapCardStatusListener(): TapBenefitPayStatusDelegate? {
+        return tapBenefitPayStatusDelegate
     }
 
     fun initializeSDK(activity: Activity, configurations: HashMap<String,Any>, tapBenefitPay: TapBenefitPay){
-        BeneiftPayConfiguration.configureWithTapCardDictionaryConfiguration(activity,tapBenefitPay,configurations)
+        BeneiftPayConfiguration.configureWithTapBenfitPayDictionaryConfiguration(activity,tapBenefitPay,configurations)
     }
 
 
@@ -153,7 +153,7 @@ object DataConfiguration {
 
 }
 
-interface TapCardStatusDelegate {
+interface TapBenefitPayStatusDelegate {
 
     fun onSuccess(data: String)
 
@@ -164,6 +164,9 @@ interface TapCardStatusDelegate {
     fun onChargeCreated(data:String){}
 
     fun onError(error: String)
+
+    fun onCancel(){}
+
 
     private fun onEnterForeground(){
 

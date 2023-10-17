@@ -8,7 +8,7 @@ import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.open.AppLifecycleObserver
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.DataConfiguration.configurationsAsHashMap
-import company.tap.tapcardformkit.open.TapCardStatusDelegate
+import company.tap.tapcardformkit.open.TapBenefitPayStatusDelegate
 import company.tap.tapnetworkkit.connection.NetworkApp
 import company.tap.tapnetworkkit.utils.CryptoUtil
 
@@ -18,11 +18,11 @@ class BeneiftPayConfiguration {
     companion object {
 
 
-        fun configureWithTapCardDictionaryConfiguration(
+        fun configureWithTapBenfitPayDictionaryConfiguration(
             context: Context,
             tapCardInputViewWeb: TapBenefitPay?,
             tapMapConfiguration: java.util.HashMap<String, Any>,
-            tapCardStatusDelegate: TapCardStatusDelegate? = null
+            tapBenefitPayStatusDelegate: TapBenefitPayStatusDelegate? = null
         ) {
             with(tapMapConfiguration) {
                 Log.e("map", tapMapConfiguration.toString())
@@ -40,7 +40,7 @@ class BeneiftPayConfiguration {
                     publickKey.toString()
                 )
 
-                DataConfiguration.addTapCardStatusDelegate(tapCardStatusDelegate)
+                DataConfiguration.addTapCardStatusDelegate(tapBenefitPayStatusDelegate)
                 tapCardInputViewWeb?.init(CardConfiguraton.MapConfigruation)
 
             }

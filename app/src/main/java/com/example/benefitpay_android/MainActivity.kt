@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
-import company.tap.tapcardformkit.open.TapCardStatusDelegate
+import company.tap.tapcardformkit.open.TapBenefitPayStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.BeneiftPayConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapBenefitPay
 
@@ -134,11 +134,11 @@ class MainActivity : AppCompatActivity() {
         configuration.put("post",post)
 
 
-        BeneiftPayConfiguration.configureWithTapCardDictionaryConfiguration(
+        BeneiftPayConfiguration.configureWithTapBenfitPayDictionaryConfiguration(
             this,
             findViewById<TapBenefitPay>(R.id.benfit_pay),
             configuration,
-            object : TapCardStatusDelegate {
+            object : TapBenefitPayStatusDelegate {
                 override fun onSuccess(data: String) {
                     findViewById<TextView>(R.id.data).text = data + "\n " + findViewById<TextView>(R.id.data).text
                     Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()

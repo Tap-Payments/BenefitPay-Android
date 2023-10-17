@@ -193,6 +193,8 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
 
                 }
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onCancel.name)) {
+                    DataConfiguration.getTapCardStatusListener()?.onCancel()
+
                     Toast.makeText(context,"cancelled",Toast.LENGTH_SHORT).show()
                     if (!(pair.first.isNotEmpty() and pair.second)) {
                         dismissDialog()
