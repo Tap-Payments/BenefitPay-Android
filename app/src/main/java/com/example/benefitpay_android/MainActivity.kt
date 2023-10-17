@@ -148,6 +148,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
 
+
                 override fun onError(error: String) {
                     findViewById<TextView>(R.id.data).text = error + "\n " + findViewById<TextView>(R.id.data).text
 
