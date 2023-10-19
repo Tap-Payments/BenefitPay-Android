@@ -1,5 +1,8 @@
 # BenefitPay-Android
-We at [Tap Payments](https://www.tap.company/) strive to make your payments easier than ever. We as a PCI compliant company, provide you a from the self solution to process Payment Button Solution in your Android app.
+Integrating Android BenefitPay SDK in your application
+
+# Introduction
+Before diving into the development process, it's essential to establish the prerequisites and criteria necessary for a successful build. In this step, we'll outline the specific Android requirements, including the minimum SDK version and other important details you need to consider. Let's ensure your project is set up for success from the very beginning.
 
 [![Platform](https://img.shields.io/badge/platform-Android-inactive.svg?style=flat)](https://tap-payments.github.io/goSellSDK-Android/)
 [![Documentation](https://img.shields.io/badge/documentation-100%25-bright%20green.svg)](https://tap-payments.github.io/goSellSDK-Android/)
@@ -8,39 +11,21 @@ We at [Tap Payments](https://www.tap.company/) strive to make your payments easi
 [![SDK Version](https://img.shields.io/badge/latestVersion-0.0.3-informational.svg)](https://stuff.mit.edu/afs/sipb/project/android/docs/reference/packages.html)
 
 
-# Demo
+# Sample Demo
 ![Imgur](https://imgur.com/Rw2vb6J.gif)
 
-# Requirements
+# Step 1 :Requirements
 
  1. We support from Android minSdk 24
- 2. Kotlin support version 1.8.0
+ 2. Kotlin support version 1.8.0+
 
-# Steps overview
-```mermaid
-sequenceDiagram
+# Step 2 :Get Your Public Keys
 
-participant  A  as  App
-participant  T  as  Tap
-participant  C  as  BenefitPay-Android
+ While you can certainly use the sandbox keys available within our sample app which you can get by following
+ [installation page](https://developers.tap.company/docs/),
+ however, we highly recommend visiting our [onboarding page](https://register.tap.company/sell), there you'll have the opportunity to register your package name and acquire your essential Tap Key for activating BenefitPay-android integration.
 
-A->>T:  Regsiter app.
-T-->>A: Public key.
-A ->> C : Install SDK
-A ->> C : Init TapBenefitPay
-C -->> A : tapBenefitPay
-A ->> C : tapBenefitPay.init(configurations,delegate)
-C -->> A: onReady()
-C -->> C : pay with Beneift Pay SDK
-C -->> A : onSuccess(data(
-```
-
-# Get your Tap keys
-You can always use the example keys within our example app, but we do recommend you to head to our [onboarding](https://register.tap.company/sell)  page. You will need to register your `package name` to get your `Tap Key` that you will need to activate our `BenefitPay-Android`.
-
-# Installation
-
-We got you covered, `BenefitPay-Android` can be installed with all possible technologies.
+# Step 3 :Installation
 
 ## Gradle
 
@@ -63,12 +48,23 @@ dependencies {
 }
 ```
 
-# Simple Integration
-You can initialize `BenefitPay-Android` in different ways
+# Step 3 :Integrating BenefitPay-Android
+This integration offers two distinct options: a [simple integration](https://register.tap.company/sell) designed for rapid development and streamlined merchant requirements, and an [advanced integration](https://register.tap.company/sell) that adds extra features for a more dynamic payment integration experience.
 
- 1. XML.
- 2. Code.
-## XML
+# Integration Flow
+Noting that in Android, you have the ability to create the UI part of the BenefitPay-Android by creating it as normal view in your XML then implement the functionality through code or fully create it by code. Below we will describe both flows:
+
+You will have to create a variable of type BenefitPayButton, which can be done in one of two ways:
+ - Created in the XML and then linked to a variable in code.
+ - Created totally within the code.
+Once you create the variable in any way, you will have to follow these steps:
+ - Create the parameters.
+ - Pass the parameters to the variable.
+ - Implement TapBenefitPayStatusDelegate interface, which allows you to get notified by different events fired from within the BenefitPay-Android SDK, also called callback functions.
+
+# Initialising the UI
+## Using xml
+  ### 1- create view in xml
 
 ```kotlin
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -90,78 +86,233 @@ You can initialize `BenefitPay-Android` in different ways
 
 </LinearLayout>
  
-- in your activity class : 
+```
+### 2- Accessing the BenefitPayButton created in XML in your code 
+### 3. Create an TapBenefitPay instance from the created view above to your Activity :
+```kotlin
+    lateinit var tapBenefitPay: TapBenefitPay
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+taBenefitPay = findViewById<TapBenefitPay>(R.id.tapBenefitPay)
+    }
 
-  BeneiftPayConfiguration.configureWithTapBenfitPayDictionaryConfiguration(
-            this,
-            findViewById<TapBenefitPay>(R.id.tapBenefitPay),
-            configuration,
-            TapBenefitPayStatusDelegate: this) 
 ```
 
-## Code
+## Using Code to create the BenefitPayButton
 
- ```kotlin
-
-       lateinit var tapBenefitPay: TapBenefitPay
-
-       override fun onCreate(savedInstanceState: Bundle?){
+```kotlin
+     lateinit var tapBenefitPay: TapBenefitPay
+        override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /**
-         * operator
-         */
-        val operator = HashMap<String,Any>()
-        operator.put("publicKey","")
+         val linearLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        /** create dynamic view of TapBenefitPay view **/ 
+        tapBenefitPay  = TapBenefitPay(this)
+        tapBenefitPay.layoutParams = linearLayoutParams
+        /** refrence to parent layout view **/  
+        this.findViewById<LinearLayout>(R.id.linear_layout).addView(tapBenefitPay)
+}
+```
+# Simple Integration
+Here, you'll discover a comprehensive table featuring the parameters applicable to the simple integration. Additionally, you'll explore the various methods for integrating the SDK, either using xml to create the layout and then implementing the interface  functionalities by code, or directly using code. Furthermore, you'll gain insights into how to receive the callback notifications.
+# Parameters
+Each parameter is linked to the reference section, which provides a more in depth explanation of it.
+
+|Parameters|Description | Required | Type| Sample
+|--|--|--| --|--|
+| operator| This is the `Key` that you will get after registering you package name. | True  | String| `var operator=HashMap<String,Any>(),operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"),operator.put("hashString","")` |
+| order| This is the `order id` that you created before or `amount` , `currency` , `transaction` to generate a new order .   It will be linked this token. | True  | `Dictionary`| ` var order = HashMap<String, Any>(), order.put("id","") order.put("amount",1),order.put("currency","BHD"),order.put("description",""), order.put("reference":"A reference to this order in your system"))` |
+| customer| The customer details you want to attach to this tokenization process. | True  | `Dictionary`| ` var customer =  HashMap<String,Any> ,customer.put("id,""), customer.put("nameOnCard","Tap Payments"),customer.put("editable",true),) var name :HashMap<String,Any> = [["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]] "contact":["email":"tap@tap.company", "phone":["countryCode":"+965","number":"88888888"]]] customer.put("name",name) , customer.put("contact",contact)` |
+
+# Configuring the BenefitPay-Android SDK
+After creating the UI using any of the previously mentioned ways, it is time to pass the parameters needed for the SDK to work as expected and serve your need correctly.
+### 1- Creating the parameters
+To allow flexibility and to ease the integration, your application will only has to pass the parameters as a HashMap<String,Any> .
+First, let us create the required parameters:
+
+```kotlin
+     /**
+       * operator
+       */
+      val operator = HashMap<String,Any>()
+        operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")
         operator.put("hashString","")
+
+        /**
+         * phone
+         */
+        val phone = HashMap<String,Any>()
+        phone.put("countryCode","+20")
+        phone.put("number","011")
+
+        /**
+         * contact
+         */
+        val contact = HashMap<String,Any>()
+        contact.put("email","test@gmail.com")
+        contact.put("phone",phone)
+        /**
+         * name
+         */
+        val name = HashMap<String,Any>()
+        name.put("lang","en")
+        name.put("first","Tap")
+        name.put("middle","")
+        name.put("last","Payment")
+
+        /**
+         * customer
+         */
+        val customer = HashMap<String,Any>()
+        customer.put("nameOnCard","")
+        customer.put("editable",true)
+        customer.put("contact",contact)
+        customer.put("name", listOf(name))
 
         /**
          * order
          */
         val order = HashMap<String,Any>()
-        order.put("id",ordrId ?: "")
-        order.put("amount", amount?.toInt() ?: 1)
+        order.put("id","order_id")
+        order.put("amount","1")
         order.put("currency","BHD")
-        order.put("description","")
-        order.put("reference","")
+        order.put("description","description")
+        order.put("reference","refrence_id")
+
+        /**
+         * configuration request
+         */
+
+        val configuration = LinkedHashMap<String,Any>()
+        configuration.put("operator", operator)
+        configuration.put("order",order)
+        configuration.put("customer",customer)
+
+```
+### 2 - Pass these parameters to the created Button variable before as follows
+
+```kotlin
+     BeneiftPayConfiguration.configureWithTapBenfitPayDictionaryConfiguration(
+            this, 
+            findViewById(R.id.benfit_pay),
+            configuration,
+            TapCardStatusDelegate)
+```
+
+### Full code snippet for creating the parameters + passing it BenefitPayButton variable
+```kotlin
+
+override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+      /**
+       * operator
+       */
+      val operator = HashMap<String,Any>()
+        operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")
+        operator.put("hashString","")
+
+        /**
+         * phone
+         */
+        val phone = HashMap<String,Any>()
+        phone.put("countryCode","+20")
+        phone.put("number","011")
+
+        /**
+         * contact
+         */
+        val contact = HashMap<String,Any>()
+        contact.put("email","test@gmail.com")
+        contact.put("phone",phone)
+        /**
+         * name
+         */
+        val name = HashMap<String,Any>()
+        name.put("lang","en")
+        name.put("first","Tap")
+        name.put("middle","")
+        name.put("last","Payment")
 
         /**
          * customer
          */
-        val customer = java.util.HashMap<String,Any>()
-        customer.put("nameOnCard", "test")
-        customer.put("editable",cardHolder)
+        val customer = HashMap<String,Any>()
+        customer.put("nameOnCard","")
+        customer.put("editable",true)
         customer.put("contact",contact)
         customer.put("name", listOf(name))
 
         /**
-         * configuration 
+         * order
          */
-        val configuration = LinkedHashMap<String,Any>()
+        val order = HashMap<String,Any>()
+        order.put("id","order_id")
+        order.put("amount","1")
+        order.put("currency","BHD")
+        order.put("description","description")
+        order.put("reference","refrence_id")
 
-        configuration.put("operator",operator)
+        /**
+         * configuration request
+         */
+
+        val configuration = LinkedHashMap<String,Any>()
+        configuration.put("operator", operator)
         configuration.put("order",order)
         configuration.put("customer",customer)
 
-        val linearLayoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-        /** create dynamic view of TapCardKit view **/ 
-        tapBenefitPay  = TapBenefitPay(this)
-        tapBenefitPay.layoutParams = linearLayoutParams
-        /** refrence to parent layout view **/  
-        this.findViewById<LinearLayout>(R.id.linear_layout).addView(tapBenefitPay)
-
-
      BeneiftPayConfiguration.configureWithTapBenfitPayDictionaryConfiguration(
-            this,
-            findViewById<TapBenefitPay>(R.id.tapBenefitPay),
+            this, 
+            findViewById(R.id.benfit_pay),
             configuration,
-            TapBenefitPayStatusDelegate: this) 
+            object : TapBenefitPayStatusDelegate {
+                override fun onSuccess(data: String) {
+                    Log.i("data",data.toString())
+                }
+                override fun onReady() {
+                    Log.i("data","onReady")
 
+                }
+
+
+                override fun onError(error: String) {
+                    Log.i("data","onError")
+
+
+                }
+                
+            })
 }
-        
+```
+# Receiving Callback Notifications
+Now we have created the UI and the parameters required to to correctly display BenefitPayButton form. For the best experience, your class will have to implement TapBenefitPayStatusDelegate interface, which is a set of optional callbacks, that will be fired based on different events from within the benefit button. This will help you in deciding the logic you need to do upon receiving each event. Kindly follow the below steps in order to complete the mentioned flow:
+- Go back to Activity file you want to get the callbacks into.
+- Head to the class declaration line
+- Add TapBenefitPayStatusDelegate
+- Override the required callbacks as follows:
+```kotlin
+ object : TapBenefitPayStatusDelegate {
+                override fun onSuccess(data: String) {
+                    Log.i("data",data.toString())
+                }
+                override fun onReady() {
+                    Log.i("data","onReady")
+
+                }
+
+
+                override fun onError(error: String) {
+                    Log.i("data","onError")
+
+
+                }
+                
+            }
 ```
 ## Simple TapCardStatusDelegate
 A protocol that allows integrators to get notified from events fired from the `BenefitPay-Android`. 
@@ -187,16 +338,6 @@ A protocol that allows integrators to get notified from events fired from the `B
 To make our sdk as dynamic as possible, we accept the input in a form of a `HashMap dictionary` . We will provide you with a sample full one for reference.
 It is always recommended, that you generate this `HashMap dictionary` from your server side, so in future if needed you may be able to change the format if we did an update.
 
-
-|Configuration|Description | Required | Type| Sample
-|--|--|--| --|--|
-| operator| This is the `Key` that you will get after registering you package name. | True  | String| `var operator=HashMap<String,Any>(),operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"),operator.put("hashString","")` |
-| order| This is the `order id` that you created before or `amount` , `currency` , `transaction` to generate a new order .   It will be linked this token. | True  | `Dictionary`| ` var order = HashMap<String, Any>(), order.put("id","") order.put("amount",1),order.put("currency","BHD"),order.put("description",""), order.put("reference":"A reference to this order in your system"))` |
-| invoice| This is the `invoice id` that you want to link this token to if any. | False  | `Dictionary`| ` var invoice = HashMap<String,Any>.put("id","")` |
-| merchant| This is the `Merchant id` that you will get after registering you bundle id. | True  | `Dictionary`| ` var merchant = HashMap<String,Any>.put("id","")` |
-| customer| The customer details you want to attach to this tokenization process. | True  | `Dictionary`| ` var customer =  HashMap<String,Any> ,customer.put("id,""), customer.put("nameOnCard","Tap Payments"),customer.put("editable",true),) var name :HashMap<String,Any> = [["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]] "contact":["email":"tap@tap.company", "phone":["countryCode":"+965","number":"88888888"]]] customer.put("name",name) , customer.put("contact",contact)` |
-| interface| Needed to defines look and feel related configurations. | False  | `Dictionary`| ` var interface = HashMap<String,Any> ,interface.put("locale","en"), interface.put("theme","light"), interface.put("edges","curved"),interface.put("colorStyle","colored"),interface.put("loader",true) // Allowed values for theme : light/dark. locale: en/ar, edges: curved/flat, direction:ltr/dynaimc,colorStyle:colored/monochrome` |
-| post| This is the `webhook` for your server, if you want us to update you server to server. | False  | `Dictionary`| ` var post = HashMap<String,Any>.put("url","")` |
 
 
 ### Documentation per variable
