@@ -14,6 +14,7 @@ import android.net.http.SslError
 import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.webkit.*
@@ -68,8 +69,8 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
         LayoutInflater.from(context).inflate(R.layout.activity_card_web_wrapper, this)
         initWebView()
 
-
     }
+
 
      private fun initWebView() {
         cardWebview = findViewById(R.id.webview)
@@ -102,6 +103,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
             else -> {}
         }
     }
+
 
     private fun applyTheme() {
         /**
@@ -268,6 +270,19 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                         )
                         linearLayout.layoutParams = params
                         linearLayout.orientation = VERTICAL
+
+                        /**
+                         * onBackPressed in Dialog
+                         */
+                        dialog.setOnKeyListener { view, keyCode, keyEvent ->
+                            if (keyEvent.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                                dismissDialog()
+                                init(cardConfiguraton)
+                                return@setOnKeyListener  true
+                            }
+                            return@setOnKeyListener false
+                        }
+
 
                         if (cardWebview.parent == null){
                             linearLayout.addView(cardWebview)

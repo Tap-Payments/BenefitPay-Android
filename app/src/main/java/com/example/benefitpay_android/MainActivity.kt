@@ -117,10 +117,6 @@ class MainActivity : AppCompatActivity() {
         interfacee.put("colorStyle",selectedColorStylee ?:"colored")
         interfacee.put("loader",loader)
 
-        /**
-         * post
-         */
-        val postUrl =  intent.getStringExtra("posturlKey")
 
         val post = HashMap<String,Any>()
         post.put("url","")
