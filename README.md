@@ -628,8 +628,8 @@ Below you will find more details about each parameter shared in the above tables
   - Example: 
       ```kotlin
        val operator = HashMap<String,Any>()
-        operator.put("publicKey",publicKey.toString())
-        operator.put("hashString",hashStringKey.toString())
+        operator.put("publicKey","publickKeyValue")
+        operator.put("hashString","hashstringValue")
       ```
 
 ## order:
@@ -655,7 +655,7 @@ Below you will find more details about each parameter shared in the above tables
       ```kotlin
       val order = HashMap<String,Any>()
       order.put("id",ordrId ?: "")
-      order.put("amount",  if (orderAmount?.isEmpty() == true)"1" else orderAmount.toString() )
+      order.put("amount",  "1" )
       order.put("currency",selectedCurrency)
       order.put("description",orderDescription ?: "")
       order.put("reference",orderRefrence ?: "")
@@ -725,8 +725,7 @@ Note: The contact information has to either have the email address or the phone 
 
       - Fields:
          - email :
-            - Customer's email address
-             Note: The email is of type string.
+            - Customer's email address (string)
          - phone :
             -  Customer's Phone number details with country code and number 
            
@@ -774,15 +773,13 @@ Note: The contact information has to either have the email address or the phone 
      - loader :
         - Definition: A boolean to indicate wether or not you want to show a loading view on top of the benefit button while it is performing api requests.
      - locale :
-        - Definition: The language of the benefit button. Accepted values as of now are:
+        - Definition: The language of the benefit button. Accepted values as of now are: (en -> english /ar -> arabic )
 Possible Values:
 
      - theme :
        -  Definition: The display styling of the benefit button. Accepted values as of now are: light /dark /dynamic
-         Note: Minimum amount to be added is 0.1.   
      - edges :
-        - Definition: Control the edges of the payment form.  (flat/curved)
-          
+        - Definition: Control the edges of the payment form.  (flat/curved)  
      - colorStyle :
         - Definition: How do you want the icons rendered inside the benefit button Possible Values: colored / monochrome
      
