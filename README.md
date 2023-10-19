@@ -632,7 +632,7 @@ Below you will find more details about each parameter shared in the above tables
         operator.put("hashString",hashStringKey.toString())
       ```
 
-# order:
+## order:
   - Definition:This defined the details of the order that you are trying to purchase, in which you need to specify some details like the id, amount, currency ...
   - Type: Dictionary, (required)
   - Fields:
@@ -661,6 +661,140 @@ Below you will find more details about each parameter shared in the above tables
       order.put("reference",orderRefrence ?: "")
       ```
 
+
+## merchant:
+  - Definition:It is the Merchant id that you get from our onboarding team. This will be used as reference for your account in Tap.
+  - Type: Dictionary, (required)
+  - Fields:
+     - id :
+        - Definition: Generated once your account with Tap is created, which is unique for every merchant. 
+     - Example: 
+      ```kotlin
+        val merchant = HashMap<String,Any>()
+        merchant.put("id", "")
+      ```
+
+
+## invoice:
+  - Definition:After the token is generated, you can use it to pay for any invoice. Each invoice will have an invoice ID which you can add here using the SDK.
+Note: An invoice will first show you a receipt/summary of the order you are going to pay for as well as the amount, currency, and any related field before actually opening the payment form and completing the payment.
+  - Type: Dictionary, (optional)
+  - Fields:
+     - id :
+        - Definition: Unique Invoice ID which we are trying to pay.
+     
+     - Example: 
+      ```kotlin
+        val invoice = HashMap<String,Any>()
+        invoice.put("id","")
+
+      ```
+
+## post:
+  - Definition:Here you can pass the webhook URL you have, in order to receive notifications of the results of each Transaction happening on your application.
+  - Type: Dictionary, (optional)
+  - Fields:
+     - url :
+        - Definition:The webhook server's URL that you want to receive notifications on.
+     
+     - Example: 
+      ```kotlin
+         val post = HashMap<String,Any>()
+        post.put("url","")
+
+      ```
+
+## customer:
+  - Definition: Here, you will collect the information of the customer that is paying..
+  - Type: Dictionary, (required)
+  - Fields:
+     - id :
+        - Definition: This is an optional field that you do not have before the charge is processed. But, after the charge, then you will receive the customer ID in the response which can be handled in the onSuccess callback function.
+      
+    - name :
+        - Definition: Full Name of the customer paying.
+            - Fields:
+               - lang : Language chosen to write the customer name.
+               - first : Customer's first name.
+               - middle :Customer's middle name.
+               - last : Customer's last name.
+  
+    - contact :
+        - Definition: The customer's contact information like email address and phone number.
+Note: The contact information has to either have the email address or the phone details of the customers or both but it should not be empty.
+
+      - Fields:
+         - email :
+            - Customer's email address
+             Note: The email is of type string.
+         - phone :
+            -  Customer's Phone number details with country code and number 
+           
+
+     - Example: 
+      ```kotlin
+         /**
+         * phone
+         */
+        val phone = java.util.HashMap<String,Any>()
+        phone.put("countryCode","+20")
+        phone.put("number","011")
+
+
+        /**
+         * contact
+         */
+        val contact = java.util.HashMap<String,Any>()
+        contact.put("email","test@gmail.com")
+        contact.put("phone",phone)
+        /**
+         * name
+         */
+        val name = java.util.HashMap<String,Any>()
+        name.put("lang","en")
+        name.put("first", "first")
+        name.put("middle", "middle")
+        name.put("last","last")
+
+        /**
+         * customer
+         */
+        val customer = java.util.HashMap<String,Any>()
+        customer.put("id", "")
+        customer.put("contact",contact)
+        customer.put("name", listOf(name))
+
+      ```
+
+
+## interface:
+  - Definition:This will help you control the layout (UI) of the payment form, like changing the theme light to dark, the language used (en or ar), ...
+  - Type: Dictionary, (required)
+  - Fields:
+     - loader :
+        - Definition: A boolean to indicate wether or not you want to show a loading view on top of the benefit button while it is performing api requests.
+     - locale :
+        - Definition: The language of the benefit button. Accepted values as of now are:
+Possible Values:
+
+     - theme :
+       -  Definition: The display styling of the benefit button. Accepted values as of now are: light /dark /dynamic
+         Note: Minimum amount to be added is 0.1.   
+     - edges :
+        - Definition: Control the edges of the payment form.  (flat/curved)
+          
+     - colorStyle :
+        - Definition: How do you want the icons rendered inside the benefit button Possible Values: colored / monochrome
+     
+     - Example: 
+      ```kotlin
+       val interfacee = HashMap<String,Any>()
+        interfacee.put("locale",selectedLanguage ?: "en")
+        interfacee.put("theme",selectedTheme ?: "light")
+        interfacee.put("edges",selectedCardEdge ?: "curved")
+        interfacee.put("colorStyle",selectedColorStylee ?:"colored")
+        interfacee.put("loader",loader)
+      ```      
 # Expected Callbacks Responses
 
 ## onError
