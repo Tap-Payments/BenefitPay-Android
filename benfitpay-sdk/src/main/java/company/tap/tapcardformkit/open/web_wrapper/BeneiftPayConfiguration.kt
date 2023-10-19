@@ -61,6 +61,7 @@ class BeneiftPayConfiguration {
 
                 }
             }
+            Log.e("packagedname",context.packageName.toString())
             NetworkApp.initNetwork(
                 tapCardInputViewWeb?.context ,
                 publicKey ?: "",

@@ -27,8 +27,8 @@ class MainActivity : AppCompatActivity() {
         val publicKey = intent.getStringExtra("publicKey")
         val hashStringKey = intent.getStringExtra("hashStringKey")
         val operator = HashMap<String,Any>()
-        operator.put("publicKey","pk_test_HJN863LmO15EtDgo9cqK7sjS")
-        operator.put("hashString","")
+        operator.put("publicKey",publicKey.toString())
+        operator.put("hashString",hashStringKey.toString())
         Log.e("orderData","pbulc" + publicKey.toString() + " \nhash" + hashStringKey.toString())
 
         /**
