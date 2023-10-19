@@ -22,8 +22,8 @@ Before diving into the development process, it's essential to establish the prer
 # Step 2 :Get Your Public Keys
 
  While you can certainly use the sandbox keys available within our sample app which you can get by following
- [installation page](https://developers.tap.company/docs/),
- however, we highly recommend visiting our [onboarding page](https://register.tap.company/sell), there you'll have the opportunity to register your package name and acquire your essential Tap Key for activating BenefitPay-android integration.
+ [installation page](https://developers.tap.company/docs/](https://developers.tap.company/docs/benefit-pay-ios#step-3-installation-using-gradle)),
+ however, we highly recommend visiting our [onboarding page](https://register.tap.company/sell](https://register.tap.company/ae/en/sell)), there you'll have the opportunity to register your package name and acquire your essential Tap Key for activating BenefitPay-android integration.
 
 # Step 3 :Installation
 
@@ -124,9 +124,9 @@ Each parameter is linked to the reference section, which provides a more in dept
 
 |Parameters|Description | Required | Type| Sample
 |--|--|--| --|--|
-| operator| This is the `Key` that you will get after registering you package name. | True  | String| `var operator=HashMap<String,Any>(),operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"),operator.put("hashString","")` |
-| order| This is the `order id` that you created before or `amount` , `currency` , `transaction` to generate a new order .   It will be linked this token. | True  | `Dictionary`| ` var order = HashMap<String, Any>(), order.put("id","") order.put("amount",1),order.put("currency","BHD"),order.put("description",""), order.put("reference":"A reference to this order in your system"))` |
-| customer| The customer details you want to attach to this tokenization process. | True  | `Dictionary`| ` var customer =  HashMap<String,Any> ,customer.put("id,""), customer.put("nameOnCard","Tap Payments"),customer.put("editable",true),) var name :HashMap<String,Any> = [["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]] "contact":["email":"tap@tap.company", "phone":["countryCode":"+965","number":"88888888"]]] customer.put("name",name) , customer.put("contact",contact)` |
+| operator| It has the key obtained after registering your package name, also known as Public key. Also, the [hashString](https://developers.tap.company/docs/webhook#validate-the-webhook-hashstring) value which is used to validate live charges | True  | String| `var operator=HashMap<String,Any>(),operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"),operator.put("hashString","")` |
+| order| Order details linked to the charge.| True  | `Dictionary`| ` var order = HashMap<String, Any>(), order.put("id","") order.put("amount",1),order.put("currency","BHD"),order.put("description",""), order.put("reference":"A reference to this order in your system"))` |
+| customer| Customer details for charge process.| True  | `Dictionary`| ` var customer =  HashMap<String,Any> ,customer.put("id,""), customer.put("nameOnCard","Tap Payments"),customer.put("editable",true),) var name :HashMap<String,Any> = [["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]] "contact":["email":"tap@tap.company", "phone":["countryCode":"+965","number":"88888888"]]] customer.put("name",name) , customer.put("contact",contact)` |
 
 # Configuring the BenefitPay-Android SDK
 After creating the UI using any of the previously mentioned ways, it is time to pass the parameters needed for the SDK to work as expected and serve your need correctly.
@@ -338,13 +338,13 @@ Each parameter is linked to the reference section, which provides a more in dept
 
 |Parameters |Description | Required | Type| Sample
 |--|--|--| --|--|
-| operator| This is the `Key` that you will get after registering you package name. | True  | String| `var operator=HashMap<String,Any>(),operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"),operator.put("hashString","")` |
-| order| This is the `order id` that you created before or `amount` , `currency` , `transaction` to generate a new order .   It will be linked this token. | True  | `Dictionary`| ` var order = HashMap<String, Any>(), order.put("id","") order.put("amount",1),order.put("currency","BHD"),order.put("description",""), order.put("reference":"A reference to this order in your system"))` |
-| invoice| This is the `invoice id` that you want to link this token to if any. | False  | `Dictionary`| ` var invoice = HashMap<String,Any>.put("id","")` |
-| merchant| This is the `Merchant id` that you will get after registering you bundle id. | True  | `Dictionary`| ` var merchant = HashMap<String,Any>.put("id","")` |
-| customer| The customer details you want to attach to this tokenization process. | True  | `Dictionary`| ` var customer =  HashMap<String,Any> ,customer.put("id,""), customer.put("nameOnCard","Tap Payments"),customer.put("editable",true),) var name :HashMap<String,Any> = [["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]] "contact":["email":"tap@tap.company", "phone":["countryCode":"+965","number":"88888888"]]] customer.put("name",name) , customer.put("contact",contact)` |
-| interface| Needed to defines look and feel related configurations. | False  | `Dictionary`| ` var interface = HashMap<String,Any> ,interface.put("locale","en"), interface.put("theme","light"), interface.put("edges","curved"),interface.put("colorStyle","colored"),interface.put("loader",true) // Allowed values for theme : light/dark. locale: en/ar, edges: curved/flat, direction:ltr/dynaimc,colorStyle:colored/monochrome` |
-| post| This is the `webhook` for your server, if you want us to update you server to server. | False  | `Dictionary`| ` var post = HashMap<String,Any>.put("url","")` |
+| operator| It has the key obtained after registering your package name, also known as Public key. Also, the [hashString](https://developers.tap.company/docs/webhook#validate-the-webhook-hashstring) value which is used to validate live charges | True  | String| `var operator=HashMap<String,Any>(),operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"),operator.put("hashString","")` |
+| order| Order details linked to the charge. | True  | `Dictionary`| ` var order = HashMap<String, Any>(), order.put("id","") order.put("amount",1),order.put("currency","BHD"),order.put("description",""), order.put("reference":"A reference to this order in your system"))` |
+| invoice|Invoice id to link to the order (optional). | False  | `Dictionary`| ` var invoice = HashMap<String,Any>.put("id","")` |
+| merchant| Merchant id obtained after registering your package name . | True  | `Dictionary`| ` var merchant = HashMap<String,Any>.put("id","")` |
+| customer| Customer details for charge process. | True  | `Dictionary`| ` var customer =  HashMap<String,Any> ,customer.put("id,""), customer.put("nameOnCard","Tap Payments"),customer.put("editable",true),) var name :HashMap<String,Any> = [["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]] "contact":["email":"tap@tap.company", "phone":["countryCode":"+965","number":"88888888"]]] customer.put("name",name) , customer.put("contact",contact)` |
+| interface| Look and feel related configurations (optional). | False  | `Dictionary`| ` var interface = HashMap<String,Any> ,interface.put("locale","en"), interface.put("theme","light"), interface.put("edges","curved"),interface.put("colorStyle","colored"),interface.put("loader",true) // Allowed values for theme : light/dark. locale: en/ar, edges: curved/flat, direction:ltr/dynaimc,colorStyle:colored/monochrome` |
+| post| Webhook for server-to-server updates (optional). | False  | `Dictionary`| ` var post = HashMap<String,Any>.put("url","")` |
 
 # Initialisation of the input
 You can use a Hashmap to send data to our SDK. The benefit is that you can generate this data from one of your APIs. If we make updates to the configurations, you can update your API, avoiding the need to update your app on the Google play  Store.
@@ -496,7 +496,7 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
          */
         val order = HashMap<String,Any>()
         order.put("id",ordrId ?: "")
-        order.put("amount",  if (orderAmount?.isEmpty() == true)"1" else orderAmount.toString() )
+        order.put("amount", "1")
         order.put("currency",selectedCurrency)
         order.put("description",orderDescription ?: "")
         order.put("reference",orderRefrence ?: "")
@@ -581,7 +581,6 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
 
     }
 
-    
 
     override fun onSuccess(data: String) {
     }
@@ -654,11 +653,11 @@ Below you will find more details about each parameter shared in the above tables
      - Example: 
       ```kotlin
       val order = HashMap<String,Any>()
-      order.put("id",ordrId ?: "")
+      order.put("id", "")
       order.put("amount",  "1" )
-      order.put("currency",selectedCurrency)
-      order.put("description",orderDescription ?: "")
-      order.put("reference",orderRefrence ?: "")
+      order.put("currency","BHD")
+      order.put("description", "")
+      order.put("reference", "")
       ```
 
 
@@ -786,10 +785,10 @@ Possible Values:
      - Example: 
       ```kotlin
        val interfacee = HashMap<String,Any>()
-        interfacee.put("locale",selectedLanguage ?: "en")
-        interfacee.put("theme",selectedTheme ?: "light")
-        interfacee.put("edges",selectedCardEdge ?: "curved")
-        interfacee.put("colorStyle",selectedColorStylee ?:"colored")
+        interfacee.put("locale","en")
+        interfacee.put("theme", "light")
+        interfacee.put("edges", "curved")
+        interfacee.put("colorStyle","colored")
         interfacee.put("loader",loader)
       ```      
 # Expected Callbacks Responses
