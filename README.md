@@ -314,21 +314,6 @@ Now we have created the UI and the parameters required to to correctly display B
                 
             }
 ```
-## Simple TapCardStatusDelegate
-A protocol that allows integrators to get notified from events fired from the `BenefitPay-Android`. 
-
-```kotlin
-    interface TapBenefitPayStatusDelegate {
-    
-     ///   Will be fired whenever the card sdk finishes successfully the task assigned to it. Whether `TapToken` or `AuthenticatedToken`
-    override fun  onSuccess(data: String) {
-     }
-    /// Will be fired whenever there is an error related to the card connectivity or apis
-    /// - Parameter data: includes a JSON format for the error description and error
-    override fun onError(data: String){
-    }
-}
-```
 
 # Advanced Integration
 The advanced configuration for the BenefitPay-Android integration not only has all the features available in the simple integration but also introduces new capabilities, providing merchants with maximum flexibility. You can find a code below, where you'll discover comprehensive guidance on implementing the advanced flow as well as a complete description of each parameter.
