@@ -331,80 +331,24 @@ A protocol that allows integrators to get notified from events fired from the `B
 ```
 
 # Advanced Integration
+The advanced configuration for the BenefitPay-Android integration not only has all the features available in the simple integration but also introduces new capabilities, providing merchants with maximum flexibility. You can find a code below, where you'll discover comprehensive guidance on implementing the advanced flow as well as a complete description of each parameter.
 
-## Advanced Documentation
+# Parameters
+Each parameter is linked to the reference section, which provides a more in depth explanation of it.
 
-### Main input documentation
-To make our sdk as dynamic as possible, we accept the input in a form of a `HashMap dictionary` . We will provide you with a sample full one for reference.
-It is always recommended, that you generate this `HashMap dictionary` from your server side, so in future if needed you may be able to change the format if we did an update.
+|Parameters |Description | Required | Type| Sample
+|--|--|--| --|--|
+| operator| This is the `Key` that you will get after registering you package name. | True  | String| `var operator=HashMap<String,Any>(),operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"),operator.put("hashString","")` |
+| order| This is the `order id` that you created before or `amount` , `currency` , `transaction` to generate a new order .   It will be linked this token. | True  | `Dictionary`| ` var order = HashMap<String, Any>(), order.put("id","") order.put("amount",1),order.put("currency","BHD"),order.put("description",""), order.put("reference":"A reference to this order in your system"))` |
+| invoice| This is the `invoice id` that you want to link this token to if any. | False  | `Dictionary`| ` var invoice = HashMap<String,Any>.put("id","")` |
+| merchant| This is the `Merchant id` that you will get after registering you bundle id. | True  | `Dictionary`| ` var merchant = HashMap<String,Any>.put("id","")` |
+| customer| The customer details you want to attach to this tokenization process. | True  | `Dictionary`| ` var customer =  HashMap<String,Any> ,customer.put("id,""), customer.put("nameOnCard","Tap Payments"),customer.put("editable",true),) var name :HashMap<String,Any> = [["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]] "contact":["email":"tap@tap.company", "phone":["countryCode":"+965","number":"88888888"]]] customer.put("name",name) , customer.put("contact",contact)` |
+| interface| Needed to defines look and feel related configurations. | False  | `Dictionary`| ` var interface = HashMap<String,Any> ,interface.put("locale","en"), interface.put("theme","light"), interface.put("edges","curved"),interface.put("colorStyle","colored"),interface.put("loader",true) // Allowed values for theme : light/dark. locale: en/ar, edges: curved/flat, direction:ltr/dynaimc,colorStyle:colored/monochrome` |
+| post| This is the `webhook` for your server, if you want us to update you server to server. | False  | `Dictionary`| ` var post = HashMap<String,Any>.put("url","")` |
 
+# Initialisation of the input
+You can use a Hashmap to send data to our SDK. The benefit is that you can generate this data from one of your APIs. If we make updates to the configurations, you can update your API, avoiding the need to update your app on the Google play  Store.
 
-
-### Documentation per variable
-
- - operator:
-	 - Responsible for passing the data that defines you as a merchant within Tap system.
- - operator.publicKey:
-	 - A string, which you get after registering the app bundle id within the Tap system. It is required to correctly identify you as a merchant.
-	 - You will receive a sandbox and a production key. Use, the one that matches your environment at the moment of usage.
- - order:
-	 - The details about the order that you will be using the token you are generating within.
- - order.id:
-	 - The id of the `order` if you already created it using our apis.
- - order.currency:
-	 - The intended currency you will perform the order linked to this token afterwards.
- -  order.amount:
-	 - The intended amount you will perform the order linked to this token afterwards.
- - order.description:
-	 - Optional string to put some clarifications about the order if needed.
- - order.reference:
-	 - Pass this value if you want to link this order to the a one you have within your system.
-
- - invoice.id:
-	 - Optional string to pass an invoice id, that you want to link to this token afterwards.
- - merchant.id:
-	 - Optional string to pass to define a sub entity registered under your key in Tap. It is the `Merchant id` that you get from our onboarding team.
- - customer.id:
-	 - If you have previously have created a customer using our apis and you want to link this token to him. please pass his id.
- - customer.name:
-	 - It is a list of localized names. each name will have:
-		 - lang : the 2 iso code for the locale of this name for example `en`
-		 - first : The first name.
-		 - middle: The middle name.
-		 - last : The last name.
- - customer.nameOnCard:
-	 - If you want to prefill the card holder's name field.
- - customer.editable:
-	 - A boolean that controls whether the customer can edit the card holder's name field or not.
- - customer.contact.email:
-	 - An email string for  the customer we are creating. At least the email or the phone is required.
- - customer.contact.phone:
-	 - The customer's phone:
-		 - countryCode
-		 - number
-- interface.loader:
-	- A boolean to indicate wether or not you want to show a loading view on top of the card form while it is performing api requests.
-- interface.locale:
-	- The language of the card form. Accepted values as of now are:
-		- en
-		- ar
-- interface.theme:
-	- The display style of the card form. Accepted values as of now are:
-		- light
-		- dark
-		- dynamic // follow the device's display style
-- interface.edges:
-	- How do you want the edges of the card form to. Accepted values as of now are:
-		- curved
-		- flat
-- interface.colorStyle:
-	- How do you want the icons rendered inside the card form to. Accepted values as of now are:
-		- colored
-		- monochrome
-
-## Initialization of the input
-
-You can create a Dictionary HashMap to pass the data to our sdk. The good part about this, is that you can generate the data from one of your apis. Whenever we have an update to the configurations, you can update your api. This will make sure, that you will not have to update your app on the Google Play Store.
 
 ```kotlin
      /**
@@ -413,24 +357,6 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
       val operator = HashMap<String,Any>()
         operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")
         operator.put("hashString","")
-
-        /**
-         * merchant
-         */
-        val merchant = HashMap<String,Any>()
-        merchant.put("id","")
-
-        /**
-         * invoice
-         */
-        val invoice = HashMap<String,Any>()
-        invoice.put("id","")
-        /**
-         * post
-         */
-        val post = HashMap<String,Any>()
-        post.put("url","")
-
 
         /**
          * phone
@@ -474,112 +400,500 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         order.put("reference","refrence_id")
 
         /**
-         * interface
+         * merchant
          */
-        val tapInterface = HashMap<String,Any>()
-        tapInterface.put("locale","en")
-        tapInterface.put("theme","light")
-        tapInterface.put("edges","curved")
-        tapInterface.put("colorStyle","colored")
-        tapInterface.put("loader",true)
+        val merchant = HashMap<String,Any>()
+        merchant.put("id", "")
 
+        /**
+         * invoice
+         */
+        val invoice = HashMap<String,Any>()
+        invoice.put("id","")
+
+     /** interface **/
+
+      val interfacee = HashMap<String,Any>()
+        interfacee.put("locale",selectedLanguage ?: "en")
+        interfacee.put("theme",selectedTheme ?: "light")
+        interfacee.put("edges",selectedCardEdge ?: "curved")
+        interfacee.put("colorStyle",selectedColorStylee ?:"colored")
+        interfacee.put("loader",loader)
+
+     /** post  **/
+
+        val post = HashMap<String,Any>()
+        post.put("url","")
         /**
          * configuration request
          */
 
+       
+
         val configuration = LinkedHashMap<String,Any>()
         configuration.put("operator", operator)
-        configuration.put("merchant",merchant)
         configuration.put("order",order)
         configuration.put("customer",customer)
+        configuration.put("merchant",merchant)
         configuration.put("invoice",invoice)
+        configuration.put("interface",interfacee)
         configuration.put("post",post)
-        configuration.put("interface",tapInterface) 
 
 ```
+# Receiving Callback Notifications (Advanced Version)
+The below will allow the integrators to get notified from events fired from the BenefitPayButton.
 
+```kotlin
+    override fun onReady() {
+           print("\n\n========\n\nonReady")
+    }
 
+    override fun onClick() {
+         print("\n\n========\n\noClick")
+    }
 
-## Advanced TapCardStatusDelegate
-An interface that allows integrators to get notified from events fired from the `TapBenefitPay`. 
+    override fun onChargeCreated(data: String) {
+           print("\n\n========\n\nonChargeCreated")
+    }
+
+    override fun onOrderCreated(data: String) {
+           print("\n\n========\n\nonOrderCreated")
+
+    }
+
+    override fun onCancel() {
+           print("\n\n========\n\nonCancel")
+    }
+
+    override fun onError(error: String) {
+           print("\n\n========\n\nonError")
+    }
+```
+# Full Code Sample
+Once all of the above steps are successfully completed, your Activity file should look like this:
 ```kotlin
 
-interface TapBenefitPayStatusDelegate {
+class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
+    lateinit var tapBenefitPay: TapBenefitPay
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        configureSdk()
+    }
+
+    fun configureSdk(){
 
 
-    override fun onSuccess(data: String)
-/**
-        Will be fired whenever the TapBenefitPay sdk finishes successfully the task assigned to it.
-     - Parameter data: will include the data in JSON format. For `TapToken`:
-     {
-         "id": "tok_MrL97231045SOom8cF8G939",
-         "created": 1694169907939,
-         "object": "token",
-         "live_mode": false,
-         "type": "CARD",
-         "source": "CARD-ENCRYPTED",
-         "used": false,
-         "card": {
-             "id": "card_d9Vj7231045akVT80B8n944",
-             "object": "card",
-             "address": {},
-             "funding": "CREDIT",
-             "fingerprint": "gRkNTnMrJPtVYkFDVU485Gc%2FQtEo%2BsV44sfBLiSPM1w%3D",
-             "brand": "VISA",
-             "scheme": "VISA",
-             "category": "",
-             "exp_month": 4,
-             "exp_year": 24,
-             "last_four": "4242",
-             "first_six": "424242",
-             "name": "AHMED",
-             "issuer": {
-                "bank": "",
-                "country": "GB",
-                "id": "bnk_TS07A0720231345Qx1e0809820"
-            }
-         },
-         "url": ""
-     }
-     */
+        /**
+         * operator
+         */
+        val operator = HashMap<String,Any>()
+        operator.put("publicKey",publicKey.toString())
+        operator.put("hashString",hashStringKey.toString())
 
-    override fun onReady()
-    /**
-     *  Will be fired whenever the TapBenefitPay is rendered and loaded
-     */
+        /**
+         * order
+         */
+        val order = HashMap<String,Any>()
+        order.put("id",ordrId ?: "")
+        order.put("amount",  if (orderAmount?.isEmpty() == true)"1" else orderAmount.toString() )
+        order.put("currency",selectedCurrency)
+        order.put("description",orderDescription ?: "")
+        order.put("reference",orderRefrence ?: "")
 
-  override fun onClick()
-    /**
-     *  Will be fired whenever the TapBenefitPay button is clicked
-     */
+        /**
+         * merchant
+         */
+        val merchant = HashMap<String,Any>()
+        merchant.put("id", "")
+
+        /**
+         * invoice
+         */
+        val invoice = HashMap<String,Any>()
+        invoice.put("id","")
 
 
-  override fun onOrderCreated()
-    /**
-     *  Will be fired whenever order is successfully created
-     */
+        /**
+         * phone
+         */
+        val phone = java.util.HashMap<String,Any>()
+        phone.put("countryCode","+20")
+        phone.put("number","011")
 
 
-  override fun onChargeCreated()
-    /**
-     *  Will be fired whenever charging occurs
-     */
+        /**
+         * contact
+         */
+        val contact = java.util.HashMap<String,Any>()
+        contact.put("email","test@gmail.com")
+        contact.put("phone",phone)
+        /**
+         * name
+         */
+        val name = java.util.HashMap<String,Any>()
+        name.put("lang","en")
+        name.put("first", "first")
+        name.put("middle", "middle")
+        name.put("last","last")
 
- override fun onCancel()
-    /**
-     *  Will be fired whenever cancelling charging 
-     */
+        /**
+         * customer
+         */
+        val customer = java.util.HashMap<String,Any>()
+        customer.put("id", "")
+        customer.put("contact",contact)
+        customer.put("name", listOf(name))
+
+        /**
+         * interface
+         */
+    
+        val interfacee = HashMap<String,Any>()
+        interfacee.put("locale",selectedLanguage ?: "en")
+        interfacee.put("theme",selectedTheme ?: "light")
+        interfacee.put("edges",selectedCardEdge ?: "curved")
+        interfacee.put("colorStyle",selectedColorStylee ?:"colored")
+        interfacee.put("loader",loader)
 
 
-    override fun onError(error: String)=
-   /**
-     *  Will be fired whenever there is an error related to the card connectivity or apis
-     *  Parameter data: includes a JSON format for the error description and error
-     */
+        val post = HashMap<String,Any>()
+        post.put("url","")
+        val configuration = LinkedHashMap<String,Any>()
+
+        configuration.put("operator",operator)
+        configuration.put("order",order)
+        configuration.put("customer",customer)
+
+        configuration.put("merchant",merchant)
+        configuration.put("invoice",invoice)
+        configuration.put("interface",interfacee)
+        configuration.put("post",post)
 
 
+
+        BeneiftPayConfiguration.configureWithTapBenfitPayDictionaryConfiguration(
+            this,
+            findViewById(R.id.benfit_pay),
+            configuration,
+           this)
+
+
+    }
+
+    
+
+    override fun onSuccess(data: String) {
+    }
+
+    override fun onReady() {
+        super.onReady()
+    }
+
+    override fun onClick() {
+        super.onClick()
+    }
+
+    override fun onChargeCreated(data: String) {
+        super.onChargeCreated(data)
+    }
+
+    override fun onOrderCreated(data: String) {
+        super.onOrderCreated(data)
+    }
+
+    override fun onCancel() {
+        super.onCancel()
+    }
+
+    override fun onError(error: String) {
+    }
 
 }
-
-
 ```
+
+
+## Parameters Reference
+Below you will find more details about each parameter shared in the above tables that will help you easily integrate BenefitPay-Android SDK.
+
+### Documentation per variable
+
+ # operator:
+  - Definition: It links the payment gateway to your merchant account with Tap, in order to know your business name, logo, etc...
+  - Type: string (required)
+  - Fields:
+     - publicKey :
+        - Definition: This is a unique public key that you will receive after creating an account with Tap which is considered a reference to identify you as a merchant. You will receive 2 public keys, one for 
+            sandbox/testing and another one for production.
+  - Example: 
+      ```kotlin
+       val operator = HashMap<String,Any>()
+        operator.put("publicKey",publicKey.toString())
+        operator.put("hashString",hashStringKey.toString())
+      ```
+
+# order:
+  - Definition:This defined the details of the order that you are trying to purchase, in which you need to specify some details like the id, amount, currency ...
+  - Type: Dictionary, (required)
+  - Fields:
+     - id :
+        - Definition: Pass the order ID created for the order you are trying to purchase, which will be available in your database.
+         Note: This field can be empty
+     - currency :
+        - Definition: The currency which is linked to the order being paid.
+
+     - amount :
+       -  Definition: The order amount to be paid by the customer.
+         Note: Minimum amount to be added is 0.1.   
+     - description :
+        - Definition: Order details, which defines what the customer is paying for or the description of the service you are providing.
+          
+     - reference :
+        - Definition: This will be the order reference present in your database in which the paying is being done for.
+     
+     - Example: 
+      ```kotlin
+      val order = HashMap<String,Any>()
+      order.put("id",ordrId ?: "")
+      order.put("amount",  if (orderAmount?.isEmpty() == true)"1" else orderAmount.toString() )
+      order.put("currency",selectedCurrency)
+      order.put("description",orderDescription ?: "")
+      order.put("reference",orderRefrence ?: "")
+      ```
+
+# Expected Callbacks Responses
+
+## onError
+``` kotlin 
+{
+    "error":""
+}
+``` 
+## onOrderCreated
+``` kotlin 
+{
+    "ord_uAx145231127yHYS19Ou9B126"
+
+}
+``` 
+## onChargeCreated
+``` kotlin 
+{
+    {
+    "id": "chg_TS07A5220231433Ql241910314",
+    "object": "charge",
+    "live_mode": false,
+    "customer_initiated": true,
+    "api_version": "V2",
+    "method": "CREATE",
+    "status": "INITIATED",
+    "amount": 0.1,
+    "currency": "BHD",
+    "threeDSecure": true,
+    "card_threeDSecure": false,
+    "save_card": false,
+    "order_id": "ord_uAx145231127yHYS19Ou9B126",
+    "product": "GOSELL",
+    "order": {
+        "id": "ord_uAx145231127yHYS19Ou9B126"
+    },
+    "transaction": {
+        "timezone": "UTC+03:00",
+        "created": "1697726033236",
+        "url": "",
+        "expiry": {
+            "period": 30,
+            "type": "MINUTE"
+        },
+        "asynchronous": false,
+        "amount": 0.1,
+        "currency": "BHD"
+    },
+    "response": {
+        "code": "100",
+        "message": "Initiated"
+    },
+    "receipt": {
+        "email": true,
+        "sms": true
+    },
+    "customer": {
+        "first_name": "TAP",
+        "last_name": "PAYMENTS",
+        "email": "tap@tap.company",
+        "phone": {
+            "country_code": " 965",
+            "number": "88888888"
+        }
+    },
+    "merchant": {
+        "country": "KW",
+        "currency": "KWD",
+        "id": "599424"
+    },
+    "source": {
+        "object": "source",
+        "id": "src_benefit_pay"
+    },
+    "redirect": {
+        "status": "PENDING",
+        "url": ""
+    },
+    "post": {
+        "status": "PENDING",
+        "url": ""
+    },
+    "activities": [
+        {
+            "id": "activity_TS02A5420231433Mx4g1910470",
+            "object": "activity",
+            "created": 1697726033236,
+            "status": "INITIATED",
+            "currency": "BHD",
+            "amount": 0.1,
+            "remarks": "charge - created"
+        }
+    ],
+    "auto_reversed": false,
+    "gateway_response": {
+        "name": "BENEFITPAY",
+        "request": {
+            "amount": "0.100",
+            "currency": "BHD",
+            "hash": "gMjpC12Ffz+CMhyvm+/jdYJmqbPdgAhHJvvGBABYhCI=",
+            "reference": {
+                "transaction": "chg_TS07A5220231433Ql241910314"
+            },
+            "merchant": {
+                "id": "00000101"
+            },
+            "application": {
+                "id": "4530082749"
+            },
+            "configuration": {
+                "show_result": "0",
+                "hide_mobile_qr": "0",
+                "frequency": {
+                    "start": 120,
+                    "interval": 60,
+                    "count": 10,
+                    "type": "SECOND"
+                }
+            }
+        }
+    }
+}
+
+}
+``` 
+## onSuccess
+``` kotlin 
+{
+   {
+    "id": "chg_TS07A5220231433Ql241910314",
+    "object": "charge",
+    "live_mode": false,
+    "customer_initiated": true,
+    "api_version": "V2",
+    "method": "UPDATE",
+    "status": "INITIATED",
+    "amount": 0.1,
+    "currency": "BHD",
+    "threeDSecure": true,
+    "card_threeDSecure": false,
+    "save_card": false,
+    "order_id": "ord_uAx145231127yHYS19Ou9B126",
+    "product": "GOSELL",
+    "description": "",
+    "order": {
+        "id": "ord_uAx145231127yHYS19Ou9B126"
+    },
+    "transaction": {
+        "timezone": "UTC+03:00",
+        "created": "1697726033236",
+        "url": "https://sandbox.payments.tap.company/test_gosell/v2/payment/tap_process.aspx?chg=8D9e9fdEo5N03hWrGnROvEEFw4DfqYVFv8R7R34GITc%3d",
+        "expiry": {
+            "period": 30,
+            "type": "MINUTE"
+        },
+        "asynchronous": false,
+        "amount": 0.1,
+        "currency": "BHD"
+    },
+    "response": {
+        "code": "100",
+        "message": "Initiated"
+    },
+    "receipt": {
+        "email": true,
+        "sms": true
+    },
+    "customer": {
+        "first_name": "TAP",
+        "last_name": "PAYMENTS",
+        "email": "tap@tap.company",
+        "phone": {
+            "country_code": " 965",
+            "number": "88888888"
+        }
+    },
+    "merchant": {
+        "country": "KW",
+        "currency": "KWD",
+        "id": "599424"
+    },
+    "source": {
+        "object": "source",
+        "id": "src_benefit_pay"
+    },
+    "redirect": {
+        "status": "PENDING",
+        "url": ""
+    },
+    "post": {
+        "status": "PENDING",
+        "url": ""
+    },
+    "activities": [
+        {
+            "id": "activity_TS02A5420231433Mx4g1910470",
+            "object": "activity",
+            "created": 1697726033236,
+            "status": "INITIATED",
+            "currency": "BHD",
+            "amount": 0.1,
+            "remarks": "charge - created"
+        }
+    ],
+    "auto_reversed": false,
+    "gateway_response": {
+        "name": "BENEFITPAY",
+        "request": {
+            "amount": "0.100",
+            "currency": "BHD",
+            "hash": "gMjpC12Ffz+CMhyvm+/jdYJmqbPdgAhHJvvGBABYhCI=",
+            "reference": {
+                "transaction": "chg_TS07A5220231433Ql241910314"
+            },
+            "merchant": {
+                "id": "00000101"
+            },
+            "application": {
+                "id": "4530082749"
+            },
+            "configuration": {
+                "show_result": "0",
+                "hide_mobile_qr": "0",
+                "frequency": {
+                    "start": 120,
+                    "interval": 60,
+                    "count": 10,
+                    "type": "SECOND"
+                }
+            }
+        }
+    }
+}
+
+}
+``` 
