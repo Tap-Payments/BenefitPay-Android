@@ -191,6 +191,8 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
 
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onError.name)) {
                     pair = Pair(request?.url?.getQueryParameterFromUri(keyValueName).toString(),true)
+                    DataConfiguration.getTapCardStatusListener()?.onError(request?.url?.getQueryParameterFromUri(keyValueName).toString())
+
                     closePayment()
 
                 }

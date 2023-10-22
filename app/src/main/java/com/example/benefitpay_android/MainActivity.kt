@@ -9,14 +9,53 @@ import android.widget.Toast
 import company.tap.tapcardformkit.open.TapBenefitPayStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.BeneiftPayConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapBenefitPay
+import java.util.*
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
+import kotlin.collections.HashMap
+import kotlin.collections.LinkedHashMap
 
-class MainActivity : AppCompatActivity() {
-    lateinit var tapBenefitPay: TapBenefitPay
+class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
+    var publicKey:String = "pk_live_0zHLeUTOXBNEyJ8p6csbK52m"
+    var amount:Double = 1.0
+    var currency:String = "BHD"
+    var transactionReference:String = ""
+    var postUrl:String = ""
+    var secretString = "sk_live_x28QGHEwiVet6yKq07zMOrjU"
+   val number3digits:String = String.format("%.3f", amount)
+
+    object Hmac {
+        fun digest(
+            msg: String,
+            key: String,
+            alg: String = "HmacSHA256"
+        ): String {
+            val signingKey = SecretKeySpec(key.toByteArray(), alg)
+            val mac = Mac.getInstance(alg)
+            mac.init(signingKey)
+
+            val bytes = mac.doFinal(msg.toByteArray())
+            return format(bytes)
+        }
+
+        private fun format(bytes: ByteArray): String {
+            val formatter = Formatter()
+            bytes.forEach { formatter.format("%02x", it) }
+            return formatter.toString()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         configureSdk()
+        val stringmsg = "x_publickey${publicKey}x_amount${number3digits}x_currency${currency}x_transaction${transactionReference}x_post$postUrl"
+        Log.e("stringMessage",stringmsg.toString())
+        val string = Hmac.digest(msg = stringmsg, key =secretString )
+        Log.e("encrypted hashString",string.toString())
+
     }
+
+
 
     fun configureSdk(){
 
@@ -124,9 +163,10 @@ class MainActivity : AppCompatActivity() {
 
         configuration.put("operator",operator)
         configuration.put("order",order)
+        configuration.put("customer",customer)
+
         configuration.put("merchant",merchant)
         configuration.put("invoice",invoice)
-        configuration.put("customer",customer)
         configuration.put("interface",interfacee)
         configuration.put("post",post)
 
@@ -136,57 +176,38 @@ class MainActivity : AppCompatActivity() {
             this,
             findViewById(R.id.benfit_pay),
             configuration,
-            object : TapBenefitPayStatusDelegate {
-                override fun onSuccess(data: String) {
-                    findViewById<TextView>(R.id.data).text = data + "\n " + findViewById<TextView>(R.id.data).text
-                    Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()
-                }
-                override fun onReady() {
-                      Toast.makeText(this@MainActivity, "onReady", Toast.LENGTH_SHORT).show()
-
-                }
-
-
-                override fun onError(error: String) {
-                    findViewById<TextView>(R.id.data).text = error + "\n " + findViewById<TextView>(R.id.data).text
-
-                    Toast.makeText(this@MainActivity, "onError ${error}", Toast.LENGTH_SHORT).show()
-                    Log.e("test",error.toString())
-
-                }
-
-                override fun onChargeCreated(data: String) {
-                    findViewById<TextView>(R.id.data).text = data + "\n " + findViewById<TextView>(R.id.data).text
-
-                    Toast.makeText(this@MainActivity, "chargeCreated ${data}", Toast.LENGTH_SHORT).show()
-
-                }
-
-                override fun onOrderCreated(data: String) {
-                    findViewById<TextView>(R.id.data).text = data + "\n " + findViewById<TextView>(R.id.data).text
-
-                    Toast.makeText(this@MainActivity, "orderCreated ${data}", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onClick() {
-                    Toast.makeText(this@MainActivity, "onClick ", Toast.LENGTH_SHORT).show()
-
-                }
-
-
-            })
+           this)
 
 
     }
 
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val intent = Intent(this, SettingsActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        finish()
-        startActivity(intent)
 
+    override fun onSuccess(data: String) {
+    }
+
+    override fun onReady() {
+        super.onReady()
+    }
+
+    override fun onClick() {
+        super.onClick()
+    }
+
+    override fun onChargeCreated(data: String) {
+        super.onChargeCreated(data)
+    }
+
+    override fun onOrderCreated(data: String) {
+        super.onOrderCreated(data)
+    }
+
+    override fun onCancel() {
+        super.onCancel()
+    }
+
+    override fun onError(error: String) {
+        Log.e("errorBac",error.toString())
     }
 
 }

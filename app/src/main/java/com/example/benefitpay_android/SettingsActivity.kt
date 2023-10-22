@@ -24,6 +24,8 @@ class SettingsActivity : AppCompatActivity(),SimpleSettingsConfig.PreferenceCall
             .build()
 
 
+
+
         SimpleSettings(this, configuration).show(R.xml.preferences)
 
     }
