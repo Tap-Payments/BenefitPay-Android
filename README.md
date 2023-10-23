@@ -1012,3 +1012,59 @@ Possible Values:
 
 }
 ``` 
+
+
+
+# Generate the hash string[](https://developers.tap.company/docs/benefit-pay-android#generate-the-hash-string)
+
+1. Import the Crypto
+```kotlin
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
+import java.util.Formatter
+``` 
+2. Copy this helper singleton class
+```kotlin
+
+/// Create a singleton class where you can use as a helper to generate hash strings
+object TapHmac {
+	/**
+     This is a helper method showing how can you generate a hash string when performing live charges
+     - Parameter publicKey:             The Tap public key for you as a merchant pk_.....
+     - Parameter secretKey:             The Tap secret key for you as a merchant sk_.....
+     - Parameter amount:                The amount you are passing to the SDK, ot the amount you used in the order if you created the order before.
+     - Parameter currency:              The currency code you are passing to the SDK, ot the currency code you used in the order if you created the order before. PS: It is the capital case of the 3 iso country code ex: SAR, KWD.
+     - Parameter post:                  The post url you are passing to the SDK, ot the post url you pass within the Charge API. If you are not using postUrl please pass it as empty string
+     - Parameter transactionReference:  The reference.trasnsaction you are passing to the SDK(not all SDKs supports this,) or the reference.trasnsaction  you pass within the Charge API. If you are not using reference.trasnsaction please pass it as empty string
+     */
+    fun generateTapHashString(publicKey:String, secretKey:String, amount:Double, currency:String, postUrl:String = "", transactionReference:String = ""): String {
+        // Let us generate our encryption key
+        val signingKey = SecretKeySpec(secretKey.toByteArray(), "HmacSHA256")
+        val mac = Mac.getInstance("HmacSHA256")
+        mac.init(signingKey)
+        // For amounts, you will need to make sure they are formatted in a way to have the correct number of decimal points. For BHD we need them to have 3 decimal points
+		val formattedAmount:String = String.format("%.3f", amount)
+        // Let us format the string that we will hash
+        val toBeHashed = "x_publickey${publicKey}x_amount${formattedAmount}x_currency${currency}x_transaction${transactionReference}x_post$postUrl"
+        // let us generate the hash string now using the HMAC SHA256 algorithm
+        val bytes = mac.doFinal(toBeHashed.toByteArray())
+        return format(bytes)
+    }
+
+    private fun format(bytes: ByteArray): String {
+        val formatter = Formatter()
+        bytes.forEach { formatter.format("%02x", it) }
+        return formatter.toString()
+    }
+}
+```
+3. Call it as follows:
+```kotlin
+val hashString:String = TapHmac.generateTapHashString(publicKey, secretKey, amount, currency, postUrl)
+```
+4. Pass it within the operator model
+```kotlin
+val operator = HashMap<String,Any>()
+operator.put("publicKey","publickKeyValue")
+operator.put("hashString",hashString)
+```
