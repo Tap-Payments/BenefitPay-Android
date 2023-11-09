@@ -24,8 +24,6 @@ import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.rawFolderRefrence
-import company.tap.tapuilibrary.R
-import company.tap.tapuilibrary.themekit.ThemeManager
 import jp.wasabeef.blurry.Blurry
 import java.net.URLEncoder
 import java.util.*
@@ -124,40 +122,6 @@ fun Uri.getQueryParameterFromUri(keyValue: String): String {
 }
 
 
-fun ViewGroup.addLoaderWithBlurryToView(showLoadingIcon: Boolean, invokeAfterLoad: () -> Unit) {
-    val progressBarSize = 65
-
-
-    @DrawableRes
-    val loaderGif: Int =
-        if (ThemeManager.currentTheme.isNotEmpty() && ThemeManager.currentTheme.contains("dark")) {
-            R.drawable.loader
-        } else if (ThemeManager.currentTheme.isNotEmpty() && !ThemeManager.currentTheme.contains(
-                "dark"
-            )
-        ) {
-            company.tap.tapcardformkit.R.drawable.output_black_loader_nobg
-        } else
-            R.drawable.loader
-
-
-
-    this.applyBluryToView()
-
-    if (showLoadingIcon) {
-        val progressImage = ImageView(this.context)
-        val params = FrameLayout.LayoutParams(progressBarSize, progressBarSize)
-        params.gravity = Gravity.CENTER
-        progressImage.layoutParams = params
-        Glide.with(this.context).asGif().load(loaderGif).into(progressImage)
-
-        this.addView(progressImage)
-    }
-    doAfterSpecificTime(5000) {
-        invokeAfterLoad.invoke()
-    }
-
-}
 
 fun getScreenHeight(): Int {
     return Resources.getSystem().getDisplayMetrics().heightPixels
