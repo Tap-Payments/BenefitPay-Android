@@ -21,7 +21,6 @@ import android.webkit.*
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.view.*
-import cards.pay.paycardsrecognizer.sdk.Card
 import company.tap.tapcardformkit.*
 import company.tap.tapcardformkit.open.ApplicationLifecycle
 import company.tap.tapcardformkit.open.DataConfiguration
@@ -46,7 +45,6 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
     companion object{
         lateinit var cardWebview: WebView
         lateinit var cardConfiguraton: CardConfiguraton
-        var card:Card?=null
     }
 
     /**

@@ -20,38 +20,14 @@ import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.core.os.postDelayed
-import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.rawFolderRefrence
-import jp.wasabeef.blurry.Blurry
 import java.net.URLEncoder
 import java.util.*
 import kotlin.random.Random
 import kotlin.random.asKotlinRandom
 
-fun View.applyBluryToView(
-    radiusNeeded: Int = 8,
-    sampling: Int = 2,
-    animationDuration: Int = 1000,
-    showOriginalView: Boolean = false
-) {
-
-//    (this as ViewGroup).children.forEachIndexed { index, view ->
-//        if (index != 0) removeView(view)
-//    }
-
-    Blurry.with(context).radius(radiusNeeded).sampling(sampling).animate(animationDuration)
-        .onto(this as ViewGroup).apply {
-            when (showOriginalView) {
-                true -> this@applyBluryToView.getChildAt(0).visibility = View.VISIBLE
-                false -> this@applyBluryToView.getChildAt(0).visibility = View.GONE
-            }
-
-        }
-
-
-}
 
 
 fun Context.px(@DimenRes dimen: Int): Int = resources.getDimension(dimen).toInt()
