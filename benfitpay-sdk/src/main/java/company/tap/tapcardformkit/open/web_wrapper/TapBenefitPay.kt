@@ -3,7 +3,6 @@ package company.tap.tapbenefitpay.open.web_wrapper
 import TapLocal
 import TapTheme
 import android.annotation.SuppressLint
-import android.app.ActivityManager
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -25,7 +24,6 @@ import company.tap.tapbenefitpay.*
 import company.tap.tapbenefitpay.open.ApplicationLifecycle
 import company.tap.tapbenefitpay.open.DataConfiguration
 import company.tap.tapbenefitpay.open.web_wrapper.enums.BenefitPayStatusDelegate
-import company.tap.tapbenefitpay.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
 import java.net.URISyntaxException
@@ -64,7 +62,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
 
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.activity_card_web_wrapper, this)
+        LayoutInflater.from(context).inflate(R.layout.activity_benefit_pay_layout_wrapper, this)
         initWebView()
 
     }

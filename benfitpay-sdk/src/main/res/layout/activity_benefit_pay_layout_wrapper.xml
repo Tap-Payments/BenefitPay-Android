@@ -5,11 +5,10 @@
     android:id="@+id/constraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    tools:context=".open.web_wrapper.scanner_activity.ScannerActivity">
+    android:background="@android:color/transparent">
 
     <include
-        layout="@layout/webviewlayout"
+        layout="@layout/webviewlayout_benefit_pay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
