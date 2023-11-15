@@ -1,4 +1,4 @@
-package company.tap.tapcardformkit.open
+package company.tap.tapbenefitpay.open
 
 import Customer
 import TapAuthentication
@@ -8,9 +8,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.util.Log
-import company.tap.tapcardformkit.R
-import company.tap.tapcardformkit.open.web_wrapper.BeneiftPayConfiguration
-import company.tap.tapcardformkit.open.web_wrapper.TapBenefitPay
+import company.tap.tapbenefitpay.R
+import company.tap.tapbenefitpay.open.web_wrapper.BeneiftPayConfiguration
+import company.tap.tapbenefitpay.open.web_wrapper.TapBenefitPay
 import company.tap.taplocalizationkit.LocalizationManager
 import company.tap.tapuilibrary.themekit.ThemeManager
 import java.util.*

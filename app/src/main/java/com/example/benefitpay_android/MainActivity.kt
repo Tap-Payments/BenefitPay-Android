@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
-import company.tap.tapcardformkit.open.TapBenefitPayStatusDelegate
-import company.tap.tapcardformkit.open.web_wrapper.BeneiftPayConfiguration
-import company.tap.tapcardformkit.open.web_wrapper.TapBenefitPay
+import company.tap.tapbenefitpay.open.TapBenefitPayStatusDelegate
+import company.tap.tapbenefitpay.open.web_wrapper.BeneiftPayConfiguration
+import company.tap.tapbenefitpay.open.web_wrapper.TapBenefitPay
 import java.util.*
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec

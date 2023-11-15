@@ -1,4 +1,4 @@
-package company.tap.tapcardformkit.open.web_wrapper
+package company.tap.tapbenefitpay.open.web_wrapper
 
 const val rawFolderRefrence = "raw"
 const val CardWebUrlPrefix = "tapbenefitpaywebsdk://"

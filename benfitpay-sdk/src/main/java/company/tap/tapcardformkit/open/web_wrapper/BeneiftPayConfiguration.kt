@@ -1,14 +1,14 @@
-package company.tap.tapcardformkit.open.web_wrapper
+package company.tap.tapbenefitpay.open.web_wrapper
 
 import Headers
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ProcessLifecycleOwner
-import company.tap.tapcardformkit.R
-import company.tap.tapcardformkit.open.AppLifecycleObserver
-import company.tap.tapcardformkit.open.DataConfiguration
-import company.tap.tapcardformkit.open.DataConfiguration.configurationsAsHashMap
-import company.tap.tapcardformkit.open.TapBenefitPayStatusDelegate
+import company.tap.tapbenefitpay.R
+import company.tap.tapbenefitpay.open.AppLifecycleObserver
+import company.tap.tapbenefitpay.open.DataConfiguration
+import company.tap.tapbenefitpay.open.DataConfiguration.configurationsAsHashMap
+import company.tap.tapbenefitpay.open.TapBenefitPayStatusDelegate
 import company.tap.tapnetworkkit.connection.NetworkApp
 import company.tap.tapnetworkkit.utils.CryptoUtil
 

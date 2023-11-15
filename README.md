@@ -75,7 +75,7 @@ Once you create the variable in any way, you will have to follow these steps:
     android:layout_height="match_parent"
     tools:context=".main_activity.MainActivity">
 
- <company.tap.tapcardformkit.open.web_wrapper.TapBenefitPay
+ <company.tap.tapbenefitpay.open.web_wrapper.TapBenefitPay
         android:id="@+id/tapBenefitPay"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

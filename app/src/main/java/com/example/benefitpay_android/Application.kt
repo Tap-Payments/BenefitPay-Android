@@ -1,7 +1,7 @@
 package com.example.benefitpay_android
 
 import android.app.Application
-import company.tap.tapcardformkit.open.AppLifecycleObserver
+import company.tap.tapbenefitpay.open.AppLifecycleObserver
 
 
 class MyApp : Application() {

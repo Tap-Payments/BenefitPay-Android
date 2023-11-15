@@ -1,4 +1,4 @@
-package company.tap.tapcardformkit.open.web_wrapper.model
+package company.tap.tapbenefitpay.open.web_wrapper.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

@@ -1,4 +1,4 @@
-package company.tap.tapcardformkit
+package company.tap.tapbenefitpay
 
 import android.app.Activity
 import android.content.Context
@@ -21,8 +21,8 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.core.os.postDelayed
 import com.google.gson.Gson
-import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
-import company.tap.tapcardformkit.open.web_wrapper.rawFolderRefrence
+import company.tap.tapbenefitpay.open.web_wrapper.model.ThreeDsResponse
+import company.tap.tapbenefitpay.open.web_wrapper.rawFolderRefrence
 import java.net.URLEncoder
 import java.util.*
 import kotlin.random.Random
