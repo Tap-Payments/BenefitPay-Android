@@ -1,14 +1,28 @@
 package com.example.benefitpay_android
 
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
+import android.net.http.SslError
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
+import android.view.ViewGroup
+import android.webkit.*
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import company.tap.tapbenefitpay.getQueryParameterFromUri
+import company.tap.tapbenefitpay.open.DataConfiguration
 import company.tap.tapbenefitpay.open.TapBenefitPayStatusDelegate
-import company.tap.tapbenefitpay.open.web_wrapper.BeneiftPayConfiguration
-import company.tap.tapbenefitpay.open.web_wrapper.TapBenefitPay
+import company.tap.tapbenefitpay.open.web_wrapper.*
+import company.tap.tapbenefitpay.open.web_wrapper.enums.BenefitPayStatusDelegate
+import java.net.URISyntaxException
 import java.util.*
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
@@ -52,8 +66,9 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         Log.e("stringMessage",stringmsg.toString())
         val string = Hmac.digest(msg = stringmsg, key =secretString )
         Log.e("encrypted hashString",string.toString())
-
     }
+
+
 
 
 

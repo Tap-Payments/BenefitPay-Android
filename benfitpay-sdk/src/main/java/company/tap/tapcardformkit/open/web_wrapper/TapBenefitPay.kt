@@ -20,6 +20,7 @@ import android.webkit.*
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.view.*
+import androidx.webkit.WebViewAssetLoader
 import company.tap.tapbenefitpay.*
 import company.tap.tapbenefitpay.open.ApplicationLifecycle
 import company.tap.tapbenefitpay.open.DataConfiguration
@@ -74,7 +75,8 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
          with(cardWebview.settings){
              javaScriptEnabled=true
              domStorageEnabled=true
-             cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+             cacheMode = WebSettings.LOAD_NO_CACHE
+
 
          }
          cardWebview.setBackgroundColor(Color.TRANSPARENT)
@@ -150,6 +152,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
             webView: WebView?,
             request: WebResourceRequest?
         ): Boolean {
+
 
             /**
              * main checker if url start with "tapCardWebSDK://"
@@ -251,7 +254,9 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
             request: WebResourceRequest?
         ): WebResourceResponse? {
             Log.e("intercepted",request?.url.toString())
+
             when(request?.url?.toString()?.contains(beneiftPayCheckoutUrl)?.and((!isBenefitPayUrlIntercepted))) {
+
                 true ->{
 
                     view?.post{
@@ -307,8 +312,10 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
             request: WebResourceRequest,
             error: WebResourceError
         ) {
-            Log.e("error",error.toString())
-            Log.e("error",request.toString())
+            Log.e("error code",error.errorCode.toString())
+            Log.e("error description ",error.description.toString())
+
+            Log.e("request header ",request.requestHeaders.toString())
 
             super.onReceivedError(view, request, error)
         }
