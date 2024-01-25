@@ -30,7 +30,7 @@ import kotlin.collections.HashMap
 import kotlin.collections.LinkedHashMap
 
 class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
-    var publicKey:String = "pk_live_0zHLeUTOXBNEyJ8p6csbK52m"
+    var publicKeyLive:String = "pk_live_0zHLeUTOXBNEyJ8p6csbK52m"
     var amount:Double = 1.0
     var currency:String = "BHD"
     var transactionReference:String = ""
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         configureSdk()
-        val stringmsg = "x_publickey${publicKey}x_amount${number3digits}x_currency${currency}x_transaction${transactionReference}x_post$postUrl"
+        val stringmsg = "x_publickey${publicKeyLive}x_amount${number3digits}x_currency${currency}x_transaction${transactionReference}x_post$postUrl"
         Log.e("stringMessage",stringmsg.toString())
         val string = Hmac.digest(msg = stringmsg, key =secretString )
         Log.e("encrypted hashString",string.toString())
