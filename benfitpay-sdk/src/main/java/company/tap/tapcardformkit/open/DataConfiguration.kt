@@ -142,8 +142,8 @@ object DataConfiguration {
         return tapBenefitPayStatusDelegate
     }
 
-    fun initializeSDK(activity: Activity, configurations: HashMap<String,Any>, tapBenefitPay: TapBenefitPay){
-        BeneiftPayConfiguration.configureWithTapBenfitPayDictionaryConfiguration(activity,tapBenefitPay,configurations)
+    fun initializeSDK(activity: Activity, configurations: HashMap<String,Any>, tapBenefitPay: TapBenefitPay , tapBenefitPayStatusDelegate: TapBenefitPayStatusDelegate){
+        BeneiftPayConfiguration.configureWithTapBenfitPayDictionaryConfiguration(activity,tapBenefitPay,configurations , tapBenefitPayStatusDelegate)
     }
 
 
