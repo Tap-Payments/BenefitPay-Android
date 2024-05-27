@@ -92,7 +92,6 @@ class BeneiftPayConfiguration {
              //   BASE_URL = urlWebStarter
                 testEncKey =  tapCardInputViewWeb?.context?.resources?.getString(R.string.enryptkeyTest)
                // prodEncKey = tapCardInputViewWeb?.context?.resources?.getString(R.string.enryptkeyProduction)
-               // prodEncKey = tapCardInputViewWeb?.context?.resources?.getString(R.string.enryptkeyTest)
 
                 startSDKWithConfigs(
                     tapMapConfiguration,
