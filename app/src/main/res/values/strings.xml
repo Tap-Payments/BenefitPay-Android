@@ -161,8 +161,8 @@
     </string-array>
 
     <string-array name="Edges">
+        <item>circular</item>
         <item>flat</item>
-        <item>curved</item>
     </string-array>
 
     <string-array name="Direction">

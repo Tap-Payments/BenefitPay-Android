@@ -10,7 +10,8 @@ const val authDataPayerKey = "authDataPayer"
 const val waitDelaytime = 4000L
 
 //const val urlWebStarter = "https://demo.dev.tap.company/v2/sdk/checkout?type=card-iframe&configurations="
-const val urlWebStarter = "https://button.dev.tap.company/wrapper/benefitpay?configurations="
+const val urlWebStarter = "https://button.dev.tap.company/wrapper/v1/benefitpay?configurations="
+//const val urlWebStarter = "https://button.dev.tap.company/wrapper/benefitpay?configurations="
 const val lightLottieUrlJson = "https://tap-assets.b-cdn.net/card-sdk/shimmer/Light_Mode_Button_Loader.json"
 const val darkLottieUrlJson = "https://tap-assets.b-cdn.net/card-sdk/shimmer/Dark_Mode_Button_Loader.json"
 const val lightLottieAssetName = "lottie_light"

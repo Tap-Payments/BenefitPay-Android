@@ -126,32 +126,17 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
          * phone
          */
         val phone = java.util.HashMap<String,Any>()
-        phone.put("countryCode","+20")
-        phone.put("number","011")
+        phone.put("countryCode","+965")
+        phone.put("number","88888888")
 
 
         /**
          * contact
          */
         val contact = java.util.HashMap<String,Any>()
-        contact.put("email","test@gmail.com")
+        contact.put("email","tap@tap.company")
         contact.put("phone",phone)
-        /**
-         * name
-         */
-        val name = java.util.HashMap<String,Any>()
-        name.put("lang","en")
-        name.put("first", "first")
-        name.put("middle", "middle")
-        name.put("last","last")
 
-        /**
-         * customer
-         */
-        val customer = java.util.HashMap<String,Any>()
-        customer.put("id", "")
-        customer.put("contact",contact)
-        customer.put("name", listOf(name))
 
         /**
          * interface
@@ -166,22 +151,61 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         Log.e("interfaceData",selectedTheme.toString() + "language" + selectedLanguage.toString() + "cardedge " + selectedCardEdge.toString() +" loader" + loader.toString() + "selectedColorStylee " + selectedColorStylee.toString())
         val interfacee = HashMap<String,Any>()
         interfacee.put("locale",selectedLanguage ?: "en")
-        interfacee.put("theme",selectedTheme ?: "light")
-        interfacee.put("edges",selectedCardEdge ?: "curved")
-        interfacee.put("colorStyle",selectedColorStylee ?:"colored")
-        interfacee.put("loader",loader)
+      //  interfacee.put("theme",selectedTheme ?: "light")
+        interfacee.put("edges",selectedCardEdge ?: "circular")
+     //   interfacee.put("colorStyle",selectedColorStylee ?:"colored")
+     //   interfacee.put("loader",loader)
 
 
         val post = HashMap<String,Any>()
         post.put("url","")
         val configuration = LinkedHashMap<String,Any>()
 
+        /**
+       * Transaction
+        * ***/
+        val transaction = HashMap<String,Any>()
+
+        transaction.put("amount",  if (orderAmount?.isEmpty() == true)"1" else orderAmount.toString() )
+        transaction.put("currency",selectedCurrency)
+      /*  transaction.put("amount",  "12" )
+        transaction.put("currency","BHD")*/
+
+        Log.e("transaction", " \n orderamount " + orderAmount.toString() + "  \n currency " + selectedCurrency.toString())
+
+        /**
+       * Reference */
+        val reference = HashMap<String,Any>()
+
+        reference.put("transaction",  "transaction" )
+        reference.put("order","order")
+        /**
+         * name
+         */
+        val name = java.util.HashMap<String,Any>()
+        name.put("lang","en")
+        name.put("first", "TAP")
+        name.put("middle", "middle")
+        name.put("last","PAYMENTS")
+
+
+        /**
+         * customer
+         */
+        val customer = java.util.HashMap<String,Any>()
+        customer.put("id", "")
+        customer.put("names", listOf(name))
+        customer.put("contact",contact)
+
         configuration.put("operator",operator)
-        configuration.put("order",order)
+       // configuration.put("order",order)
+        configuration.put("transaction",transaction)
+        configuration.put("reference",reference)
+
         configuration.put("customer",customer)
 
         configuration.put("merchant",merchant)
-        configuration.put("invoice",invoice)
+       // configuration.put("invoice",invoice)
         configuration.put("interface",interfacee)
         configuration.put("post",post)
 
@@ -222,7 +246,8 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
     }
 
     override fun onError(error: String) {
-        Log.e("errorBac",error.toString())
+
+        Log.e("onError RECIEVED ::",error.toString())
     }
 
 }
