@@ -191,7 +191,6 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onError.name)) {
                     pair = Pair(request?.url?.getQueryParameterFromUri(keyValueName).toString(),true)
                     DataConfiguration.getTapCardStatusListener()?.onError(request?.url?.getQueryParameterFromUri(keyValueName).toString())
-
                     closePayment()
 
                 }
@@ -201,7 +200,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                     when(iSAppInForeground) {
 
                         true ->{closePayment()
-                            Log.e("app","one")
+                            Log.e("success","one")
                         }
                         false ->{}
                     }
@@ -342,7 +341,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
     override fun onEnterForeground() {
         iSAppInForeground = true
         Log.e("applifeCycle","onEnterForeground")
-        closePayment()
+      //  closePayment()
 
 
 
@@ -351,11 +350,13 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
     }
 
     private fun closePayment() {
+
         if (pair.second) {
             Log.e("app","one")
             dismissDialog()
-            init(cardConfiguraton)
+          //  init(cardConfiguraton) // was reloading url cz problem stopped
             DataConfiguration.getTapCardStatusListener()?.onSuccess(pair.first)
+
         }
     }
 

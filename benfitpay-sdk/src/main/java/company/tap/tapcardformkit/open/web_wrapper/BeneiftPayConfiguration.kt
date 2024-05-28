@@ -24,7 +24,7 @@ class BeneiftPayConfiguration {
         private val retrofit = ApiService.RetrofitClient.getClient()
         private val tapSDKConfigsUrl = retrofit.create(ApiService.TapSDKConfigUrls::class.java)
         private var testEncKey: String? = null
-       // private var prodEncKey: String? = null
+        private var prodEncKey: String? = null
         private var dynamicBaseUrlResponse: String? = null
         fun configureWithTapBenfitPayDictionaryConfiguration(
             context: Context,
@@ -79,6 +79,7 @@ class BeneiftPayConfiguration {
                 val tapSDKConfigUrlResponse = tapSDKConfigsUrl.getSDKConfigUrl()
                // BASE_URL = tapSDKConfigUrlResponse.baseURL
                 testEncKey = tapSDKConfigUrlResponse.testEncKey
+                prodEncKey = tapSDKConfigUrlResponse.prodEncKey
                 urlWebStarter = tapSDKConfigUrlResponse.baseURL
 
                 startSDKWithConfigs(
@@ -91,7 +92,7 @@ class BeneiftPayConfiguration {
             } catch (e: Exception) {
              //   BASE_URL = urlWebStarter
                 testEncKey =  tapCardInputViewWeb?.context?.resources?.getString(R.string.enryptkeyTest)
-               // prodEncKey = tapCardInputViewWeb?.context?.resources?.getString(R.string.enryptkeyProduction)
+                prodEncKey = tapCardInputViewWeb?.context?.resources?.getString(R.string.enryptkeyProduction)
 
                 startSDKWithConfigs(
                     tapMapConfiguration,
@@ -149,20 +150,24 @@ class BeneiftPayConfiguration {
             publicKey: String?,
             tapCardInputViewWeb: TapBenefitPay?
         ): String? {
-            //if (!testEncKey.isNullOrBlank() && !prodEncKey.isNullOrBlank()) {
-            if (!testEncKey.isNullOrBlank()) {
-
+            if (!testEncKey.isNullOrBlank() && !prodEncKey.isNullOrBlank()) {
+                return if (publicKey?.contains("test") == true) {
                     // println("EncKey>>>>>" + testEncKey)
-               return  testEncKey
-
+                    testEncKey
+                } else {
+                    //  println("EncKey<<<<<<" + prodEncKey)
+                    prodEncKey
+                }
             } else {
-
-                return tapCardInputViewWeb?.context?.resources?.getString(R.string.enryptkeyTest)
-
+                //  println("EncKey<<<<<<>>>>>>>>>" + testEncKey)
+                return if (publicKey?.contains("test") == true) {
+                    tapCardInputViewWeb?.context?.resources?.getString(R.string.enryptkeyTest)
+                }else{
+                    tapCardInputViewWeb?.context?.resources?.getString(R.string.enryptkeyProduction)
+                }
 
 
             }
-
         }
 
         private fun startSDKWithConfigs(

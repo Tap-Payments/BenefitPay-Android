@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
     var postUrl:String = ""
     var secretString = "sk_live_x28QGHEwiVet6yKq07zMOrjU"
    val number3digits:String = String.format("%.3f", amount)
+   lateinit var dataTextView:TextView
 
     object Hmac {
         fun digest(
@@ -66,6 +67,8 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         Log.e("stringMessage",stringmsg.toString())
         val string = Hmac.digest(msg = stringmsg, key =secretString )
         Log.e("encrypted hashString",string.toString())
+
+        dataTextView = findViewById(R.id.data)
     }
 
 
@@ -223,6 +226,7 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
 
 
     override fun onSuccess(data: String) {
+        dataTextView.text = data
     }
 
     override fun onReady() {
@@ -243,10 +247,11 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
 
     override fun onCancel() {
         super.onCancel()
+        dataTextView.text = "Result is :: Cancelled!!!"
     }
 
     override fun onError(error: String) {
-
+        dataTextView.text = "Result is :: "+error
         Log.e("onError RECIEVED ::",error.toString())
     }
 
