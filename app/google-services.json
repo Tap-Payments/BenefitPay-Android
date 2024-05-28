@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "450705786189",
+    "project_id": "tapbenefitpaysdk",
+    "storage_bucket": "tapbenefitpaysdk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:450705786189:android:10699af5be2c19cb8aa304",
+        "android_client_info": {
+          "package_name": "com.example.benefitpay_android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfHgfpvTQx8n5u3noqVzth6FNzVlQwq8U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
