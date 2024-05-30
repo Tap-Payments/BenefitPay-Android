@@ -30,10 +30,11 @@
 
         <ProgressBar
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="15dp"
             android:indeterminateTint="@color/darker_gray"
             android:visibility="visible"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
             android:id="@+id/progress_circular"/>
         </WebView>
     </FrameLayout>
