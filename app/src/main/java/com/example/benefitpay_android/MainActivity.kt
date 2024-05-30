@@ -22,6 +22,10 @@ import company.tap.tapbenefitpay.open.DataConfiguration
 import company.tap.tapbenefitpay.open.TapBenefitPayStatusDelegate
 import company.tap.tapbenefitpay.open.web_wrapper.*
 import company.tap.tapbenefitpay.open.web_wrapper.enums.BenefitPayStatusDelegate
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.net.URISyntaxException
 import java.util.*
 import javax.crypto.Mac
@@ -247,12 +251,19 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
 
     override fun onCancel() {
         super.onCancel()
-        dataTextView.text = "Result is :: Cancelled!!!"
+
+            dataTextView.text = "Result is :: Cancelled!!!"
+
+
+
     }
 
     override fun onError(error: String) {
-        dataTextView.text = "Result is :: "+error
-        Log.e("onError RECIEVED ::",error.toString())
-    }
+
+            dataTextView.text = "Result is :: "+error
+            Log.e("onError RECIEVED ::",error.toString())
+        }
+
+
 
 }

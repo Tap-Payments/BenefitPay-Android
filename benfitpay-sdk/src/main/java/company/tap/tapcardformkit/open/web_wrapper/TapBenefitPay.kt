@@ -11,6 +11,7 @@ import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.net.http.SslError
 import android.os.Build
+import android.os.Looper
 import android.util.AttributeSet
 import android.util.Log
 import android.view.KeyEvent
@@ -19,6 +20,7 @@ import android.view.ViewGroup
 import android.webkit.*
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.os.postDelayed
 import androidx.core.view.*
 import androidx.webkit.WebViewAssetLoader
 import company.tap.tapbenefitpay.*
@@ -29,16 +31,22 @@ import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
 import java.net.URISyntaxException
 import java.util.*
+import java.util.logging.Handler
+
+import kotlin.concurrent.schedule
+import kotlin.math.log
 
 
 @SuppressLint("ViewConstructor")
 class TapBenefitPay : LinearLayout,ApplicationLifecycle {
     lateinit var webViewFrame: FrameLayout
+    lateinit var progressBar: ProgressBar
     private var isBenefitPayUrlIntercepted =false
     lateinit var dialog: Dialog
      var pair =  Pair("",false)
     lateinit var linearLayout: LinearLayout
      var iSAppInForeground = true
+     var onSuccessCalled = false
 
 
     companion object{
@@ -72,6 +80,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
      private fun initWebView() {
         cardWebview = findViewById(R.id.webview)
         webViewFrame = findViewById(R.id.webViewFrame)
+         progressBar = findViewById(R.id.progress_circular)
          with(cardWebview.settings){
              javaScriptEnabled=true
              domStorageEnabled=true
@@ -89,8 +98,9 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
 
      fun init(configuraton: CardConfiguraton) {
          cardConfiguraton = configuraton
+         progressBar.visibility = VISIBLE
          DataConfiguration.addAppLifeCycle(this)
-        applyTheme()
+         applyTheme()
         when (configuraton) {
             CardConfiguraton.MapConfigruation -> {
                 val url  = "${urlWebStarter}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
@@ -147,6 +157,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
 
 
     inner class MyWebViewClient : WebViewClient() {
+        @SuppressLint("SuspiciousIndentation")
         @RequiresApi(Build.VERSION_CODES.O)
         override fun shouldOverrideUrlLoading(
             webView: WebView?,
@@ -165,37 +176,58 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                  */
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onReady.name)) {
                     DataConfiguration.getTapCardStatusListener()?.onReady()
+                    progressBar.visibility = GONE
                 }
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onChargeCreated.name)) {
                     DataConfiguration.getTapCardStatusListener()?.onChargeCreated(request?.url?.getQueryParameterFromUri(keyValueName).toString())
+                    progressBar.visibility = GONE
                 }
 
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onOrderCreated.name)) {
                     DataConfiguration.getTapCardStatusListener()?.onOrderCreated(request?.url?.getQueryParameter(keyValueName).toString())
+                    progressBar.visibility = GONE
                 }
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onClick.name)) {
+                    progressBar.visibility = VISIBLE
                     isBenefitPayUrlIntercepted=false
                     pair = Pair("",false)
                     DataConfiguration.getTapCardStatusListener()?.onClick()
+                    onSuccessCalled = false
+
 
                 }
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onCancel.name)) {
-                    DataConfiguration.getTapCardStatusListener()?.onCancel()
-                    if (!(pair.first.isNotEmpty() and pair.second)) {
-                        dismissDialog()
+                    android.os.Handler(Looper.getMainLooper()).postDelayed(3000) {
+                        if(!onSuccessCalled){
+                            DataConfiguration.getTapCardStatusListener()?.onCancel()
+                        }
+
+
                     }
 
+                    if (!(pair.first.isNotEmpty() and pair.second)) {
+                            dismissDialog()
+                        }
+                    progressBar.visibility = GONE
 
                 }
 
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onError.name)) {
+                    android.os.Handler(Looper.getMainLooper()).postDelayed(3000) {
+                        if(!onSuccessCalled){
+                            DataConfiguration.getTapCardStatusListener()?.onError(request?.url?.getQueryParameterFromUri(keyValueName).toString())
+
+                        }
+
+                    }
                     pair = Pair(request?.url?.getQueryParameterFromUri(keyValueName).toString(),true)
-                    DataConfiguration.getTapCardStatusListener()?.onError(request?.url?.getQueryParameterFromUri(keyValueName).toString())
-                    closePayment()
+                        closePayment()
+                    progressBar.visibility = GONE
 
                 }
 
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onSuccess.name)) {
+                    onSuccessCalled = true
                     pair = Pair(request?.url?.getQueryParameterFromUri(keyValueName).toString(),true)
                     when(iSAppInForeground) {
 
@@ -204,7 +236,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                         }
                         false ->{}
                     }
-
+                    progressBar.visibility = GONE
 
                 }
 
@@ -234,6 +266,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                     Log.e("error", "Can't resolve intent://", e)
 
                 }
+                progressBar.visibility = GONE
             }
 
 
@@ -254,10 +287,10 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
         ): WebResourceResponse? {
             Log.e("intercepted",request?.url.toString())
 
+
             when(request?.url?.toString()?.contains(beneiftPayCheckoutUrl)?.and((!isBenefitPayUrlIntercepted))) {
 
                 true ->{
-
                     view?.post{
                         (webViewFrame as ViewGroup).removeView(cardWebview)
 
