@@ -2,19 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:id="@+id/webViewFrame"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-
-    <FrameLayout
-        android:id="@+id/webViewFrame"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_45sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+    android:layout_height="@dimen/_45sdp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
 
         <WebView
@@ -35,9 +28,7 @@
             android:indeterminate="true"
             android:indeterminateTint="@color/darker_gray"
             android:visibility="visible"
-            android:layout_gravity="center_horizontal"
             android:id="@+id/progress_circular"/>
         </WebView>
-    </FrameLayout>
 
 </LinearLayout>

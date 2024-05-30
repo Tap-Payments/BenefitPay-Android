@@ -39,7 +39,7 @@ import kotlin.math.log
 
 @SuppressLint("ViewConstructor")
 class TapBenefitPay : LinearLayout,ApplicationLifecycle {
-    lateinit var webViewFrame: FrameLayout
+    lateinit var webViewFrame: LinearLayout
     lateinit var progressBar: ProgressBar
     private var isBenefitPayUrlIntercepted =false
     lateinit var dialog: Dialog
