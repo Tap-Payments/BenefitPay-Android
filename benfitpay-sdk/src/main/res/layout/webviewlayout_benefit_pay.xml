@@ -27,7 +27,7 @@
             android:layout_margin="15dp"
             android:indeterminate="true"
             android:indeterminateTint="@color/darker_gray"
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/progress_circular"/>
         </WebView>
 

@@ -98,7 +98,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
 
      fun init(configuraton: CardConfiguraton) {
          cardConfiguraton = configuraton
-         progressBar.visibility = VISIBLE
+        // progressBar.visibility = VISIBLE
          DataConfiguration.addAppLifeCycle(this)
          applyTheme()
         when (configuraton) {
@@ -176,19 +176,19 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                  */
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onReady.name)) {
                     DataConfiguration.getTapCardStatusListener()?.onReady()
-                    progressBar.visibility = GONE
+                  //  progressBar.visibility = GONE
                 }
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onChargeCreated.name)) {
                     DataConfiguration.getTapCardStatusListener()?.onChargeCreated(request?.url?.getQueryParameterFromUri(keyValueName).toString())
-                    progressBar.visibility = GONE
+                  //  progressBar.visibility = GONE
                 }
 
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onOrderCreated.name)) {
                     DataConfiguration.getTapCardStatusListener()?.onOrderCreated(request?.url?.getQueryParameter(keyValueName).toString())
-                    progressBar.visibility = GONE
+                  //  progressBar.visibility = GONE
                 }
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onClick.name)) {
-                    progressBar.visibility = VISIBLE
+                   // progressBar.visibility = VISIBLE
                     isBenefitPayUrlIntercepted=false
                     pair = Pair("",false)
                     DataConfiguration.getTapCardStatusListener()?.onClick()
@@ -208,7 +208,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                     if (!(pair.first.isNotEmpty() and pair.second)) {
                             dismissDialog()
                         }
-                    progressBar.visibility = GONE
+                   // progressBar.visibility = GONE
 
                 }
 
@@ -222,7 +222,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                     }
                     pair = Pair(request?.url?.getQueryParameterFromUri(keyValueName).toString(),true)
                         closePayment()
-                    progressBar.visibility = GONE
+                  //  progressBar.visibility = GONE
 
                 }
 
@@ -236,7 +236,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                         }
                         false ->{}
                     }
-                    progressBar.visibility = GONE
+                  //  progressBar.visibility = GONE
 
                 }
 
@@ -266,7 +266,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                     Log.e("error", "Can't resolve intent://", e)
 
                 }
-                progressBar.visibility = GONE
+             //   progressBar.visibility = GONE
             }
 
 
