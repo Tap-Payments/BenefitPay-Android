@@ -1,7 +1,7 @@
 package company.tap.tapbenefitpay.open.web_wrapper
 
 import androidx.annotation.RestrictTo
-import company.tap.tapcardformkit.open.web_wrapper.data.network.model.TapSDKConfigUrlResponse
+import company.tap.tapcardformkit.open.web_wrapper.data.network.model.TapBenefitSDKConfigUrlResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -17,12 +17,12 @@ Copyright (c) 2022    Tap Payments.
 All rights reserved.
  **/
 @RestrictTo(RestrictTo.Scope.LIBRARY)
-object ApiService {
+object ApiServiceBenefit {
    var BASE_URL = "https://mw-sdk.dev.tap.company/v2/checkout/"
 
   interface TapSDKConfigUrls {
     @GET("/mobile/benefitpay/1.0.0/base_url.json")
-    suspend fun getSDKConfigUrl(): TapSDKConfigUrlResponse
+    suspend fun getSDKConfigUrl(): TapBenefitSDKConfigUrlResponse
 
 
   }

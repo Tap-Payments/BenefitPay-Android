@@ -10,7 +10,6 @@ import company.tap.tapbenefitpay.open.AppLifecycleObserver
 import company.tap.tapbenefitpay.open.DataConfiguration
 import company.tap.tapbenefitpay.open.DataConfiguration.configurationsAsHashMap
 import company.tap.tapbenefitpay.open.TapBenefitPayStatusDelegate
-import company.tap.tapbenefitpay.open.web_wrapper.ApiService.BASE_URL
 import company.tap.tapnetworkkit.connection.NetworkApp
 import company.tap.tapnetworkkit.utils.CryptoUtil
 import kotlinx.coroutines.MainScope
@@ -21,8 +20,8 @@ class BeneiftPayConfiguration {
 
     companion object {
 
-        private val retrofit = ApiService.RetrofitClient.getClient()
-        private val tapSDKConfigsUrl = retrofit.create(ApiService.TapSDKConfigUrls::class.java)
+        private val retrofit = ApiServiceBenefit.RetrofitClient.getClient()
+        private val tapSDKConfigsUrl = retrofit.create(ApiServiceBenefit.TapSDKConfigUrls::class.java)
         private var testEncKey: String? = null
         private var prodEncKey: String? = null
         private var dynamicBaseUrlResponse: String? = null
@@ -119,7 +118,7 @@ class BeneiftPayConfiguration {
                 tapCardInputViewWeb?.context ,
                 publicKey ?: "",
                 context.packageName,
-                ApiService. BASE_URL.replace("benefitpay?configurations", ""),
+                ApiServiceBenefit. BASE_URL.replace("benefitpay?configurations", ""),
                 "android-benefitpay",
                 true,
                 encodedeky,
