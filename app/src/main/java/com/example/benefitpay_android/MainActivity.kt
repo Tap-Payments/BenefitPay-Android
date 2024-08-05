@@ -1,32 +1,11 @@
 package com.example.benefitpay_android
 
-import android.app.Dialog
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
-import android.net.http.SslError
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
-import android.view.ViewGroup
-import android.webkit.*
-import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
-import androidx.annotation.RequiresApi
-import company.tap.tapbenefitpay.getQueryParameterFromUri
-import company.tap.tapbenefitpay.open.DataConfiguration
 import company.tap.tapbenefitpay.open.TapBenefitPayStatusDelegate
 import company.tap.tapbenefitpay.open.web_wrapper.*
-import company.tap.tapbenefitpay.open.web_wrapper.enums.BenefitPayStatusDelegate
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.net.URISyntaxException
 import java.util.*
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
@@ -229,28 +208,28 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
 
 
 
-    override fun onSuccess(data: String) {
+    override fun onBenefitPaySuccess(data: String) {
         dataTextView.text = data
     }
 
-    override fun onReady() {
-        super.onReady()
+    override fun onBenefitPayReady() {
+        super.onBenefitPayReady()
     }
 
-    override fun onClick() {
-        super.onClick()
+    override fun onBenefitPayClick() {
+        super.onBenefitPayClick()
     }
 
-    override fun onChargeCreated(data: String) {
-        super.onChargeCreated(data)
+    override fun onBenefitPayChargeCreated(data: String) {
+        super.onBenefitPayChargeCreated(data)
     }
 
-    override fun onOrderCreated(data: String) {
-        super.onOrderCreated(data)
+    override fun onBenefitPayOrderCreated(data: String) {
+        super.onBenefitPayOrderCreated(data)
     }
 
-    override fun onCancel() {
-        super.onCancel()
+    override fun onBenefitPayCancel() {
+        super.onBenefitPayCancel()
 
             dataTextView.text = "Result is :: Cancelled!!!"
 
@@ -258,7 +237,7 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
 
     }
 
-    override fun onError(error: String) {
+    override fun onBenefitPayError(error: String) {
 
             dataTextView.text = "Result is :: "+error
             Log.e("onError RECIEVED ::",error.toString())

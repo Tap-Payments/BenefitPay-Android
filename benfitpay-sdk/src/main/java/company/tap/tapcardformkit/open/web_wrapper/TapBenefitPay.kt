@@ -22,7 +22,6 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.os.postDelayed
 import androidx.core.view.*
-import androidx.webkit.WebViewAssetLoader
 import company.tap.tapbenefitpay.*
 import company.tap.tapbenefitpay.open.ApplicationLifecycle
 import company.tap.tapbenefitpay.open.DataConfiguration
@@ -31,10 +30,6 @@ import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
 import java.net.URISyntaxException
 import java.util.*
-import java.util.logging.Handler
-
-import kotlin.concurrent.schedule
-import kotlin.math.log
 
 
 @SuppressLint("ViewConstructor")
@@ -175,23 +170,23 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                  * listen for states of cardWebStatus of onReady , onValidInput .. etc
                  */
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onReady.name)) {
-                    DataConfiguration.getTapCardStatusListener()?.onReady()
+                    DataConfiguration.getTapCardStatusListener()?.onBenefitPayReady()
                   //  progressBar.visibility = GONE
                 }
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onChargeCreated.name)) {
-                    DataConfiguration.getTapCardStatusListener()?.onChargeCreated(request?.url?.getQueryParameterFromUri(keyValueName).toString())
+                    DataConfiguration.getTapCardStatusListener()?.onBenefitPayChargeCreated(request?.url?.getQueryParameterFromUri(keyValueName).toString())
                   //  progressBar.visibility = GONE
                 }
 
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onOrderCreated.name)) {
-                    DataConfiguration.getTapCardStatusListener()?.onOrderCreated(request?.url?.getQueryParameter(keyValueName).toString())
+                    DataConfiguration.getTapCardStatusListener()?.onBenefitPayOrderCreated(request?.url?.getQueryParameter(keyValueName).toString())
                   //  progressBar.visibility = GONE
                 }
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onClick.name)) {
                    // progressBar.visibility = VISIBLE
                     isBenefitPayUrlIntercepted=false
                     pair = Pair("",false)
-                    DataConfiguration.getTapCardStatusListener()?.onClick()
+                    DataConfiguration.getTapCardStatusListener()?.onBenefitPayClick()
                     onSuccessCalled = false
 
 
@@ -199,7 +194,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onCancel.name)) {
                     android.os.Handler(Looper.getMainLooper()).postDelayed(3000) {
                         if(!onSuccessCalled){
-                            DataConfiguration.getTapCardStatusListener()?.onCancel()
+                            DataConfiguration.getTapCardStatusListener()?.onBenefitPayCancel()
                         }
 
 
@@ -215,7 +210,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onError.name)) {
                     android.os.Handler(Looper.getMainLooper()).postDelayed(3000) {
                         if(!onSuccessCalled){
-                            DataConfiguration.getTapCardStatusListener()?.onError(request?.url?.getQueryParameterFromUri(keyValueName).toString())
+                            DataConfiguration.getTapCardStatusListener()?.onBenefitPayError(request?.url?.getQueryParameterFromUri(keyValueName).toString())
 
                         }
 
@@ -388,7 +383,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
             Log.e("app","one")
             dismissDialog()
           //  init(cardConfiguraton) // was reloading url cz problem stopped
-            DataConfiguration.getTapCardStatusListener()?.onSuccess(pair.first)
+            DataConfiguration.getTapCardStatusListener()?.onBenefitPaySuccess(pair.first)
 
         }
     }

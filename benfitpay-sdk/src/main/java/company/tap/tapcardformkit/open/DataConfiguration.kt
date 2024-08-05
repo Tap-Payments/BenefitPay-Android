@@ -154,13 +154,13 @@ object DataConfiguration {
 }
 
 interface TapBenefitPayStatusDelegate {
-    fun onSuccess(data: String)
-    fun onReady(){}
-    fun onClick(){}
-    fun onOrderCreated(data: String){}
-    fun onChargeCreated(data:String){}
-    fun onError(error: String)
-    fun onCancel(){}
+    fun onBenefitPaySuccess(data: String)
+    fun onBenefitPayReady(){}
+    fun onBenefitPayClick(){}
+    fun onBenefitPayOrderCreated(data: String){}
+    fun onBenefitPayChargeCreated(data:String){}
+    fun onBenefitPayError(error: String)
+    fun onBenefitPayCancel(){}
 }
 
 interface ApplicationLifecycle {
