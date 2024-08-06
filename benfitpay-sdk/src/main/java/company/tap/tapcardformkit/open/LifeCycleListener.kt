@@ -9,11 +9,11 @@ class AppLifecycleObserver : LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onEnterForeground() {
-        DataConfiguration.getAppLifeCycle()?.onEnterForeground()
+        BenefitPayDataConfiguration.getAppLifeCycle()?.onEnterForeground()
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onEnterBackground() {
-        DataConfiguration.getAppLifeCycle()?.onEnterBackground()
+        BenefitPayDataConfiguration.getAppLifeCycle()?.onEnterBackground()
     }
 }

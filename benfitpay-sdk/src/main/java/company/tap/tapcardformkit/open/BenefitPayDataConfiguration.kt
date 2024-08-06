@@ -23,7 +23,7 @@ Copyright (c) 2022    Tap Payments.
 All rights reserved.
  **/
 @SuppressLint("StaticFieldLeak")
-object DataConfiguration {
+object BenefitPayDataConfiguration {
 
     private var tapBenefitPayStatusDelegate: TapBenefitPayStatusDelegate? = null
     private var applicationLifecycle: ApplicationLifecycle? = null

@@ -7,8 +7,8 @@ import android.util.Log
 import androidx.lifecycle.ProcessLifecycleOwner
 import company.tap.tapbenefitpay.R
 import company.tap.tapbenefitpay.open.AppLifecycleObserver
-import company.tap.tapbenefitpay.open.DataConfiguration
-import company.tap.tapbenefitpay.open.DataConfiguration.configurationsAsHashMap
+import company.tap.tapbenefitpay.open.BenefitPayDataConfiguration
+import company.tap.tapbenefitpay.open.BenefitPayDataConfiguration.configurationsAsHashMap
 import company.tap.tapbenefitpay.open.TapBenefitPayStatusDelegate
 import company.tap.tapnetworkkit.connection.NetworkApp
 import company.tap.tapnetworkkit.utils.CryptoUtil
@@ -192,7 +192,7 @@ class BeneiftPayConfiguration {
                     publickKey.toString()
                 )
 
-                DataConfiguration.addTapBenefitPayStatusDelegate(tapBenefitPayStatusDelegate)
+                BenefitPayDataConfiguration.addTapBenefitPayStatusDelegate(tapBenefitPayStatusDelegate)
                 tapCardInputViewWeb?.init(CardConfiguraton.MapConfigruation)
 
             }

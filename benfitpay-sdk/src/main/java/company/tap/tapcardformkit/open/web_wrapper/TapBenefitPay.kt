@@ -24,7 +24,7 @@ import androidx.core.os.postDelayed
 import androidx.core.view.*
 import company.tap.tapbenefitpay.*
 import company.tap.tapbenefitpay.open.ApplicationLifecycle
-import company.tap.tapbenefitpay.open.DataConfiguration
+import company.tap.tapbenefitpay.open.BenefitPayDataConfiguration
 import company.tap.tapbenefitpay.open.web_wrapper.enums.BenefitPayStatusDelegate
 import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
@@ -94,11 +94,11 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
      fun init(configuraton: CardConfiguraton) {
          cardConfiguraton = configuraton
         // progressBar.visibility = VISIBLE
-         DataConfiguration.addAppLifeCycle(this)
+         BenefitPayDataConfiguration.addAppLifeCycle(this)
          applyTheme()
         when (configuraton) {
             CardConfiguraton.MapConfigruation -> {
-                val url  = "${urlWebStarter}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
+                val url  = "${urlWebStarter}${encodeConfigurationMapToUrl(BenefitPayDataConfiguration.configurationsAsHashMap)}"
              Log.e("url",url.toString())
                 cardWebview.loadUrl(url)
 
@@ -114,7 +114,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
          */
         when(cardConfiguraton){
             CardConfiguraton.MapConfigruation ->{
-                val tapInterface = DataConfiguration.configurationsAsHashMap?.get("interface") as? Map<*, *>
+                val tapInterface = BenefitPayDataConfiguration.configurationsAsHashMap?.get("interface") as? Map<*, *>
               setTapThemeAndLanguage(
                     this.context,
                     TapLocal.valueOf(tapInterface?.get("locale")?.toString() ?: TapLocal.en.name),
@@ -129,14 +129,14 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
     private fun setTapThemeAndLanguage(context: Context, language: TapLocal?, themeMode: TapTheme?) {
         when (themeMode) {
             TapTheme.light -> {
-                DataConfiguration.setTheme(
+                BenefitPayDataConfiguration.setTheme(
                     context, context.resources, null,
                     R.raw.defaultlighttheme, TapTheme.light.name
                 )
                 ThemeManager.currentThemeName = TapTheme.light.name
             }
             TapTheme.dark -> {
-                DataConfiguration.setTheme(
+                BenefitPayDataConfiguration.setTheme(
                     context, context.resources, null,
                     R.raw.defaultdarktheme, TapTheme.dark.name
                 )
@@ -144,7 +144,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
             }
             else -> {}
         }
-        DataConfiguration.setLocale(this.context, language?.name ?:"en", null, this@TapBenefitPay.context.resources, R.raw.lang)
+        BenefitPayDataConfiguration.setLocale(this.context, language?.name ?:"en", null, this@TapBenefitPay.context.resources, R.raw.lang)
 
     }
 
@@ -170,23 +170,23 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                  * listen for states of cardWebStatus of onReady , onValidInput .. etc
                  */
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onReady.name)) {
-                    DataConfiguration.getTapCardStatusListener()?.onBenefitPayReady()
+                    BenefitPayDataConfiguration.getTapCardStatusListener()?.onBenefitPayReady()
                   //  progressBar.visibility = GONE
                 }
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onChargeCreated.name)) {
-                    DataConfiguration.getTapCardStatusListener()?.onBenefitPayChargeCreated(request?.url?.getQueryParameterFromUri(keyValueName).toString())
+                    BenefitPayDataConfiguration.getTapCardStatusListener()?.onBenefitPayChargeCreated(request?.url?.getQueryParameterFromUri(keyValueName).toString())
                   //  progressBar.visibility = GONE
                 }
 
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onOrderCreated.name)) {
-                    DataConfiguration.getTapCardStatusListener()?.onBenefitPayOrderCreated(request?.url?.getQueryParameter(keyValueName).toString())
+                    BenefitPayDataConfiguration.getTapCardStatusListener()?.onBenefitPayOrderCreated(request?.url?.getQueryParameter(keyValueName).toString())
                   //  progressBar.visibility = GONE
                 }
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onClick.name)) {
                    // progressBar.visibility = VISIBLE
                     isBenefitPayUrlIntercepted=false
                     pair = Pair("",false)
-                    DataConfiguration.getTapCardStatusListener()?.onBenefitPayClick()
+                    BenefitPayDataConfiguration.getTapCardStatusListener()?.onBenefitPayClick()
                     onSuccessCalled = false
 
 
@@ -194,7 +194,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onCancel.name)) {
                     android.os.Handler(Looper.getMainLooper()).postDelayed(3000) {
                         if(!onSuccessCalled){
-                            DataConfiguration.getTapCardStatusListener()?.onBenefitPayCancel()
+                            BenefitPayDataConfiguration.getTapCardStatusListener()?.onBenefitPayCancel()
                         }
 
 
@@ -210,7 +210,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                 if (request?.url.toString().contains(BenefitPayStatusDelegate.onError.name)) {
                     android.os.Handler(Looper.getMainLooper()).postDelayed(3000) {
                         if(!onSuccessCalled){
-                            DataConfiguration.getTapCardStatusListener()?.onBenefitPayError(request?.url?.getQueryParameterFromUri(keyValueName).toString())
+                            BenefitPayDataConfiguration.getTapCardStatusListener()?.onBenefitPayError(request?.url?.getQueryParameterFromUri(keyValueName).toString())
 
                         }
 
@@ -383,7 +383,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
             Log.e("app","one")
             dismissDialog()
           //  init(cardConfiguraton) // was reloading url cz problem stopped
-            DataConfiguration.getTapCardStatusListener()?.onBenefitPaySuccess(pair.first)
+            BenefitPayDataConfiguration.getTapCardStatusListener()?.onBenefitPaySuccess(pair.first)
 
         }
     }
