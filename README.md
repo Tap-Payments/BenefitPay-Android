@@ -44,7 +44,7 @@ allprojects {
 Then get latest dependency  in your app module gradle
 ```kotlin
 dependencies {
-  implementation : 'com.github.Tap-Payments:BenefitPay-Android:0.0.9'
+  implementation : 'com.github.Tap-Payments:BenefitPay-Android:0.0.19'
 }
 ```
 
