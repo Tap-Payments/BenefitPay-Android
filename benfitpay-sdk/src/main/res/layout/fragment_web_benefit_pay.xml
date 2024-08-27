@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <LinearLayout
+  <!--  <LinearLayout
         android:id="@+id/topLinear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,5 +67,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:ignore="MissingDefaultResource"
-   />
+   />-->
 </LinearLayout>
