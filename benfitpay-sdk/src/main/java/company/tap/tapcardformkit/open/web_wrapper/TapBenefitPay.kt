@@ -347,13 +347,6 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
             super.onReceivedError(view, request, error)
         }
 
-        override fun onReceivedSslError(
-            view: WebView?,
-            handler: SslErrorHandler?,
-            error: SslError?
-        ) {
-            handler?.proceed()
-        }
     }
 
     private fun dismissDialog() {
