@@ -11,8 +11,8 @@ import android.util.Log
 import company.tap.tapbenefitpay.R
 import company.tap.tapbenefitpay.open.web_wrapper.BeneiftPayConfiguration
 import company.tap.tapbenefitpay.open.web_wrapper.TapBenefitPay
-import company.tap.taplocalizationkit.LocalizationManager
-import company.tap.tapuilibrary.themekit.ThemeManager
+//import company.tap.taplocalizationkit.LocalizationManager
+//import company.tap.tapuilibrary.themekit.ThemeManager
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -81,17 +81,17 @@ object BenefitPayDataConfiguration {
         if (resources != null && urlPathLocal != null) {
             if (fileName != null && fileName.contains("dark")) {
                 if (urlPathLocal != null) {
-                    ThemeManager.loadTapTheme(resources, urlPathLocal, "darktheme")
+                   // ThemeManager.loadTapTheme(resources, urlPathLocal, "darktheme")
                 }
             } else {
                 if (urlPathLocal != null) {
-                    ThemeManager.loadTapTheme(resources, urlPathLocal, "lighttheme")
+                   // ThemeManager.loadTapTheme(resources, urlPathLocal, "lighttheme")
                 }
             }
         } else if (urlString != null) {
             if (context != null) {
                 println("urlString>>>" + urlString)
-                ThemeManager.loadTapTheme(context, urlString, "lighttheme")
+             //   ThemeManager.loadTapTheme(context, urlString, "lighttheme")
             }
         }
 
@@ -104,13 +104,13 @@ object BenefitPayDataConfiguration {
         resources: Resources?,
         urlPathLocal: Int?
     ) {
-        LocalizationManager.setLocale(context, Locale(languageString))
+       // LocalizationManager.setLocale(context, Locale(languageString))
         lanuage = languageString
         if (resources != null && urlPathLocal != null) {
-            LocalizationManager.loadTapLocale(resources, R.raw.lang)
+          //  LocalizationManager.loadTapLocale(resources, R.raw.lang)
         } else if (urlString != null) {
             if (context != null) {
-                LocalizationManager.loadTapLocale(context, urlString)
+             //   LocalizationManager.loadTapLocale(context, urlString)
                 Log.e("local", urlString.toString())
 
             }

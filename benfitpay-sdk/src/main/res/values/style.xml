@@ -127,11 +127,12 @@
 
     <style name="CustomShapeAppearanceBottomSheetDialog">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">@dimen/_16sdp</item>
-        <item name="cornerSizeTopLeft">@dimen/_16sdp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
 
+    <color name="white">#ffffff</color>
 </resources>

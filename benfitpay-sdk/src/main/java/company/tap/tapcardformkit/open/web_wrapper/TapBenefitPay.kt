@@ -26,8 +26,8 @@ import company.tap.tapbenefitpay.*
 import company.tap.tapbenefitpay.open.ApplicationLifecycle
 import company.tap.tapbenefitpay.open.BenefitPayDataConfiguration
 import company.tap.tapbenefitpay.open.web_wrapper.enums.BenefitPayStatusDelegate
-import company.tap.tapuilibrary.themekit.ThemeManager
-import company.tap.tapuilibrary.uikit.atoms.*
+//import company.tap.tapuilibrary.themekit.ThemeManager
+//import company.tap.tapuilibrary.uikit.atoms.*
 import java.net.URISyntaxException
 import java.util.*
 
@@ -95,7 +95,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
          cardConfiguraton = configuraton
         // progressBar.visibility = VISIBLE
          BenefitPayDataConfiguration.addAppLifeCycle(this)
-         applyTheme()
+     //    applyTheme()
         when (configuraton) {
             CardConfiguraton.MapConfigruation -> {
                 val url  = "${urlWebStarter}${encodeConfigurationMapToUrl(BenefitPayDataConfiguration.configurationsAsHashMap)}"
@@ -133,14 +133,14 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                     context, context.resources, null,
                     R.raw.defaultlighttheme, TapTheme.light.name
                 )
-                ThemeManager.currentThemeName = TapTheme.light.name
+               // ThemeManager.currentThemeName = TapTheme.light.name
             }
             TapTheme.dark -> {
                 BenefitPayDataConfiguration.setTheme(
                     context, context.resources, null,
                     R.raw.defaultdarktheme, TapTheme.dark.name
                 )
-                ThemeManager.currentThemeName = TapTheme.dark.name
+               // ThemeManager.currentThemeName = TapTheme.dark.name
             }
             else -> {}
         }
@@ -347,13 +347,6 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
             super.onReceivedError(view, request, error)
         }
 
-        override fun onReceivedSslError(
-            view: WebView?,
-            handler: SslErrorHandler?,
-            error: SslError?
-        ) {
-            handler?.proceed()
-        }
     }
 
     private fun dismissDialog() {
