@@ -111,7 +111,8 @@ class BeneiftPayConfiguration {
             modelConfiguration: CardConfiguraton,
             publicKey: String?
         ) {
-         val encodedeky = getPublicEncryptionKey(publicKey,tapCardInputViewWeb)
+       //  val encodedeky = getPublicEncryptionKey(publicKey,tapCardInputViewWeb)
+         val encodedeky = tapCardInputViewWeb?.context?.resources?.getString(R.string.enryptkeyTest) //TODO replace to above one commented get dynamic from cdn
             Log.e("packagedname",context.packageName.toString())
 
             NetworkApp.initNetwork(

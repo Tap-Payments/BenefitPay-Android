@@ -86,6 +86,9 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         val orderRefrence =  intent.getStringExtra("orderTransactionRefrence")
         val selectedCurrency: String = intent.getStringExtra("selectedCurrencyKey").toString()
 
+        /**
+         * order
+         */
         val order = HashMap<String,Any>()
         order.put("id",ordrId ?: "")
         order.put("amount",  if (orderAmount?.isEmpty() == true)"1" else orderAmount.toString() )
@@ -94,6 +97,7 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         order.put("reference",orderRefrence ?: "")
         order.put("metadata",metada)
         Log.e("orderData","id" + ordrId.toString() + "  \n dest" + orderDescription.toString() +" \n orderamount " + orderAmount.toString() +"  \n orderRef" + orderRefrence.toString() + "  \n currency " + selectedCurrency.toString())
+
 
         /**
          * merchant
@@ -113,7 +117,7 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
          */
         val phone = java.util.HashMap<String,Any>()
         phone.put("countryCode","+965")
-        phone.put("number","88888888")
+        phone.put("number","6617090")
 
 
         /**
@@ -137,10 +141,10 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         Log.e("interfaceData",selectedTheme.toString() + "language" + selectedLanguage.toString() + "cardedge " + selectedCardEdge.toString() +" loader" + loader.toString() + "selectedColorStylee " + selectedColorStylee.toString())
         val interfacee = HashMap<String,Any>()
         interfacee.put("locale",selectedLanguage ?: "en")
-      //  interfacee.put("theme",selectedTheme ?: "light")
+        interfacee.put("theme",selectedTheme ?: "light")
         interfacee.put("edges",selectedCardEdge ?: "circular")
-     //   interfacee.put("colorStyle",selectedColorStylee ?:"colored")
-     //   interfacee.put("loader",loader)
+       interfacee.put("colorStyle",selectedColorStylee ?:"colored")
+        interfacee.put("loader",loader)
 
 
         val post = HashMap<String,Any>()
@@ -151,11 +155,24 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
        * Transaction
         * ***/
         val transaction = HashMap<String,Any>()
-
+        /**
+         * authenticate for Card buttons
+         */
+        val authenticate = HashMap<String,Any>()
+        authenticate.put("id", "")
+        authenticate.put("required",true)
+        /**
+         * source for Card buttons
+         */
+        val source = HashMap<String,Any>()
+        source.put("id",  "")
         transaction.put("amount",  if (orderAmount?.isEmpty() == true)"1" else orderAmount.toString() )
         transaction.put("currency",selectedCurrency)
       /*  transaction.put("amount",  "12" )
         transaction.put("currency","BHD")*/
+        transaction.put("authenticate",authenticate)
+        transaction.put("source",source)
+        transaction.put("authentication",true)
 
         Log.e("transaction", " \n orderamount " + orderAmount.toString() + "  \n currency " + selectedCurrency.toString())
 
@@ -170,18 +187,16 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
          */
         val name = java.util.HashMap<String,Any>()
         name.put("lang","en")
-        name.put("first", "TAP")
+        name.put("first", "Forst")
         name.put("middle", "middle")
         name.put("last","PAYMENTS")
 
 
-        /**
-         * customer
-         */
-        val customer = java.util.HashMap<String,Any>()
-        customer.put("id", "")
-        customer.put("names", listOf(name))
-        customer.put("contact",contact)
+        val customer = HashMap<String, Any>()
+        customer.put("nameOnCard", "")
+        customer.put("editable", true)
+        customer.put("contact", contact)
+        customer.put("name", listOf(name))
 
         /**
          * Accepaance
@@ -205,8 +220,17 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
        // configuration.put("invoice",invoice)
         configuration.put("interface",interfacee)
         configuration.put("post",post)*/
+        /**
+         * featurestr
+         */
+        val features = HashMap<String,Any>()
+        val showCardBrands: Boolean = intent.getBooleanExtra("selectedCardBrand", true)
+        features.put("acceptanceBadge",true)
+        features.put("customerCards",true)
 
-      //  configuration.put("scope",scopeKey.toString()) //TODO we need or no
+
+
+        configuration.put("scope","charge") //TODO we need or no
         configuration.put("operator",operator)
         configuration.put("acceptance",acceptance)//TODO we need or no
         configuration.put("debug",true)
@@ -215,12 +239,12 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         configuration.put("transaction",transaction)
         configuration.put("customer",customer)
         configuration.put("interface",interfacee)
-       // configuration.put("features",features) //TODO we need or no
+        configuration.put("features",features) //TODO we need or no
         configuration.put("redirect_url","https://demo.dev.tap.company/v2/sdk/button?paymentMethod=benefitpay") // TODO what will be in this
         configuration.put("data-testid","TapButton")
         configuration.put("platform","mobile")
         configuration.put("language",selectedLanguage ?: "dynamic")
-        configuration.put("themeMode",selectedTheme ?:"dynamic")
+        configuration.put("themeMode",selectedTheme?:"dynamic")
         configuration.put("edges",selectedCardEdge ?:"dynamic")
         configuration.put("paymentMethod","benefitpay") //TODO what has to be sent here
 
