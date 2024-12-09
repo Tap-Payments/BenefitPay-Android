@@ -11,6 +11,7 @@ import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.net.http.SslError
 import android.os.Build
+import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import android.util.Log
@@ -26,6 +27,17 @@ import company.tap.tapbenefitpay.*
 import company.tap.tapbenefitpay.open.ApplicationLifecycle
 import company.tap.tapbenefitpay.open.BenefitPayDataConfiguration
 import company.tap.tapbenefitpay.open.web_wrapper.enums.BenefitPayStatusDelegate
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
+import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.IOException
 //import company.tap.tapuilibrary.themekit.ThemeManager
 //import company.tap.tapuilibrary.uikit.atoms.*
 import java.net.URISyntaxException
@@ -42,11 +54,11 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
     lateinit var linearLayout: LinearLayout
      var iSAppInForeground = true
      var onSuccessCalled = false
-
-
+    lateinit var urlToBeloaded: String
+    lateinit var cardConfiguraton: java.util.HashMap<String, Any>
     companion object{
         lateinit var cardWebview: WebView
-        lateinit var cardConfiguraton: CardConfiguraton
+       // lateinit var cardConfiguraton: CardConfiguraton
     }
 
     /**
@@ -91,12 +103,15 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
      }
 
 
-     fun init(configuraton: CardConfiguraton) {
+    // fun init(configuraton: CardConfiguraton) {
+     fun init( configuraton: java.util.HashMap<String, Any>) {
          cardConfiguraton = configuraton
         // progressBar.visibility = VISIBLE
          BenefitPayDataConfiguration.addAppLifeCycle(this)
+
+         callConfigAPI(configuraton)
      //    applyTheme()
-        when (configuraton) {
+       /* when (configuraton) {
             CardConfiguraton.MapConfigruation -> {
                 val url  = "${urlWebStarter}${encodeConfigurationMapToUrl(BenefitPayDataConfiguration.configurationsAsHashMap)}"
              Log.e("url",url.toString())
@@ -104,14 +119,14 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
 
             }
             else -> {}
-        }
+        }*/
     }
 
 
-    private fun applyTheme() {
-        /**
+  /*  private fun applyTheme() {
+        *//**
          * need to be refactored : mulitple copies of same code
-         */
+         *//*
         when(cardConfiguraton){
             CardConfiguraton.MapConfigruation ->{
                 val tapInterface = BenefitPayDataConfiguration.configurationsAsHashMap?.get("interface") as? Map<*, *>
@@ -124,7 +139,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
         }
 
 
-    }
+    }*/
 
     private fun setTapThemeAndLanguage(context: Context, language: TapLocal?, themeMode: TapTheme?) {
         when (themeMode) {
@@ -386,7 +401,58 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
         Log.e("applifeCycle","onEnterBackground")
 
     }
+    private fun callConfigAPI(configuraton: java.util.HashMap<String, Any>) {
+        try {
+            val baseURL = "https://mw-sdk.dev.tap.company/v2/button/config "
+            val builder: OkHttpClient.Builder = OkHttpClient().newBuilder()
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            builder.addInterceptor(interceptor)
 
+            val body = (configuraton as Map<*, *>?)?.let { JSONObject(it).toString().toRequestBody("application/json".toMediaTypeOrNull()) }
+            val okHttpClient: OkHttpClient = builder.build()
+            val request: Request = Request.Builder()
+                .url(baseURL )
+                .method("POST", body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", "Bearer sk_test_bNgRpokWMylX3CBJ6FOresTq")
+                .build()
+            okHttpClient.newCall(request).enqueue(object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    try {
+                        var responseBody: JSONObject? =
+                            response.body?.string()?.let { JSONObject(it) } // toString() is not the response body, it is a debug representation of the response body
+
+                        if(!responseBody.toString().contains("errors")){
+                            var redirectURL = responseBody?.getString("redirect_url")
+                            if (redirectURL != null) {
+                                // knetWebView.loadUrl(redirectURL)
+                                urlToBeloaded = redirectURL
+                                Handler(Looper.getMainLooper()).post {
+                                    cardWebview.loadUrl(redirectURL)
+
+                                }
+                            }
+                        }else{
+
+
+                        }
+
+                    } catch (ex: JSONException) {
+                        throw RuntimeException(ex)
+                    } catch (ex: IOException) {
+                        throw RuntimeException(ex)
+                    }
+
+                }
+
+                override fun onFailure(call: Call, e: IOException) {}
+            })
+        } catch (e: Exception) {
+            throw RuntimeException(e)
+        }
+
+    }
 
 }
 

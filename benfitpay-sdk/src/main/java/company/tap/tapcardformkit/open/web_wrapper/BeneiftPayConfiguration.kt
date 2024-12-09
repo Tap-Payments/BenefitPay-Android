@@ -170,7 +170,7 @@ class BeneiftPayConfiguration {
         }
 
         private fun startSDKWithConfigs(
-            tapMapConfiguration: HashMap<String, Any>,
+            tapMapConfiguration: java.util.HashMap<String, Any>,
             tapCardInputViewWeb: TapBenefitPay?,
             context: Context,
             tapBenefitPayStatusDelegate: TapBenefitPayStatusDelegate? = null,
@@ -193,7 +193,8 @@ class BeneiftPayConfiguration {
                 )
 
                 BenefitPayDataConfiguration.addTapBenefitPayStatusDelegate(tapBenefitPayStatusDelegate)
-                tapCardInputViewWeb?.init(CardConfiguraton.MapConfigruation)
+                //tapCardInputViewWeb?.init(CardConfiguraton.MapConfigruation)
+                tapCardInputViewWeb?.init(tapMapConfiguration)
 
             }
         }

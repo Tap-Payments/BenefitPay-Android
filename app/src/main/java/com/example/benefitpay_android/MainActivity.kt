@@ -183,6 +183,17 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         customer.put("names", listOf(name))
         customer.put("contact",contact)
 
+        /**
+         * Accepaance
+         */
+        val acceptance = HashMap<String,Any>()
+        /* acceptance.put("supportedFundSource",supportedFund)
+          acceptance.put("supportedPaymentAuthentications",supportedPaymentAuthentications)
+          acceptance.put("supportedSchemes",supportedSchemes) */
+
+        acceptance.put("supportedPaymentMethod","benefitpay") //TODO check what has to be passed dynamic
+       // acceptance.put("supportedSchemes",supportedSchemes)//TODO check what has to be passed dynamic
+/* stoopped old one
         configuration.put("operator",operator)
        // configuration.put("order",order)
         configuration.put("transaction",transaction)
@@ -193,7 +204,25 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         configuration.put("merchant",merchant)
        // configuration.put("invoice",invoice)
         configuration.put("interface",interfacee)
-        configuration.put("post",post)
+        configuration.put("post",post)*/
+
+      //  configuration.put("scope",scopeKey.toString()) //TODO we need or no
+        configuration.put("operator",operator)
+        configuration.put("acceptance",acceptance)//TODO we need or no
+        configuration.put("debug",true)
+        configuration.put("merchant",merchant)
+        configuration.put("order",order)
+        configuration.put("transaction",transaction)
+        configuration.put("customer",customer)
+        configuration.put("interface",interfacee)
+       // configuration.put("features",features) //TODO we need or no
+        configuration.put("redirect_url","https://demo.dev.tap.company/v2/sdk/button?paymentMethod=benefitpay") // TODO what will be in this
+        configuration.put("data-testid","TapButton")
+        configuration.put("platform","mobile")
+        configuration.put("language",selectedLanguage ?: "dynamic")
+        configuration.put("themeMode",selectedTheme ?:"dynamic")
+        configuration.put("edges",selectedCardEdge ?:"dynamic")
+        configuration.put("paymentMethod","benefitpay") //TODO what has to be sent here
 
 
 
