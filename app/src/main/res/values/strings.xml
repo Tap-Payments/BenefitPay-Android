@@ -70,7 +70,7 @@
     <string name="currency">Currency</string>
     <string name="order_id">Order id</string>
     <string name="order_desc">Order Description</string>
-    <string name="trans_refrence">Reference</string>
+    <string name="trans_refrence">Transaction</string>
     <string name="invoice">Invoice</string>
     <string name="invoice_id">Invoice id</string>
     <string name="post">Post</string>
@@ -94,12 +94,11 @@
     <string name="choose_theme">Choose Theme</string>
     <string name="payment_agreement_id">Payment agreement id </string>
     <string name="payment_agreement_contract">Payment agreement contract </string>
+    <string name="payment_methods">Paymeny Method</string>
 
     <string-array name="ScopeList">
-        <item>Token</item>
-        <item>AuthenticatedToken</item>
-        <item>SaveToken</item>
-        <item>SaveAuthenticatedToken</item>
+        <item>charge</item>
+
     </string-array>
 
     <string-array name="ScopeList_default_values">
@@ -161,8 +160,8 @@
     </string-array>
 
     <string-array name="Edges">
-        <item>circular</item>
-        <item>flat</item>
+        <item>curved</item>
+        <item>straight</item>
     </string-array>
 
     <string-array name="Direction">

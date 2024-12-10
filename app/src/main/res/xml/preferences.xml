@@ -24,7 +24,17 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory  app:title="@string/scope_title">
 
+
+        <DropDownPreference
+            app:key="scopeKey"
+            app:entries="@array/ScopeList"
+            app:entryValues="@array/ScopeList"
+            app:defaultValue="1"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
 
 
     <PreferenceCategory
@@ -43,16 +53,21 @@
             app:title="@string/amount"
             app:useSimpleSummaryProvider="true"/>
         <EditTextPreference
+            app:key="paymentMethodKey"
+            app:defaultValue="benefitpay"
+            app:title="@string/payment_methods"
+            app:useSimpleSummaryProvider="true"/>
+        <EditTextPreference
             app:key="orderDescKey"
             app:defaultValue=""
-            app:isPreferenceVisible="false"
+            app:isPreferenceVisible="true"
             app:title="@string/order_desc"
             app:useSimpleSummaryProvider="true"/>
 
         <EditTextPreference
             app:key="orderTransactionRefrence"
             app:defaultValue=""
-            app:isPreferenceVisible="false"
+            app:isPreferenceVisible="true"
             app:title="@string/trans_refrence"
             app:useSimpleSummaryProvider="true"/>
 

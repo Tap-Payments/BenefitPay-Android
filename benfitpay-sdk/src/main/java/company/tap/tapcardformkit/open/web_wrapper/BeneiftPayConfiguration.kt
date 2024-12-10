@@ -192,7 +192,8 @@ class BeneiftPayConfiguration {
                     CardConfiguraton.MapConfigruation,
                     publickKey.toString()
                 )
-
+                tapMapConfiguration.put("platform","mobile")
+                tapMapConfiguration.put("paymentMethod","benefitpay")
                 BenefitPayDataConfiguration.addTapBenefitPayStatusDelegate(tapBenefitPayStatusDelegate)
                 //tapCardInputViewWeb?.init(CardConfiguraton.MapConfigruation)
                 tapCardInputViewWeb?.init(tapMapConfiguration)

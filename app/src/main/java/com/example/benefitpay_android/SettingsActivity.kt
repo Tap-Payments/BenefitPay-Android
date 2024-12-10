@@ -48,6 +48,7 @@ class SettingsActivity : AppCompatActivity(),SimpleSettingsConfig.PreferenceCall
       //  intent.putExtra("publicKey", getPrefStringValue("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"))
         intent.putExtra("publicKey", getPrefStringValue("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"))
         intent.putExtra("hashStringKey", getPrefStringValue("hashStringKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"))
+        intent.putExtra("scopeKey", getPrefStringValue("scopeKey","charge"))
 
         /**
          * order
@@ -55,6 +56,7 @@ class SettingsActivity : AppCompatActivity(),SimpleSettingsConfig.PreferenceCall
         intent.putExtra("orderIdKey", getPrefStringValue("orderIdKey",""))
         intent.putExtra("orderDescKey", getPrefStringValue("orderDescKey","test"))
         intent.putExtra("amountKey", getPrefStringValue("amountKey","1"))
+        intent.putExtra("paymentMethodKey", getPrefStringValue("paymentMethodKey","benefitpay"))
         intent.putExtra("orderTransactionRefrence", getPrefStringValue("orderTransactionRefrence","test"))
         intent.putExtra("selectedCurrencyKey", getPrefStringValue("selectedCurrencyKey","test"))
 
