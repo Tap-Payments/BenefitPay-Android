@@ -80,6 +80,18 @@ class SettingsActivity : AppCompatActivity(),SimpleSettingsConfig.PreferenceCall
 
         intent.putExtra("posturlKey", getPrefStringValue("posturlKey",""))
 
+        /**
+         * Customer details
+         */
+
+
+        intent.putExtra("editFirstNameKey", getPrefStringValue("editFirstNameKey","TAP"))
+        intent.putExtra("editMiddleNameKey", getPrefStringValue("editMiddleNameKey","Middle"))
+        intent.putExtra("editLastNameKey", getPrefStringValue("editLastNameKey","Payments"))
+        intent.putExtra("editPhoneCodeKey", getPrefStringValue("editPhoneCodeKey","965"))
+        intent.putExtra("editPhoneNoKey", getPrefStringValue("editPhoneNoKey","66278989"))
+        intent.putExtra("editEmailKey", getPrefStringValue("editEmailKey","emial@email.com"))
+
         finish()
         startActivity(intent)
 

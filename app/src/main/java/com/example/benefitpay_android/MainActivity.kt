@@ -117,15 +117,15 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
          * phone
          */
         val phone = java.util.HashMap<String,Any>()
-        phone.put("countryCode","+965")
-        phone.put("number","6617090")
+        phone.put("countryCode",intent.getStringExtra("editPhoneCodeKey")?:"+965")
+        phone.put("number",intent.getStringExtra("editPhoneNoKey")?:"6617090")
 
 
         /**
          * contact
          */
         val contact = java.util.HashMap<String,Any>()
-        contact.put("email","tap@tap.company")
+        contact.put("email",intent.getStringExtra("editEmailKey")?:"email@emailc.com")
         contact.put("phone",phone)
 
 
@@ -185,10 +185,10 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
          * name
          */
         val name = java.util.HashMap<String,Any>()
-        name.put("lang","en")
-        name.put("first", "TAP")
-        name.put("middle", "middle")
-        name.put("last","PAYMENTS")
+        name.put("lang",selectedLanguage?:"en")
+        name.put("first", intent.getStringExtra("editFirstNameKey")?:"TAP")
+        name.put("middle", intent.getStringExtra("editMiddleNameKey")?:"middle")
+        name.put("last",intent.getStringExtra("editLastNameKey")?:"PAYMENTS")
         /**
          * Customer data
          */

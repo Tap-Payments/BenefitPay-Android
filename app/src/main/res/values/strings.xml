@@ -95,6 +95,8 @@
     <string name="payment_agreement_id">Payment agreement id </string>
     <string name="payment_agreement_contract">Payment agreement contract </string>
     <string name="payment_methods">Paymeny Method</string>
+    <string name="phone_number_code">Code</string>
+
 
     <string-array name="ScopeList">
         <item>charge</item>

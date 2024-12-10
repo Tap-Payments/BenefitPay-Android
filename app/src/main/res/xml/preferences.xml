@@ -166,7 +166,48 @@
 
 
     </PreferenceCategory>
+    <PreferenceCategory
+        app:key="dialog_customer"
+        android:title="Customer"
+        app:summary="Customer Details" >
+        <EditTextPreference
+            app:key="editFirstNameKey"
+            app:defaultValue="Tap"
 
+            app:title="@string/first_name"
+            app:useSimpleSummaryProvider="true"/>
+        <EditTextPreference
+            app:key="editMiddleNameKey"
+            app:defaultValue="Middle"
+
+            app:title="@string/middle_name"
+            app:useSimpleSummaryProvider="true"/>
+        <EditTextPreference
+            app:key="editLastNameKey"
+            app:defaultValue="Payments"
+
+            app:title="@string/last_name"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            app:key="editPhoneCodeKey"
+            app:defaultValue="+965"
+
+            app:title="@string/phone_number_code"
+            app:useSimpleSummaryProvider="true"/>
+        <EditTextPreference
+            app:key="editPhoneNoKey"
+            app:defaultValue="66178990"
+
+            app:title="@string/phone_number"
+            app:useSimpleSummaryProvider="true"/>
+        <EditTextPreference
+            app:key="editEmailKey"
+            app:defaultValue="email@email.com"
+
+            app:title="@string/email"
+            app:useSimpleSummaryProvider="true"/>
+    </PreferenceCategory>
     <Preference
         app:key="dialog_preference"
         android:title="Done"
