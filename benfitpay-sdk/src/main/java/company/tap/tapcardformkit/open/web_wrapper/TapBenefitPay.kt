@@ -26,6 +26,7 @@ import androidx.core.view.*
 import company.tap.tapbenefitpay.*
 import company.tap.tapbenefitpay.open.ApplicationLifecycle
 import company.tap.tapbenefitpay.open.BenefitPayDataConfiguration
+import company.tap.tapbenefitpay.open.web_wrapper.BeneiftPayConfiguration.Companion.configApiUrl
 import company.tap.tapbenefitpay.open.web_wrapper.enums.BenefitPayStatusDelegate
 import okhttp3.Call
 import okhttp3.Callback
@@ -403,7 +404,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
     }
     private fun callConfigAPI(configuraton: java.util.HashMap<String, Any>) {
         try {
-            val baseURL = "https://mw-sdk.dev.tap.company/v2/button/config"
+            val baseURL = configApiUrl
             val builder: OkHttpClient.Builder = OkHttpClient().newBuilder()
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -412,7 +413,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
             val body = (configuraton as Map<*, *>?)?.let { JSONObject(it).toString().toRequestBody("application/json".toMediaTypeOrNull()) }
             val okHttpClient: OkHttpClient = builder.build()
             val request: Request = Request.Builder()
-                .url(baseURL )
+                .url(baseURL)
                 .method("POST", body)
                 .addHeader("Content-Type", "application/json")
                // .addHeader("Authorization", "Bearer sk_test_bNgRpokWMylX3CBJ6FOresTq")

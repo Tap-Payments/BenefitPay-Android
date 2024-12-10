@@ -10,6 +10,7 @@ import company.tap.tapbenefitpay.open.AppLifecycleObserver
 import company.tap.tapbenefitpay.open.BenefitPayDataConfiguration
 import company.tap.tapbenefitpay.open.BenefitPayDataConfiguration.configurationsAsHashMap
 import company.tap.tapbenefitpay.open.TapBenefitPayStatusDelegate
+import company.tap.tapbenefitpay.open.web_wrapper.ApiServiceBenefit.BASE_URL
 import company.tap.tapnetworkkit.connection.NetworkApp
 import company.tap.tapnetworkkit.utils.CryptoUtil
 import kotlinx.coroutines.MainScope
@@ -25,6 +26,7 @@ class BeneiftPayConfiguration {
         private var testEncKey: String? = null
         private var prodEncKey: String? = null
         private var dynamicBaseUrlResponse: String? = null
+       var configApiUrl : String = "https://mw-sdk.dev.tap.company/v2/button/config"
         fun configureWithTapBenfitPayDictionaryConfiguration(
             context: Context,
             tapCardInputViewWeb: TapBenefitPay?,
@@ -77,6 +79,7 @@ class BeneiftPayConfiguration {
 
                 val tapSDKConfigUrlResponse = tapSDKConfigsUrl.getSDKConfigUrl()
                // BASE_URL = tapSDKConfigUrlResponse.baseURL
+                configApiUrl = tapSDKConfigUrlResponse.baseURL
                 testEncKey = tapSDKConfigUrlResponse.testEncKey
                 prodEncKey = tapSDKConfigUrlResponse.prodEncKey
                 urlWebStarter = tapSDKConfigUrlResponse.baseURL
@@ -111,14 +114,14 @@ class BeneiftPayConfiguration {
             modelConfiguration: CardConfiguraton,
             publicKey: String?
         ) {
-       //  val encodedeky = getPublicEncryptionKey(publicKey,tapCardInputViewWeb)
-         val encodedeky = tapCardInputViewWeb?.context?.resources?.getString(R.string.enryptkeyTest) //TODO replace to above one commented get dynamic from cdn
+         val encodedeky = getPublicEncryptionKey(publicKey,tapCardInputViewWeb)
+
             Log.e("packagedname",context.packageName.toString())
 
             NetworkApp.initNetwork(
                 tapCardInputViewWeb?.context ,
                 publicKey ?: "",
-                context.packageName,
+               context.packageName,
                 ApiServiceBenefit. BASE_URL.replace("benefitpay?configurations", ""),
                 "android-benefitpay",
                 true,
@@ -193,7 +196,6 @@ class BeneiftPayConfiguration {
                     publickKey.toString()
                 )
                 tapMapConfiguration.put("platform","mobile")
-                tapMapConfiguration.put("paymentMethod","benefitpay")
                 BenefitPayDataConfiguration.addTapBenefitPayStatusDelegate(tapBenefitPayStatusDelegate)
                 //tapCardInputViewWeb?.init(CardConfiguraton.MapConfigruation)
                 tapCardInputViewWeb?.init(tapMapConfiguration)
