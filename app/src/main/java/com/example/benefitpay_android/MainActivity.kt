@@ -259,8 +259,8 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
 
     override fun onBenefitPayReady() {
         super.onBenefitPayReady()
-        dataTextView.text = "onBenefitPayReady >>"+"\n"+
-                ">>>>>>>>>>>>>>>>>>>>>>>"
+        dataTextView.text = "<<< onBenefitPayReady >>>"+"\n"
+
 
     }
 
@@ -270,7 +270,7 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
 
     override fun onBenefitPayChargeCreated(data: String) {
         super.onBenefitPayChargeCreated(data)
-        dataTextView.text = "onBenefitPayChargeCreated >>"+"\n"+
+        dataTextView.text = "<<<onBenefitPayChargeCreated>>>"+"\n"+
         data+"\n"+ ">>>>>>>>>>>>>>>>>>>>>>>"
     }
 
