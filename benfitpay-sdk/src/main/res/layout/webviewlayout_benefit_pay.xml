@@ -5,6 +5,8 @@
     android:id="@+id/webViewFrame"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_45sdp"
+    android:layout_marginStart="@dimen/_3sdp"
+    android:layout_marginEnd="@dimen/_3sdp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
@@ -14,8 +16,7 @@
             android:id="@+id/webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
+
             android:scrollbars="none"
             android:layout_gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"

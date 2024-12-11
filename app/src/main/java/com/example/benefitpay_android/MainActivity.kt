@@ -68,7 +68,8 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         val hashStringKey = intent.getStringExtra("hashStringKey")
         val scopeKey = intent.getStringExtra("scopeKey")
         val operator = HashMap<String,Any>()
-        operator.put("publicKey",publicKey.toString())
+       //operator.put("publicKey",publicKey.toString())
+        operator.put("publicKey","pk_live_0zHLeUTOXBNEyJ8p6csbK52m")
         operator.put("hashString",hashStringKey.toString())
         Log.e("orderData","pbulc" + publicKey.toString() + " \nhash" + hashStringKey.toString())
 
@@ -252,11 +253,15 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
 
 
     override fun onBenefitPaySuccess(data: String) {
-        dataTextView.text = data
+        dataTextView.text = "onBenefitPaySuccess >>"+"\n"+
+                data+"\n"+ ">>>>>>>>>>>>>>>>>>>>>>>"
     }
 
     override fun onBenefitPayReady() {
         super.onBenefitPayReady()
+        dataTextView.text = "onBenefitPayReady >>"+"\n"+
+                ">>>>>>>>>>>>>>>>>>>>>>>"
+
     }
 
     override fun onBenefitPayClick() {
@@ -265,6 +270,8 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
 
     override fun onBenefitPayChargeCreated(data: String) {
         super.onBenefitPayChargeCreated(data)
+        dataTextView.text = "onBenefitPayChargeCreated >>"+"\n"+
+        data+"\n"+ ">>>>>>>>>>>>>>>>>>>>>>>"
     }
 
     override fun onBenefitPayOrderCreated(data: String) {
@@ -274,7 +281,7 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
     override fun onBenefitPayCancel() {
         super.onBenefitPayCancel()
 
-            dataTextView.text = "Result is :: Cancelled!!!"
+            dataTextView.text = "onBenefitPayCancel is >>"+"\n"+"Cancelled!!!"
 
 
 
