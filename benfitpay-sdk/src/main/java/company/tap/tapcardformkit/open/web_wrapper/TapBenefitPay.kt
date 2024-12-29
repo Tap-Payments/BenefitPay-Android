@@ -405,6 +405,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
     private fun callConfigAPI(configuraton: java.util.HashMap<String, Any>) {
         try {
             val baseURL = configApiUrl
+           // val baseURL = "https://mw-sdk.beta.tap.company/v2/button/config"
             val builder: OkHttpClient.Builder = OkHttpClient().newBuilder()
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -416,7 +417,6 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
                 .url(baseURL)
                 .method("POST", body)
                 .addHeader("Content-Type", "application/json")
-               // .addHeader("Authorization", "Bearer sk_test_bNgRpokWMylX3CBJ6FOresTq")
                 .build()
             okHttpClient.newCall(request).enqueue(object : Callback {
                 override fun onResponse(call: Call, response: Response) {

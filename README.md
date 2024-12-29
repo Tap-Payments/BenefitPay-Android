@@ -168,10 +168,9 @@ First, let us create the required parameters:
          * customer
          */
         val customer = HashMap<String,Any>()
-        customer.put("nameOnCard","")
-        customer.put("editable",true)
-        customer.put("contact",contact)
-        customer.put("name", listOf(name))
+        customer.put("id", "")
+customer.put("contact", contact)
+customer.put("names", listOf(name)) 
 
         /**
          * order
@@ -188,9 +187,20 @@ First, let us create the required parameters:
          */
 
         val configuration = LinkedHashMap<String,Any>()
-        configuration.put("operator", operator)
-        configuration.put("order",order)
+
+
+        configuration.put("paymentMethod",paymentMethod ?: "benefitpay")
+        configuration.put("merchant",merchant)
+        configuration.put("scope",scopeKey.toString())
+        configuration.put("redirect","tapredirectionwebsdk://") // TODO what will be in this
         configuration.put("customer",customer)
+        configuration.put("interface",interfacee)
+        configuration.put("reference",reference)
+         configuration.put("metadata","")
+         configuration.put("post",post)
+        configuration.put("transaction",transaction)
+        configuration.put("operator",operator)
+
 
 ```
 ### 2 - Pass these parameters to the created Button variable before as follows
@@ -242,10 +252,9 @@ override fun onCreate(savedInstanceState: Bundle?) {
          * customer
          */
         val customer = HashMap<String,Any>()
-        customer.put("nameOnCard","")
-        customer.put("editable",true)
-        customer.put("contact",contact)
-        customer.put("name", listOf(name))
+        customer.put("id", "")
+customer.put("contact", contact)
+customer.put("names", listOf(name)) 
 
         /**
          * order
@@ -297,16 +306,16 @@ Now we have created the UI and the parameters required to to correctly display B
 - Override the required callbacks as follows:
 ```kotlin
  object : TapBenefitPayStatusDelegate {
-                override fun onSuccess(data: String) {
+                override fun onBenefitPaySuccess(data: String) {
                     Log.i("data",data.toString())
                 }
-                override fun onReady() {
+                override fun onBenefitPayReady() {
                     Log.i("data","onReady")
 
                 }
 
 
-                override fun onError(error: String) {
+                override fun onBenefitPayError(error: String) {
                     Log.i("data","onError")
 
 
@@ -369,10 +378,9 @@ You can use a Hashmap to send data to our SDK. The benefit is that you can gener
          * customer
          */
         val customer = HashMap<String,Any>()
-        customer.put("nameOnCard","")
-        customer.put("editable",true)
-        customer.put("contact",contact)
-        customer.put("name", listOf(name))
+        customer.put("id", "")
+customer.put("contact", contact)
+customer.put("names", listOf(name)) 
 
         /**
          * order
@@ -412,10 +420,23 @@ You can use a Hashmap to send data to our SDK. The benefit is that you can gener
         /**
          * configuration request
          */
+/**
+ * Transaction
+ * ***/
+val transaction = HashMap<String,Any>()
+transaction.put("amount",  if (orderAmount?.isEmpty() == true)"1" else orderAmount.toString() )
+transaction.put("currency",selectedCurrency)
 
-       
+/**
+ * invoice
+ */
+val invoice = HashMap<String,Any>()
+invoice.put("id","")
 
-        val configuration = LinkedHashMap<String,Any>()
+val post = HashMap<String,Any>()
+post.put("url","")
+
+val configuration = LinkedHashMap<String,Any>()
         configuration.put("operator", operator)
         configuration.put("order",order)
         configuration.put("customer",customer)
@@ -429,30 +450,34 @@ You can use a Hashmap to send data to our SDK. The benefit is that you can gener
 The below will allow the integrators to get notified from events fired from the BenefitPayButton.
 
 ```kotlin
-    override fun onReady() {
+    override fun onBenefitPayReady() {
            print("\n\n========\n\nonReady")
     }
 
-    override fun onClick() {
+    override fun onBenefitPayClick() {
          print("\n\n========\n\noClick")
     }
 
-    override fun onChargeCreated(data: String) {
+    override fun onBenefitPayChargeCreated(data: String) {
            print("\n\n========\n\nonChargeCreated")
     }
 
-    override fun onOrderCreated(data: String) {
+    override fun onBenefitPayOrderCreated(data: String) {
            print("\n\n========\n\nonOrderCreated")
 
     }
 
-    override fun onCancel() {
+    override fun onBenefitPayCancel() {
            print("\n\n========\n\nonCancel")
     }
 
-    override fun onError(error: String) {
+    override fun onBenefitPayError(error: String) {
            print("\n\n========\n\nonError")
     }
+    override fun onBenefitPaySuccess(data: String) {
+    print("onBenefitPaySuccess >>")
+    }
+
 ```
 # Full Code Sample
 Once all of the above steps are successfully completed, your Activity file should look like this:

@@ -68,8 +68,7 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         val hashStringKey = intent.getStringExtra("hashStringKey")
         val scopeKey = intent.getStringExtra("scopeKey")
         val operator = HashMap<String,Any>()
-       //operator.put("publicKey",publicKey.toString())
-        operator.put("publicKey","pk_live_0zHLeUTOXBNEyJ8p6csbK52m")
+       operator.put("publicKey",publicKey.toString())
         operator.put("hashString",hashStringKey.toString())
         Log.e("orderData","pbulc" + publicKey.toString() + " \nhash" + hashStringKey.toString())
 
@@ -199,18 +198,7 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         customer.put("contact", contact)
         customer.put("names", listOf(name))
 
-/* stopped old one
-        configuration.put("operator",operator)
-       // configuration.put("order",order)
-        configuration.put("transaction",transaction)
-        configuration.put("reference",reference)
 
-        configuration.put("customer",customer)
-
-        configuration.put("merchant",merchant)
-       // configuration.put("invoice",invoice)
-        configuration.put("interface",interfacee)
-        configuration.put("post",post)*/
 
 
         configuration.put("paymentMethod",paymentMethod ?: "benefitpay")
@@ -224,19 +212,6 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         configuration.put("post",post)
         configuration.put("transaction",transaction)
         configuration.put("operator",operator)
-
-
-/*
-
-
-        configuration.put("features",features) //TODO we need or no
-        configuration.put("redirect_url","https://demo.dev.tap.company/v2/sdk/button?paymentMethod=benefitpay") // TODO what will be in this
-        configuration.put("data-testid","TapButton")
-
-        configuration.put("language",selectedLanguage ?: "dynamic")
-        configuration.put("themeMode",selectedTheme?:"dynamic")
-        configuration.put("edges",selectedCardEdge ?:"dynamic")
-*/
 
 
 

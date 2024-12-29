@@ -26,7 +26,7 @@ class BeneiftPayConfiguration {
         private var testEncKey: String? = null
         private var prodEncKey: String? = null
         private var dynamicBaseUrlResponse: String? = null
-       var configApiUrl : String = "https://mw-sdk.dev.tap.company/v2/button/config"
+       var configApiUrl : String = "https://mw-sdk.tap.company/v2/button/config"
         fun configureWithTapBenfitPayDictionaryConfiguration(
             context: Context,
             tapCardInputViewWeb: TapBenefitPay?,
@@ -80,6 +80,7 @@ class BeneiftPayConfiguration {
                 val tapSDKConfigUrlResponse = tapSDKConfigsUrl.getSDKConfigUrl()
                // BASE_URL = tapSDKConfigUrlResponse.baseURL
                 configApiUrl = tapSDKConfigUrlResponse.baseURL
+               // configApiUrl = "https://mw-sdk.beta.tap.company/v2/button/config"
                 testEncKey = tapSDKConfigUrlResponse.testEncKey
                 prodEncKey = tapSDKConfigUrlResponse.prodEncKey
                 urlWebStarter = tapSDKConfigUrlResponse.baseURL
