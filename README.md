@@ -382,16 +382,7 @@ You can use a Hashmap to send data to our SDK. The benefit is that you can gener
 customer.put("contact", contact)
 customer.put("names", listOf(name)) 
 
-        /**
-         * order
-         */
-        val order = HashMap<String,Any>()
-        order.put("id","order_id")
-        order.put("amount","1")
-        order.put("currency","BHD")
-        order.put("description","description")
-        order.put("reference","refrence_id")
-
+       
         /**
          * merchant
          */
@@ -501,15 +492,7 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         operator.put("publicKey",publicKey.toString())
         operator.put("hashString",hashStringKey.toString())
 
-        /**
-         * order
-         */
-        val order = HashMap<String,Any>()
-        order.put("id",ordrId ?: "")
-        order.put("amount", "1")
-        order.put("currency",selectedCurrency)
-        order.put("description",orderDescription ?: "")
-        order.put("reference",orderRefrence ?: "")
+       
 
         /**
          * merchant
@@ -517,11 +500,7 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         val merchant = HashMap<String,Any>()
         merchant.put("id", "")
 
-        /**
-         * invoice
-         */
-        val invoice = HashMap<String,Any>()
-        invoice.put("id","")
+       
 
 
         /**
@@ -561,24 +540,25 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
     
         val interfacee = HashMap<String,Any>()
         interfacee.put("locale",selectedLanguage ?: "en")
-        interfacee.put("theme",selectedTheme ?: "light")
         interfacee.put("edges",selectedCardEdge ?: "curved")
-        interfacee.put("colorStyle",selectedColorStylee ?:"colored")
-        interfacee.put("loader",loader)
+        
 
 
         val post = HashMap<String,Any>()
         post.put("url","")
         val configuration = LinkedHashMap<String,Any>()
 
-        configuration.put("operator",operator)
-        configuration.put("order",order)
-        configuration.put("customer",customer)
-
+        configuration.put("paymentMethod",paymentMethod ?: "benefitpay")
         configuration.put("merchant",merchant)
-        configuration.put("invoice",invoice)
+        configuration.put("scope","charge")
+        configuration.put("redirect","tapredirectionwebsdk://") 
+        configuration.put("customer",customer)
         configuration.put("interface",interfacee)
+        configuration.put("reference",reference)
+        configuration.put("metadata","")
         configuration.put("post",post)
+        configuration.put("transaction",transaction)
+        configuration.put("operator",operator)
 
 
 

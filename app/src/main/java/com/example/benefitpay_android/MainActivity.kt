@@ -134,13 +134,13 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
          */
 
         val selectedLanguage: String? =  intent.getStringExtra("selectedlangKey")
-        val selectedTheme: String? = intent.getStringExtra("selectedthemeKey")
-        val selectedCardEdge = intent.getStringExtra("selectedcardedgeKey")
-        val selectedColorStylee = intent.getStringExtra("selectedcolorstyleKey")
-        val paymentMethod = intent.getStringExtra("paymentMethodKey")
-        val loader = intent.getBooleanExtra("loaderKey",false)
 
-        Log.e("interfaceData",selectedTheme.toString() + "language" + selectedLanguage.toString() + "cardedge " + selectedCardEdge.toString() +" loader" + loader.toString() + "selectedColorStylee " + selectedColorStylee.toString())
+        val selectedCardEdge = intent.getStringExtra("selectedcardedgeKey")
+
+        val paymentMethod = intent.getStringExtra("paymentMethodKey")
+
+
+        Log.e("interfaceData", "language" + selectedLanguage.toString() + "cardedge " + selectedCardEdge.toString())
         val interfacee = HashMap<String,Any>()
         interfacee.put("locale",selectedLanguage ?: "en")
       //  interfacee.put("theme",selectedTheme ?: "light")
