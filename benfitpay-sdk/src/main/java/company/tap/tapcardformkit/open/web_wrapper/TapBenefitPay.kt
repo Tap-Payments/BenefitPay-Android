@@ -109,7 +109,7 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
          cardConfiguraton = configuraton
         // progressBar.visibility = VISIBLE
          BenefitPayDataConfiguration.addAppLifeCycle(this)
-
+        configuraton.put("autoDissmess",true)
          callConfigAPI(configuraton)
      //    applyTheme()
        /* when (configuraton) {
