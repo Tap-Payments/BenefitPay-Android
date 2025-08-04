@@ -109,8 +109,17 @@ class TapBenefitPay : LinearLayout,ApplicationLifecycle {
          cardConfiguraton = configuraton
         // progressBar.visibility = VISIBLE
          BenefitPayDataConfiguration.addAppLifeCycle(this)
-        configuraton.put("autoDissmess",true)
-         callConfigAPI(configuraton)
+        val transaction = configuraton["transaction"] as? MutableMap<String, Any?>
+        val autoDismiss = when {
+            transaction?.containsKey("autoDismiss") == true -> transaction.remove("autoDismiss") as? Boolean
+            transaction?.containsKey("autoDissmess") == true -> transaction.remove("autoDissmess") as? Boolean
+            else -> null
+        } ?: false
+
+        configuraton["autoDissmess"] = autoDismiss
+
+
+        callConfigAPI(configuraton)
      //    applyTheme()
        /* when (configuraton) {
             CardConfiguraton.MapConfigruation -> {

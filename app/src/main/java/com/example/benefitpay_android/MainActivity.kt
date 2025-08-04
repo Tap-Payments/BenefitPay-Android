@@ -169,7 +169,7 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         source.put("id",  "")
         transaction.put("amount",  if (orderAmount?.isEmpty() == true)"1" else orderAmount.toString() )
         transaction.put("currency",selectedCurrency)
-
+        transaction.put("autoDismiss",false) ///can be true/ false
 
 
         Log.e("transaction", " \n orderamount " + orderAmount.toString() + "  \n currency " + selectedCurrency.toString())
