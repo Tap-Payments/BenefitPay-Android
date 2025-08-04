@@ -70,7 +70,11 @@
             app:isPreferenceVisible="true"
             app:title="@string/trans_refrence"
             app:useSimpleSummaryProvider="true"/>
-
+        <CheckBoxPreference
+            app:key="autoDimissKey"
+            app:title="autoDimiss"
+            android:defaultValue="false"
+            />
 
     </PreferenceCategory>
 

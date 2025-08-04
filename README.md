@@ -44,7 +44,7 @@ allprojects {
 Then get latest dependency  in your app module gradle
 ```kotlin
 dependencies {
-  implementation : 'com.github.Tap-Payments:BenefitPay-Android:0.0.20'
+  implementation : 'com.github.Tap-Payments:BenefitPay-Android:1.0.2'
 }
 ```
 
@@ -187,6 +187,7 @@ customer.put("names", listOf(name))
          */
 
         val configuration = LinkedHashMap<String,Any>()
+transaction.put("autoDismiss", getPrefBooleanValue("autoDimissKey",false)) ///can be true/ false
 
 
         configuration.put("paymentMethod",paymentMethod ?: "benefitpay")

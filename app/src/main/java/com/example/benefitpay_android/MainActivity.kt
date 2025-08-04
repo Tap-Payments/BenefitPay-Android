@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import com.chillibits.simplesettings.tool.getPrefBooleanValue
 import company.tap.tapbenefitpay.open.TapBenefitPayStatusDelegate
 import company.tap.tapbenefitpay.open.web_wrapper.*
 import java.util.*
@@ -169,7 +170,7 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
         source.put("id",  "")
         transaction.put("amount",  if (orderAmount?.isEmpty() == true)"1" else orderAmount.toString() )
         transaction.put("currency",selectedCurrency)
-        transaction.put("autoDismiss",false) ///can be true/ false
+        transaction.put("autoDismiss", getPrefBooleanValue("autoDimissKey",false)) ///can be true/ false
 
 
         Log.e("transaction", " \n orderamount " + orderAmount.toString() + "  \n currency " + selectedCurrency.toString())
