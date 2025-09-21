@@ -76,32 +76,31 @@ dependencies {
 
 
 }
-task sourcesJar(type: Jar) {
+// Register sourcesJar properly
+tasks.register("sourcesJar", Jar) {
     archiveClassifier.set("sources")
     from android.sourceSets.main.java.srcDirs
 }
 
-
-artifacts {
-    archives sourcesJar
-}
 afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
-                from components.release
+                from components.findByName("release")
 
                 groupId = 'com.github.Tap-Payments'
                 artifactId = 'benfitpay-sdk'
                 version = android.defaultConfig.versionName ?: "1.0.4"
 
-                // Attach sources jar
-                artifact(sourcesJar) {
-                    builtBy sourcesJar
-                }
+                // Attach sources jar safely
+                artifact(tasks.named("sourcesJar"))
             }
         }
     }
+
+    // Ensure metadata task runs after sourcesJar
+    tasks.matching { it.name == "generateMetadataFileForReleasePublication" }
+            .configureEach {
+                dependsOn(tasks.named("sourcesJar"))
+            }
 }
-
-
