@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    compileSdk 34
+    compileSdk 36
     namespace 'com.example.benefitpay_android'
 
     defaultConfig {
         applicationId "com.example.benefitpay_android"
         minSdk 24
-        targetSdk 34
+        targetSdk 36
         versionCode 1
         versionName "1.0.0"
         multiDexEnabled true
@@ -47,13 +47,12 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
-    implementation "com.google.mlkit:barcode-scanning:17.2.0"
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation 'com.github.Tap-Payments:TapAndroidForm:0.0.3'
     implementation project(path: ':benfitpay-sdk')
-    implementation platform('com.google.firebase:firebase-bom:33.0.0')
+    implementation platform('com.google.firebase:firebase-bom:34.3.0')
     implementation 'com.google.firebase:firebase-analytics'
    //implementation 'com.github.Tap-Payments:BenefitPay-Android:0.0.8'
 
