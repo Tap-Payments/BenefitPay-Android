@@ -76,29 +76,41 @@ dependencies {
 
 
 }
-task sourcesJar(type: Jar) {
-    archiveClassifier.set("sources")
+
+
+
+// Javadoc for Android (variant-aware)
+task releaseJavadoc(type: Jar) {
+    archiveClassifier.set('javadoc')
     from android.sourceSets.main.java.srcDirs
-}
-
-
-artifacts {
-    archives sourcesJar
+    // optional: include kotlin sources if you have Kotlin
+    // from android.sourceSets.main.kotlin.srcDirs
 }
 afterEvaluate {
     publishing {
         publications {
             create("release", MavenPublication) {
-                from components.release
+                // Publish AAR
+                artifact("$buildDir/outputs/aar/${project.name}-release.aar") {
+                    builtBy tasks.named("assembleRelease")
+                }
 
+                // Group, artifact, version
                 groupId = "com.github.Tap-Payments"
                 artifactId = "benfitpay-sdk"
-                version = android.defaultConfig.versionName ?: "1.0.4"
+                version = android.defaultConfig.versionName ?: "1.0.0"
 
-                // Attach Android Gradle’s generated sources/javadoc
+                // Attach sources and javadoc
                 artifact(tasks.named("releaseSourcesJar"))
-
+                artifact(tasks.named("releaseJavadoc"))
             }
         }
     }
+
+    // Ensure metadata generation waits for sources/javadoc
+    tasks.named("generateMetadataFileForReleasePublication") {
+        dependsOn(tasks.named("releaseSourcesJar"))
+        dependsOn(tasks.named("releaseJavadoc"))
+    }
 }
+
