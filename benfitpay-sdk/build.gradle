@@ -86,21 +86,24 @@ afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
-                from components.findByName("release")
+                // Publish AAR directly
+                artifact("$buildDir/outputs/aar/${project.name}-release.aar")
 
-                groupId = 'com.github.Tap-Payments'
-                artifactId = 'benfitpay-sdk'
+                groupId = "com.github.Tap-Payments"
+                artifactId = "benfitpay-sdk"
                 version = android.defaultConfig.versionName ?: "1.0.4"
 
-                // Attach sources jar safely
+                // Attach sources and javadoc jars
                 artifact(tasks.named("sourcesJar"))
+
             }
         }
     }
 
-    // Ensure metadata task runs after sourcesJar
+    // Ensure metadata waits for jars
     tasks.matching { it.name == "generateMetadataFileForReleasePublication" }
             .configureEach {
                 dependsOn(tasks.named("sourcesJar"))
+                dependsOn(tasks.named("javadocJar"))
             }
 }
