@@ -76,34 +76,34 @@ dependencies {
 
 
 }
-// Register sourcesJar properly
-tasks.register("sourcesJar", Jar) {
+task sourcesJar(type: Jar) {
     archiveClassifier.set("sources")
     from android.sourceSets.main.java.srcDirs
 }
 
+
+artifacts {
+    archives sourcesJar
+}
 afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
-                // Publish AAR directly
-                artifact("$buildDir/outputs/aar/${project.name}-release.aar")
+                // This must be inside afterEvaluate
+                from components.findByName("release")
 
-                groupId = "com.github.Tap-Payments"
-                artifactId = "benfitpay-sdk"
+                groupId = 'com.github.Tap-Payments'
+                artifactId = 'benefitpay-sdk'
                 version = android.defaultConfig.versionName ?: "1.0.4"
 
-                // Attach sources and javadoc jars
-                artifact(tasks.named("sourcesJar"))
+                // Declare dependency on AAR task
+                artifact("$buildDir/outputs/aar/${project.getName()}-release.aar") {
+                    builtBy tasks.named("bundleReleaseAar")
+                }
 
+                // Optionally attach sources
+                artifact sourcesJar
             }
         }
     }
-
-    // Ensure metadata waits for jars
-    tasks.matching { it.name == "generateMetadataFileForReleasePublication" }
-            .configureEach {
-                dependsOn(tasks.named("sourcesJar"))
-                dependsOn(tasks.named("javadocJar"))
-            }
 }
