@@ -94,10 +94,13 @@ afterEvaluate {
                 artifactId = 'benfitpay-sdk'
                 version = android.defaultConfig.versionName ?: "1.0.4"
 
-                // Attach sources JAR with classifier = "sources"
-                artifact sourcesJar
+                // Attach sources jar
+                artifact(sourcesJar) {
+                    builtBy sourcesJar
+                }
             }
         }
     }
 }
+
 
