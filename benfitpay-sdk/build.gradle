@@ -85,7 +85,7 @@ task releaseJavadoc(type: Jar) {
     archiveClassifier.set('javadoc')
     from android.sourceSets.main.java.srcDirs
     // optional: include kotlin sources if you have Kotlin
-    // from android.sourceSets.main.kotlin.srcDirs
+     from android.sourceSets.main.kotlin.srcDirs
 }
 afterEvaluate {
     publishing {
