@@ -83,7 +83,7 @@
 -keep class com.intuit.sdp.** { *; }
 -keep class com.tap.commondatamodels.** { *; }
 # Keep the Serializable annotation
--keep @kotlinx.serialization.Serializable class com.tap.cardconfig.models.** { *; }
+-keep @kotlinx.parcelize.DataClass class com.tap.cardconfig.models.** { *; }
 
 
 # Keep serializer companion objects and generated serializers
