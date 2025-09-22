@@ -19,3 +19,63 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# ============================
+# Kotlin & AndroidX
+# ============================
+-keep class kotlin.** { *; }
+-keep class androidx.** { *; }
+-dontwarn androidx.**
+-dontwarn kotlin.**
+
+# ============================
+# Gson (Serialization / Reflection)
+# ============================
+-keep class com.google.gson.** { *; }
+-keepattributes Signature
+-keepattributes *Annotation*
+-keepclassmembers class * {
+    @com.google.gson.annotations.SerializedName <fields>;
+}
+
+# ============================
+# Retrofit interfaces & models
+# ============================
+-keep interface company.tap.tapnetworkkit.* { *; }    # <-- Replace with your Retrofit interfaces package
+-keep class company.tap.tapnetworkkit.** { *; }    # <-- Replace with your models package
+
+# Retrofit & OkHttp
+-keep class retrofit2.** { *; }
+-keep class okhttp3.** { *; }
+-keep class okio.** { *; }
+-dontwarn retrofit2.**
+-dontwarn okhttp3.**
+-dontwarn okio.**
+
+# Converter factories
+-keep class retrofit2.converter.gson.** { *; }
+
+# ============================
+# Tap Payments SDKs
+# ============================
+-keep class com.tap.** { *; }
+-dontwarn com.tap.**
+
+# ============================
+# Miscellaneous / other libraries
+# ============================
+-keep class com.intuit.sdp.** { *; }
+-keep class com.github.Tap-Payments.CommonDataModelsWeb-Andriod.** { *; }
+
+# ============================
+# General rule for serialization
+# ============================
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object readResolve();
+}
+
+
