@@ -82,6 +82,18 @@
 # ============================
 -keep class com.intuit.sdp.** { *; }
 -keep class com.tap.commondatamodels.** { *; }
+# Keep the Serializable annotation
+-keep @kotlinx.serialization.Serializable class com.tap.cardconfig.models.** { *; }
+
+
+# Keep serializer companion objects and generated serializers
+-keepclassmembers class **$Companion { *; }
+-keepclassmembers class **$$serializer { *; }
+
+# Do not warn about kotlinx.serialization internal APIs
+-dontwarn kotlinx.serialization.**
+
+
 
 # ============================
 # General rule for serialization
