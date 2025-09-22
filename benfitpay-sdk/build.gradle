@@ -80,48 +80,38 @@ dependencies {
 
 
 
-task releaseSourcesJar(type: Jar) {
-    archiveClassifier.set('sources')
-    from android.sourceSets.main.java.srcDirs
-    from android.sourceSets.main.kotlin.srcDirs
-}
-
+// Javadoc for Android (variant-aware)
 task releaseJavadoc(type: Jar) {
     archiveClassifier.set('javadoc')
     from android.sourceSets.main.java.srcDirs
+    // optional: include kotlin sources if you have Kotlin
+    // from android.sourceSets.main.kotlin.srcDirs
 }
 afterEvaluate {
     publishing {
         publications {
             create("release", MavenPublication) {
-                groupId = "com.github.Tap-Payments"
-                artifactId = "benefitpay-sdk"
-                version = android.defaultConfig.versionName ?: "1.0.0"
-
                 // Publish AAR
-                artifact("$buildDir/outputs/aar/${project.name}-release.aar")
+                artifact("$buildDir/outputs/aar/${project.name}-release.aar") {
+                    builtBy tasks.named("assembleRelease")
+                }
 
-                // Publish sources + javadoc
+                // Group, artifact, version
+                groupId = "com.github.Tap-Payments"
+                artifactId = "benfitpay-sdk"
+                version = android.defaultConfig.versionName ?: "1.0.4"
+
+                // Attach sources and javadoc
                 artifact(tasks.named("releaseSourcesJar"))
                 artifact(tasks.named("releaseJavadoc"))
-
-                // Attach pom dependencies
-                pom {
-                    withXml {
-                        def dependenciesNode = asNode().appendNode('dependencies')
-                        configurations.api.getAllDependencies().each { dep ->
-                            if (dep.group != null && dep.name != null) {
-                                def dependencyNode = dependenciesNode.appendNode('dependency')
-                                dependencyNode.appendNode('groupId', dep.group)
-                                dependencyNode.appendNode('artifactId', dep.name)
-                                dependencyNode.appendNode('version', dep.version)
-                            }
-                        }
-                    }
-                }
             }
         }
     }
 
+    // Ensure metadata generation waits for sources/javadoc
+    tasks.named("generateMetadataFileForReleasePublication") {
+        dependsOn(tasks.named("releaseSourcesJar"))
+        dependsOn(tasks.named("releaseJavadoc"))
+    }
 }
 
