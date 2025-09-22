@@ -8,7 +8,8 @@ android {
     namespace 'com.example.benefitpay_android'
 
     defaultConfig {
-        applicationId "com.example.benefitpay_android"
+       // applicationId "com.example.benefitpay_android"
+        applicationId "tap.BenefitPayExampleApp"
         minSdk 24
         targetSdk 36
         versionCode 1

@@ -54,6 +54,9 @@
 
 # Converter factories
 -keep class retrofit2.converter.gson.** { *; }
+-keep interface company.tap.tapnetworkkit.api.** { *; }
+-keep class company.tap.tapnetworkkit.model.** { *; }
+-keepattributes Signature, *Annotation*
 
 # ============================
 # Tap Payments SDKs
@@ -77,5 +80,9 @@
     private void readObject(java.io.ObjectInputStream);
     java.lang.Object readResolve();
 }
+-keep class com.github.tap.payments.benefitpay.** { *; }
+-keep class com.tap.** { *; }
+-dontwarn com.tap.**
+
 
 
