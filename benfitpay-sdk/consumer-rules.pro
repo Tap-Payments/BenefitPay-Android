@@ -81,7 +81,7 @@
 # Miscellaneous / other libraries
 # ============================
 -keep class com.intuit.sdp.** { *; }
--keep class com.github.Tap-Payments.CommonDataModelsWeb-Andriod.** { *; }
+-keep class com.tap.commondatamodels.** { *; }
 
 # ============================
 # General rule for serialization
