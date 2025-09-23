@@ -78,63 +78,54 @@ dependencies {
     api 'com.github.Tap-Payments:CommonDataModelsWeb-Andriod:0.0.15'
 }
 
-// ------------------------
-// Tasks for publishing
-// ------------------------
-task releaseSourcesJar(type: Jar) {
-    archiveClassifier.set('sources')
-    from android.sourceSets.main.java.srcDirs
-    from android.sourceSets.main.kotlin.srcDirs
-}
 
+
+// Javadoc for Android (variant-aware)
 task releaseJavadoc(type: Jar) {
     archiveClassifier.set('javadoc')
     from android.sourceSets.main.java.srcDirs
+    // optional: include kotlin sources if you have Kotlin
     from android.sourceSets.main.kotlin.srcDirs
 }
-
-// ------------------------
-// Rename _45sdp → tap_45sdp in merged resources
-// ------------------------
 afterEvaluate {
     android.libraryVariants.all { variant ->
+        // Use the provider API instead of mergeResources directly
         variant.mergeResourcesProvider.configure { mergeTask ->
             doLast {
                 def resDir = mergeTask.outputDir.get().asFile
                 def valuesDir = new File(resDir, "values")
-                if (valuesDir.exists()) {
-                    valuesDir.listFiles().each { file ->
-                        if (file.name.endsWith(".xml")) {
-                            def updated = file.getText("UTF-8").replaceAll('name="_', 'name="tap_')
-                            file.write(updated, "UTF-8")
-                        }
-                    }
+
+                def dimensFile = new File(valuesDir, "dimens_sdp.xml")
+                if (dimensFile.exists()) {
+                    def updated = dimensFile.getText("UTF-8")
+                            .replaceAll('name="_', 'name="tap_') // rename _45sdp → tap_45sdp
+                    dimensFile.write(updated, "UTF-8")
                 }
             }
         }
     }
-
     publishing {
         publications {
             create("release", MavenPublication) {
-                from components.release
+                // Publish AAR
+                artifact("$buildDir/outputs/aar/${project.name}-release.aar") {
+                    builtBy tasks.named("assembleRelease")
+                }
 
                 groupId = "com.github.Tap-Payments"
                 artifactId = "BenefitPay-Android"
-                version = android.defaultConfig.versionName
+                version = android.defaultConfig.versionName ?: "1.0.4"
 
-                artifact releaseSourcesJar
-                artifact releaseJavadoc
+                // Attach sources and javadoc
+                artifact(tasks.named("releaseSourcesJar"))
+                artifact(tasks.named("releaseJavadoc"))
             }
-        }
-
-        repositories {
-            mavenLocal()
         }
     }
 
+    // Ensure metadata generation waits for sources/javadoc
     tasks.named("generateMetadataFileForReleasePublication") {
-        dependsOn(tasks.findByName("releaseSourcesJar") ?: [])
-        dependsOn(tasks.findByName("releaseJavadoc") ?: [])
+        dependsOn(tasks.named("releaseSourcesJar"))
+        dependsOn(tasks.named("releaseJavadoc"))
     }
 }
