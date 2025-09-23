@@ -134,15 +134,14 @@ afterEvaluate {
                 pom {
                     withXml {
                         def dependenciesNode = asNode().appendNode('dependencies')
-                        configurations.api.allDependencies.each { dep ->
-                            if (dep.group != null && dep.name != null && dep.version != null) {
-                                def dependencyNode = dependenciesNode.appendNode('dependency')
-                                dependencyNode.appendNode('groupId', dep.group)
-                                dependencyNode.appendNode('artifactId', dep.name)
-                                dependencyNode.appendNode('version', dep.version)
-                                dependencyNode.appendNode('scope', 'compile')
-                            }
+                        configurations.api.allDependencies.findAll { it.version != null }.each { dep ->
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', dep.group)
+                            dependencyNode.appendNode('artifactId', dep.name)
+                            dependencyNode.appendNode('version', dep.version)
+                            dependencyNode.appendNode('scope', 'compile')
                         }
+
                     }
                 }
             }
