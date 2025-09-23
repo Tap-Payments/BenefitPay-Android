@@ -123,22 +123,27 @@ afterEvaluate {
                 // Group / artifact / version
                 groupId = "com.github.Tap-Payments"
                 artifactId = "benfitpay-sdk"
-                version = android.defaultConfig.versionName ?: "1.0.4"
+                version = android.defaultConfig.versionName ?: "1.0.3.24"
 
-                // Attach sources safely
+                // Attach sources with a distinct classifier
                 def sourcesTask = tasks.findByName("releaseSourcesJar")
                 if (sourcesTask != null) {
-                    artifact(sourcesTask)
+                    artifact(sourcesTask) {
+                        classifier = "sources"
+                    }
                 }
 
-                // Attach Javadoc safely
+                // Attach Javadoc with a distinct classifier
                 def javadocTask = tasks.findByName("releaseJavadoc")
                 if (javadocTask != null) {
-                    artifact(javadocTask)
+                    artifact(javadocTask) {
+                        classifier = "javadoc"
+                    }
                 }
             }
         }
     }
+
 
     // Ensure metadata generation waits for sources/javadoc
     tasks.named("generateMetadataFileForReleasePublication") {
