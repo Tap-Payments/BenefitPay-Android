@@ -1,6 +1,6 @@
 package com.example.benefitpay_android
 
-import TapLocal
+
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +12,7 @@ import com.chillibits.simplesettings.core.SimpleSettingsConfig
 import com.chillibits.simplesettings.tool.getPrefBooleanValue
 import com.chillibits.simplesettings.tool.getPrefStringValue
 import com.chillibits.simplesettings.tool.getPrefs
+import com.tap.commondatamodels.TapTheme
 
 class SettingsActivity : AppCompatActivity(),SimpleSettingsConfig.PreferenceCallback  {
     override fun onCreate(savedInstanceState: Bundle?) {

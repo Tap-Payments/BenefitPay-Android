@@ -1,7 +1,6 @@
 package company.tap.tapbenefitpay.open.web_wrapper
 
-import TapLocal
-import TapTheme
+
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
@@ -23,6 +22,8 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.os.postDelayed
 import androidx.core.view.*
+import com.tap.commondatamodels.TapLocal
+import com.tap.commondatamodels.TapTheme
 import company.tap.tapbenefitpay.*
 import company.tap.tapbenefitpay.open.ApplicationLifecycle
 import company.tap.tapbenefitpay.open.BenefitPayDataConfiguration

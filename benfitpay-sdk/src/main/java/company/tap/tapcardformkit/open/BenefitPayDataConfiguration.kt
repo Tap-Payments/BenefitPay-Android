@@ -1,13 +1,14 @@
 package company.tap.tapbenefitpay.open
 
-import Customer
-import TapAuthentication
-import TapCardConfigurations
+
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.util.Log
+import com.tap.commondatamodels.Customer
+import com.tap.commondatamodels.TapAuthentication
+import com.tap.commondatamodels.TapCardConfigurations
 import company.tap.tapbenefitpay.R
 import company.tap.tapbenefitpay.open.web_wrapper.BeneiftPayConfiguration
 import company.tap.tapbenefitpay.open.web_wrapper.TapBenefitPay

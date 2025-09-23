@@ -1,10 +1,11 @@
 package company.tap.tapbenefitpay.open.web_wrapper
 
-import Headers
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ProcessLifecycleOwner
+import com.tap.commondatamodels.Headers
 import company.tap.tapbenefitpay.R
 import company.tap.tapbenefitpay.open.AppLifecycleObserver
 import company.tap.tapbenefitpay.open.BenefitPayDataConfiguration
