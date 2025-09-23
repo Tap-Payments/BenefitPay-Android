@@ -99,7 +99,7 @@ afterEvaluate {
 
                 groupId = "com.github.Tap-Payments"
                 artifactId = "BenefitPay-Android"
-                version = android.defaultConfig.versionName ?: "1.0.3.29"
+                version = android.defaultConfig.versionName ?: "1.0.3.30"
 
                 // Attach sources and javadoc
                 artifact(tasks.named("releaseSourcesJar"))
