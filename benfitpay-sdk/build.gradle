@@ -79,17 +79,29 @@ dependencies {
 }
 
 
+plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+    id 'kotlin-android'
+}
 
-// Javadoc for Android (variant-aware)
+// ---- Javadoc task (variant-aware) ----
 task releaseJavadoc(type: Jar) {
     archiveClassifier.set('javadoc')
     from android.sourceSets.main.java.srcDirs
-    // optional: include kotlin sources if you have Kotlin
-     from android.sourceSets.main.kotlin.srcDirs
+    from android.sourceSets.main.kotlin.srcDirs
 }
+
+// ---- Source Jar task ----
+task releaseSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from android.sourceSets.main.java.srcDirs
+    from android.sourceSets.main.kotlin.srcDirs
+}
+
 afterEvaluate {
+    // ✅ Safe API for AGP 8.x
     android.libraryVariants.all { variant ->
-        // Use the provider API instead of mergeResources directly
         variant.mergeResourcesProvider.configure { mergeTask ->
             doLast {
                 def resDir = mergeTask.outputDir.get().asFile
@@ -98,36 +110,51 @@ afterEvaluate {
                 def dimensFile = new File(valuesDir, "dimens_sdp.xml")
                 if (dimensFile.exists()) {
                     def updated = dimensFile.getText("UTF-8")
-                            .replaceAll('name="_', 'name="tap_') // rename _45sdp → tap_45sdp
+                            .replaceAll('name="_', 'name="tap_') // rename resources
                     dimensFile.write(updated, "UTF-8")
                 }
             }
         }
     }
+
     publishing {
         publications {
             create("release", MavenPublication) {
-                // Publish AAR
-                artifact("$buildDir/outputs/aar/${project.name}-release.aar") {
-                    builtBy tasks.named("assembleRelease")
-                }
+                // ✅ Publish compiled AAR
+                from components.release
 
-                // Group, artifact, version
                 groupId = "com.github.Tap-Payments"
                 artifactId = "benfitpay-sdk"
                 version = android.defaultConfig.versionName ?: "1.0.4"
 
-                // Attach sources and javadoc
+                // ✅ Attach sources + javadoc
                 artifact(tasks.named("releaseSourcesJar"))
                 artifact(tasks.named("releaseJavadoc"))
+
+                // ✅ Export api dependencies to POM
+                pom {
+                    withXml {
+                        def dependenciesNode = asNode().appendNode('dependencies')
+                        configurations.api.allDependencies.each { dep ->
+                            if (dep.group != null && dep.name != null) {
+                                def dependencyNode = dependenciesNode.appendNode('dependency')
+                                dependencyNode.appendNode('groupId', dep.group)
+                                dependencyNode.appendNode('artifactId', dep.name)
+                                dependencyNode.appendNode('version', dep.version)
+                                dependencyNode.appendNode('scope', 'compile')
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 
-    // Ensure metadata generation waits for sources/javadoc
+    // ✅ Ensure metadata waits for sources/javadoc
     tasks.named("generateMetadataFileForReleasePublication") {
         dependsOn(tasks.named("releaseSourcesJar"))
         dependsOn(tasks.named("releaseJavadoc"))
     }
 }
+
 

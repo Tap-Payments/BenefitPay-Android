@@ -108,3 +108,5 @@
 -keep class com.github.tap.payments.benefitpay.** { *; }
 -keep class com.tap.** { *; }
 -dontwarn com.tap.**
+
+-keep class com.tap.commondatamodels.** { *; }
