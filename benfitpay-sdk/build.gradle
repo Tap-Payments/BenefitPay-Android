@@ -79,11 +79,7 @@ dependencies {
 }
 
 
-plugins {
-    id 'com.android.library'
-    id 'maven-publish'
-    id 'kotlin-android'
-}
+
 
 // ---- Javadoc task (variant-aware) ----
 task releaseJavadoc(type: Jar) {
