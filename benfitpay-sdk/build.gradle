@@ -1,13 +1,12 @@
 plugins {
     id 'com.android.library'
-    id 'maven-publish'
     id 'kotlin-android'
     id 'kotlin-parcelize'
-
+    id 'maven-publish'
 }
 
-
 group = 'com.github.Tap-Payments'
+
 def getVersionName = { ->
     try {
         def stdout = new ByteArrayOutputStream()
@@ -16,21 +15,20 @@ def getVersionName = { ->
             standardOutput = stdout
         }
         return stdout.toString().trim()
-    }
-    catch (ignored) {
-        return null;
+    } catch (ignored) {
+        return "1.0.0"
     }
 }
-android {
-    compileSdkVersion 36
 
+android {
     namespace 'company.tap.tapbenefitpay'
+    compileSdkVersion 34
 
     defaultConfig {
         minSdkVersion 24
-        targetSdkVersion 36
+        targetSdkVersion 34
         versionCode 1
-        versionName "1.0.1"
+        versionName getVersionName()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -43,18 +41,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = '11'
     }
-
 }
 
 dependencies {
-    api 'androidx.webkit:webkit:1.11.0'
     def lifecycle_version = "2.6.2"
 
     api "org.jetbrains.kotlin:kotlin-stdlib:1.9.0"
@@ -62,28 +60,33 @@ dependencies {
     api 'androidx.appcompat:appcompat:1.6.1'
     api 'com.google.android.material:material:1.12.0'
     api 'androidx.constraintlayout:constraintlayout:2.1.4'
-   api 'com.github.Tap-Payments:TapNetwrok-Android:0.2.2.44'
+    api 'androidx.webkit:webkit:1.11.0'
+
     api 'com.google.code.gson:gson:2.10'
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.okhttp3:logging-interceptor:4.10.0'
     api "com.squareup.retrofit2:converter-gson:2.9.0"
-    api "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
-    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"
-    api 'com.intuit.sdp:sdp-android:1.1.0'
-    api 'com.github.Tap-Payments:CommonDataModelsWeb-Andriod:0.0.15'
-    api 'androidx.lifecycle:lifecycle-process:2.6.2'
+
+    api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    api "androidx.lifecycle:lifecycle-process:$lifecycle_version"
 
+    api 'com.intuit.sdp:sdp-android:1.1.0'
 
-
+    // Tap dependencies
+    api 'com.github.Tap-Payments:TapNetwrok-Android:0.2.2.44'
+    api 'com.github.Tap-Payments:CommonDataModelsWeb-Andriod:0.0.15'
 }
 
-
-
-
 // ------------------------
-// Javadoc task
+// Tasks for publishing
 // ------------------------
+task releaseSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from android.sourceSets.main.java.srcDirs
+    from android.sourceSets.main.kotlin.srcDirs
+}
+
 task releaseJavadoc(type: Jar) {
     archiveClassifier.set('javadoc')
     from android.sourceSets.main.java.srcDirs
@@ -111,44 +114,27 @@ afterEvaluate {
         }
     }
 
-    // ------------------------
-    // Maven publishing
-    // ------------------------
     publishing {
         publications {
             create("release", MavenPublication) {
-                // Publish compiled AAR
                 from components.release
 
-                // Group / artifact / version
                 groupId = "com.github.Tap-Payments"
-                artifactId = "benfitpay-sdk"
-                version = android.defaultConfig.versionName ?: "1.0.3.24"
+                artifactId = "BenefitPay-Android"
+                version = android.defaultConfig.versionName
 
-                // Attach sources with a distinct classifier
-                def sourcesTask = tasks.findByName("releaseSourcesJar")
-                if (sourcesTask != null) {
-                    artifact(sourcesTask) {
-                        classifier = "sources"
-                    }
-                }
-
-                // Attach Javadoc with a distinct classifier
-                def javadocTask = tasks.findByName("releaseJavadoc")
-                if (javadocTask != null) {
-                    artifact(javadocTask) {
-                        classifier = "javadoc"
-                    }
-                }
+                artifact releaseSourcesJar
+                artifact releaseJavadoc
             }
+        }
+
+        repositories {
+            mavenLocal()
         }
     }
 
-
-    // Ensure metadata generation waits for sources/javadoc
     tasks.named("generateMetadataFileForReleasePublication") {
         dependsOn(tasks.findByName("releaseSourcesJar") ?: [])
         dependsOn(tasks.findByName("releaseJavadoc") ?: [])
     }
 }
-
