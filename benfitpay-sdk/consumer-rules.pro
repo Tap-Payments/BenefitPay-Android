@@ -117,3 +117,56 @@
 -keep class company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.Customer
 -keep class company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.TapTheme
 -keep class company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.TapLocal
+-keep class company.tap.tapbenefitpay.open.web_wrapper.model.ThreeDsResponse
+# Keep all classes in the model package
+-keep class company.tap.tapcardformkit.open.web_wrapper.model.** {
+    <fields>;
+    <init>(...);
+    public *;
+}
+
+# Keep the ApiServiceBenefit object and its members
+-keep class company.tap.tapcardformkit.open.web_wrapper.ApiServiceBenefit {
+    <fields>;
+    <methods>;
+}
+
+# Keep all Retrofit interfaces in this package
+-keep interface company.tap.tapcardformkit.open.web_wrapper.** {
+    <methods>;
+}
+
+# Keep all data models used by Retrofit/Gson in this package
+-keep class company.tap.tapcardformkit.open.web_wrapper.model.** {
+    <fields>;
+    <init>(...);
+    public *;
+}
+
+# Prevent warnings about OkHttp & Retrofit
+-dontwarn okhttp3.**
+-dontwarn retrofit2.**
+-dontwarn retrofit2.converter.gson.**
+# Keep all classes in the web_wrapper package
+-keep class company.tap.tapbenefitpay.open.web_wrapper.** {
+    <fields>;
+    <methods>;
+}
+
+# Keep all models under web_wrapper.commondatamodels
+-keep class company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.** {
+    <fields>;
+    <methods>;
+}
+
+# Keep ApiServiceBenefit object from tapcardformkit package
+-keep class company.tap.tapcardformkit.open.web_wrapper.ApiServiceBenefit {
+    <fields>;
+    <methods>;
+}
+
+# Prevent warnings about coroutines and lifecycle
+-dontwarn kotlinx.coroutines.**
+-dontwarn androidx.lifecycle.**
+-dontwarn company.tap.tapnetworkkit.**
+

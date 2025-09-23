@@ -10,6 +10,7 @@ import company.tap.tapbenefitpay.open.AppLifecycleObserver
 import company.tap.tapbenefitpay.open.BenefitPayDataConfiguration
 import company.tap.tapbenefitpay.open.BenefitPayDataConfiguration.configurationsAsHashMap
 import company.tap.tapbenefitpay.open.TapBenefitPayStatusDelegate
+import company.tap.tapcardformkit.open.web_wrapper.ApiServiceBenefit
 import company.tap.tapnetworkkit.connection.NetworkApp
 import company.tap.tapnetworkkit.utils.CryptoUtil
 import kotlinx.coroutines.MainScope

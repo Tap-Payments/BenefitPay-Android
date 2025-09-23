@@ -1,4 +1,4 @@
-package company.tap.tapcardformkit.open.web_wrapper.data.network.model
+package company.tap.tapcardformkit.open.web_wrapper.model
 
 data class TapBenefitSDKConfigUrlResponse(
     val baseURL: String,

@@ -1,7 +1,7 @@
-package company.tap.tapbenefitpay.open.web_wrapper
+package company.tap.tapcardformkit.open.web_wrapper
 
 import androidx.annotation.RestrictTo
-import company.tap.tapcardformkit.open.web_wrapper.data.network.model.TapBenefitSDKConfigUrlResponse
+import company.tap.tapcardformkit.open.web_wrapper.model.TapBenefitSDKConfigUrlResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
