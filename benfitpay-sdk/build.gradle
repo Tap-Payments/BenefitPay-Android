@@ -90,7 +90,30 @@ task releaseJavadoc(type: Jar) {
     from android.sourceSets.main.kotlin.srcDirs
 }
 
+// ------------------------
+// Rename _45sdp → tap_45sdp in merged resources
+// ------------------------
 afterEvaluate {
+    android.libraryVariants.all { variant ->
+        variant.mergeResourcesProvider.configure { mergeTask ->
+            doLast {
+                def resDir = mergeTask.outputDir.get().asFile
+                def valuesDir = new File(resDir, "values")
+                if (valuesDir.exists()) {
+                    valuesDir.listFiles().each { file ->
+                        if (file.name.endsWith(".xml")) {
+                            def updated = file.getText("UTF-8").replaceAll('name="_', 'name="tap_')
+                            file.write(updated, "UTF-8")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // ------------------------
+    // Maven publishing
+    // ------------------------
     publishing {
         publications {
             create("release", MavenPublication) {
@@ -102,12 +125,13 @@ afterEvaluate {
                 artifactId = "benfitpay-sdk"
                 version = android.defaultConfig.versionName ?: "1.0.4"
 
-                // Attach sources and Javadoc safely in Groovy
+                // Attach sources safely
                 def sourcesTask = tasks.findByName("releaseSourcesJar")
                 if (sourcesTask != null) {
                     artifact(sourcesTask)
                 }
 
+                // Attach Javadoc safely
                 def javadocTask = tasks.findByName("releaseJavadoc")
                 if (javadocTask != null) {
                     artifact(javadocTask)
@@ -122,3 +146,4 @@ afterEvaluate {
         dependsOn(tasks.findByName("releaseJavadoc") ?: [])
     }
 }
+
