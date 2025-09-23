@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.Color
-import android.net.http.SslError
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -21,9 +20,8 @@ import android.webkit.*
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.os.postDelayed
-import androidx.core.view.*
-import com.tap.commondatamodels.TapLocal
-import com.tap.commondatamodels.TapTheme
+import company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.TapLocal
+import company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.TapTheme
 import company.tap.tapbenefitpay.*
 import company.tap.tapbenefitpay.open.ApplicationLifecycle
 import company.tap.tapbenefitpay.open.BenefitPayDataConfiguration
@@ -43,7 +41,6 @@ import java.io.IOException
 //import company.tap.tapuilibrary.themekit.ThemeManager
 //import company.tap.tapuilibrary.uikit.atoms.*
 import java.net.URISyntaxException
-import java.util.*
 
 
 @SuppressLint("ViewConstructor")

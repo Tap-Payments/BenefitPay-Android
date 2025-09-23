@@ -86,10 +86,10 @@
 
 
 -keep class com.tap.commondatamodels.** { *; }
--keep class com.tap.commondatamodels.Headers
--keep class com.tap.commondatamodels.Authentication
--keep class com.tap.commondatamodels.TapAuthentication
--keep class com.tap.commondatamodels.TapCardConfigurations
--keep class com.tap.commondatamodels.Customer
--keep class com.tap.commondatamodels.TapTheme
--keep class com.tap.commondatamodels.TapLocal
+-keep class company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.Headers
+-keep class company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.Authentication
+-keep class company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.TapAuthentication
+-keep class company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.TapCardConfigurations
+-keep class company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.Customer
+-keep class company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.TapTheme
+-keep class company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.TapLocal

@@ -5,8 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ProcessLifecycleOwner
-import com.tap.commondatamodels.Headers
-import company.tap.tapbenefitpay.R
+import company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.Headers
 import company.tap.tapbenefitpay.open.AppLifecycleObserver
 import company.tap.tapbenefitpay.open.BenefitPayDataConfiguration
 import company.tap.tapbenefitpay.open.BenefitPayDataConfiguration.configurationsAsHashMap
@@ -15,7 +14,6 @@ import company.tap.tapnetworkkit.connection.NetworkApp
 import company.tap.tapnetworkkit.utils.CryptoUtil
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import kotlin.coroutines.coroutineContext
 
 
 class BeneiftPayConfiguration {

@@ -6,15 +6,13 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.util.Log
-import com.tap.commondatamodels.Customer
-import com.tap.commondatamodels.TapAuthentication
-import com.tap.commondatamodels.TapCardConfigurations
-import company.tap.tapbenefitpay.R
+import company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.Customer
+import company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.TapAuthentication
+import company.tap.tapbenefitpay.open.web_wrapper.commondatamodels.TapCardConfigurations
 import company.tap.tapbenefitpay.open.web_wrapper.BeneiftPayConfiguration
 import company.tap.tapbenefitpay.open.web_wrapper.TapBenefitPay
 //import company.tap.taplocalizationkit.LocalizationManager
 //import company.tap.tapuilibrary.themekit.ThemeManager
-import java.util.*
 import kotlin.collections.HashMap
 
 /**
