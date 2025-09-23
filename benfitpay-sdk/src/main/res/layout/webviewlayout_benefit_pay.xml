@@ -9,7 +9,7 @@
     android:layout_marginEnd="@dimen/_3sdp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    android:fitsSystemWindows="true"
+
     app:layout_constraintTop_toTopOf="parent">
 
 
