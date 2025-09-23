@@ -72,7 +72,6 @@ dependencies {
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     api "androidx.lifecycle:lifecycle-process:$lifecycle_version"
 
-    api 'com.intuit.sdp:sdp-android:1.1.0'
 
     // Tap dependencies
     api 'com.github.Tap-Payments:TapNetwrok-Android:0.2.2.44'
@@ -89,22 +88,7 @@ task releaseJavadoc(type: Jar) {
     from android.sourceSets.main.kotlin.srcDirs
 }
 afterEvaluate {
-    android.libraryVariants.all { variant ->
-        // Use the provider API instead of mergeResources directly
-        variant.mergeResourcesProvider.configure { mergeTask ->
-            doLast {
-                def resDir = mergeTask.outputDir.get().asFile
-                def valuesDir = new File(resDir, "values")
 
-                def dimensFile = new File(valuesDir, "dimens_sdp.xml")
-                if (dimensFile.exists()) {
-                    def updated = dimensFile.getText("UTF-8")
-                            .replaceAll('name="_', 'name="tap_') // rename _45sdp → tap_45sdp
-                    dimensFile.write(updated, "UTF-8")
-                }
-            }
-        }
-    }
     publishing {
         publications {
             create("release", MavenPublication) {
@@ -115,7 +99,7 @@ afterEvaluate {
 
                 groupId = "com.github.Tap-Payments"
                 artifactId = "BenefitPay-Android"
-                version = android.defaultConfig.versionName ?: "1.0.3.28"
+                version = android.defaultConfig.versionName ?: "1.0.3.29"
 
                 // Attach sources and javadoc
                 artifact(tasks.named("releaseSourcesJar"))
