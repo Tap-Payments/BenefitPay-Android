@@ -265,3 +265,8 @@
 -dontwarn androidx.lifecycle.**
 -dontwarn company.tap.tapnetworkkit.**
 
+# Keep the ApiServiceBenefit object and its members
+-keep class company.tap.tapcardformkit.open.web_wrapper.model.TapBenefitSDKConfigUrlResponse {
+    <fields>;
+    <methods>;
+}

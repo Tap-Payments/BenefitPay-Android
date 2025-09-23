@@ -130,6 +130,11 @@
     <fields>;
     <methods>;
 }
+# Keep the ApiServiceBenefit object and its members
+-keep class company.tap.tapcardformkit.open.web_wrapper.model.TapBenefitSDKConfigUrlResponse {
+    <fields>;
+    <methods>;
+}
 
 # Keep all Retrofit interfaces in this package
 -keep interface company.tap.tapcardformkit.open.web_wrapper.** {
