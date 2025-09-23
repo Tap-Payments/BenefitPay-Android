@@ -85,4 +85,11 @@
 -dontwarn com.tap.**
 
 
-
+-keep class com.tap.commondatamodels.** { *; }
+-keep class com.tap.commondatamodels.Headers
+-keep class com.tap.commondatamodels.Authentication
+-keep class com.tap.commondatamodels.TapAuthentication
+-keep class com.tap.commondatamodels.TapCardConfigurations
+-keep class com.tap.commondatamodels.Customer
+-keep class com.tap.commondatamodels.TapTheme
+-keep class com.tap.commondatamodels.TapLocal
