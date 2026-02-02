@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() ,TapBenefitPayStatusDelegate{
     var currency:String = "BHD"
     var transactionReference:String = ""
     var postUrl:String = ""
-    var secretString = "sk_live_x28QGHEwiVet6yKq07zMOrjU"
+    var secretString = "XXXXXXXX"
    val number3digits:String = String.format("%.3f", amount)
    lateinit var dataTextView:TextView
 
