@@ -139,7 +139,7 @@ First, let us create the required parameters:
        * operator
        */
       val operator = HashMap<String,Any>()
-        operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")
+        operator.put("publicKey","pk_test_XXXXXXXXXXXXXX")
         operator.put("hashString","")
 
         /**
@@ -224,7 +224,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
        * operator
        */
       val operator = HashMap<String,Any>()
-        operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")
+        operator.put("publicKey","pk_test_XXXXXXXXXXXXXX")
         operator.put("hashString","")
 
         /**
@@ -333,7 +333,7 @@ Each parameter is linked to the reference section, which provides a more in dept
 
 |Parameters |Description | Required | Type| Sample
 |--|--|--| --|--|
-| operator| It has the key obtained after registering your package name, also known as Public key. Also, the [hashString](https://developers.tap.company/docs/webhook#validate-the-webhook-hashstring) value which is used to validate live charges | True  | String| `var operator=HashMap<String,Any>(),operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"),operator.put("hashString","")` |
+| operator| It has the key obtained after registering your package name, also known as Public key. Also, the [hashString](https://developers.tap.company/docs/webhook#validate-the-webhook-hashstring) value which is used to validate live charges | True  | String| `var operator=HashMap<String,Any>(),operator.put("publicKey","pk_test_XXXXXXXXXXXXXX"),operator.put("hashString","")` |
 | order| Order details linked to the charge. | True  | `Dictionary`| ` var order = HashMap<String, Any>(), order.put("id","") order.put("amount",1),order.put("currency","BHD"),order.put("description",""), order.put("reference":"A reference to this order in your system"))` |
 | invoice|Invoice id to link to the order (optional). | False  | `Dictionary`| ` var invoice = HashMap<String,Any>.put("id","")` |
 | merchant| Merchant id obtained after registering your package name . | True  | `Dictionary`| ` var merchant = HashMap<String,Any>.put("id","")` |
@@ -350,7 +350,7 @@ You can use a Hashmap to send data to our SDK. The benefit is that you can gener
        * operator
        */
       val operator = HashMap<String,Any>()
-        operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")
+        operator.put("publicKey","pk_test_XXXXXXXXXXXXXX")
         operator.put("hashString","")
 
         /**
